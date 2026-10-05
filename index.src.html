@@ -38,9 +38,13 @@
   header.nav { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,.96); backdrop-filter: blur(6px); }
   header.nav::after { content: ""; display: block; height: 4px; background: var(--brand); }
   .hdr-pulse { position: absolute; left: 0; right: 0; bottom: -7px; height: 18px; overflow: hidden; pointer-events: none; z-index: 2; }
-  .hdr-pulse svg { position: absolute; bottom: 0; left: 0; width: 120px; height: 18px; transform: translateX(-130px); animation: hbeat 8s linear infinite; }
-  .hdr-pulse path { fill: none; stroke: #fff; stroke-width: 2.2; stroke-linejoin: round; filter: drop-shadow(0 0 3px rgba(255,255,255,.9)); }
-  @keyframes hbeat { 0% { transform: translateX(-130px); } 55%, 100% { transform: translateX(100vw); } }
+  /* a live monitor trace: a bright pen draws the beat as it travels, with a fading trail behind it */
+  .hdr-pulse svg { position: absolute; inset: 0; width: 100%; height: 18px; overflow: visible; }
+  .hdr-pulse path { fill: none; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+  .hdr-pulse .pen { stroke: #fff; stroke-width: 2.4; stroke-dasharray: 34 2600; filter: drop-shadow(0 0 4px #fff); animation: trace 6s linear infinite; }
+  .hdr-pulse .trail { stroke: rgba(255,255,255,.55); stroke-width: 1.6; stroke-dasharray: 150 2600; animation: trace-trail 6s linear infinite; }
+  @keyframes trace { from { stroke-dashoffset: 34; } to { stroke-dashoffset: -1500; } }
+  @keyframes trace-trail { from { stroke-dashoffset: 150; } to { stroke-dashoffset: -1384; } }
   @media (prefers-reduced-motion: reduce) { .hdr-pulse { display: none; } }
   header.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 84px; }
   .brand img { display: block; height: 58px; width: auto; }
@@ -790,7 +794,7 @@
 <body>
 
 <header class="nav">
-  <div class="hdr-pulse" aria-hidden="true"><svg viewBox="0 0 120 18"><path d="M0 13 H38 L44 13 L48 4 L54 17 L59 1 L64 15 L68 13 H120"/></svg></div>
+  <div class="hdr-pulse" aria-hidden="true"><svg viewBox="0 0 1200 18" preserveAspectRatio="none"><path class="trail" d="M0 13 H60 L66 13 L70 4 L76 17 L81 1 L86 15 L90 13 H150 H210 L216 13 L220 4 L226 17 L231 1 L236 15 L240 13 H300 H360 L366 13 L370 4 L376 17 L381 1 L386 15 L390 13 H450 H510 L516 13 L520 4 L526 17 L531 1 L536 15 L540 13 H600 H660 L666 13 L670 4 L676 17 L681 1 L686 15 L690 13 H750 H810 L816 13 L820 4 L826 17 L831 1 L836 15 L840 13 H900 H960 L966 13 L970 4 L976 17 L981 1 L986 15 L990 13 H1050 H1110 L1116 13 L1120 4 L1126 17 L1131 1 L1136 15 L1140 13 H1200"/><path class="pen" d="M0 13 H60 L66 13 L70 4 L76 17 L81 1 L86 15 L90 13 H150 H210 L216 13 L220 4 L226 17 L231 1 L236 15 L240 13 H300 H360 L366 13 L370 4 L376 17 L381 1 L386 15 L390 13 H450 H510 L516 13 L520 4 L526 17 L531 1 L536 15 L540 13 H600 H660 L666 13 L670 4 L676 17 L681 1 L686 15 L690 13 H750 H810 L816 13 L820 4 L826 17 L831 1 L836 15 L840 13 H900 H960 L966 13 L970 4 L976 17 L981 1 L986 15 L990 13 H1050 H1110 L1116 13 L1120 4 L1126 17 L1131 1 L1136 15 L1140 13 H1200"/></svg></div>
   <div class="wrap">
     <a class="brand" href="#"><img src="{{LOGO}}" alt="IntSys Guru · Passion | Knowledge | Experience"></a>
     <nav>
@@ -1093,7 +1097,7 @@
         <button type="button" class="tk-f" data-f="benefits" aria-pressed="false">Benefits &amp; retirement</button>
         <button type="button" class="tk-f" data-f="boomerang" aria-pressed="false">Boomerang</button>
         <button type="button" class="tk-f" data-f="global" aria-pressed="false">Global</button>
-        <button type="button" class="tk-f" data-f="rescue" aria-pressed="false">Rescue &amp; support</button>
+        <button type="button" class="tk-f" data-f="rescue" aria-pressed="false">Support</button>
       </div>
       <div class="tk-nav">
         <button type="button" class="tk-arrow prev" aria-label="Previous stories">←</button>
