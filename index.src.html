@@ -1,0 +1,2160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IntSys Guru — Workday Integration Consulting</title>
+<meta name="description" content="Independent Workday integration consultant. 16 years building, fixing and supporting Studio, EIB, Cloud Connect, PECI and PICOF integrations.">
+<!-- Fonts: IBM Plex Sans (c) IBM Corp. and Michroma (c) Vernon Adams, both under the SIL Open Font License 1.1, self-hosted.
+     Some icon shapes adapted from Feather Icons (c) Cole Bemis, MIT License. -->
+<script>document.documentElement.classList.add('js')</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="7283e81e-7919-433a-a250-63175c9607ab" data-domains="intsys.guru,www.intsys.guru"></script>
+<style>
+{{FONTS}}
+  :root {
+    --passion: #bc1f2d;
+    --knowledge: #2f3192;
+    --experience: #f8ad40;
+    --plum: #7a2470;
+    --ink: #14152b;
+    --ink-2: #3b3d58;
+    --muted: #5f6279;
+    --night: #10123a;
+    --line: #e4e5f0;
+    --warm: #fff6ea;
+    --cool: #f1f2ff;
+    --brand: linear-gradient(90deg, #f8ad40 0%, #e8572f 35%, #bc1f2d 60%, #2f3192 100%);
+    --brand-bright: linear-gradient(90deg, #ffc15e 0%, #ff7a45 45%, #ff5468 100%);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #fff; color: var(--ink); font: 17px/1.6 "IBM Plex Sans", system-ui, sans-serif; }
+  a { color: var(--knowledge); }
+  img { max-width: 100%; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .wide { font-family: "Michroma", "IBM Plex Sans", sans-serif; letter-spacing: .12em; text-transform: uppercase; }
+
+  /* header */
+  header.nav { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,.96); backdrop-filter: blur(6px); }
+  header.nav::after { content: ""; display: block; height: 4px; background: var(--brand); }
+  .hdr-pulse { position: absolute; left: 0; right: 0; bottom: -7px; height: 18px; overflow: hidden; pointer-events: none; z-index: 2; }
+  .hdr-pulse svg { position: absolute; bottom: 0; left: 0; width: 120px; height: 18px; transform: translateX(-130px); animation: hbeat 8s linear infinite; }
+  .hdr-pulse path { fill: none; stroke: #fff; stroke-width: 2.2; stroke-linejoin: round; filter: drop-shadow(0 0 3px rgba(255,255,255,.9)); }
+  @keyframes hbeat { 0% { transform: translateX(-130px); } 55%, 100% { transform: translateX(100vw); } }
+  @media (prefers-reduced-motion: reduce) { .hdr-pulse { display: none; } }
+  header.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 84px; }
+  .brand img { display: block; height: 58px; width: auto; }
+  nav a { color: var(--ink-2); text-decoration: none; margin-left: 26px; font-size: 15px; font-weight: 500; }
+  nav a:hover { color: var(--passion); }
+  .nav-pulse svg { width: 20px; height: 10px; margin-right: 6px; vertical-align: -1px; fill: none; stroke: var(--passion); stroke-width: 2; stroke-linejoin: round;
+    stroke-dasharray: 40; animation: navbeat 2.4s ease-in-out infinite; }
+  @keyframes navbeat { 0% { stroke-dashoffset: 40; } 50%, 100% { stroke-dashoffset: 0; } }
+  nav a.btn-sm { background: var(--passion); color: #fff; padding: 9px 18px; border-radius: 999px; }
+  nav a.btn-sm:hover { background: #a01a26; color: #fff; }
+
+  /* hero */
+  .hero {
+    color: #fff; padding: 104px 0 150px; position: relative; overflow: hidden;
+    background:
+      radial-gradient(circle at 88% 12%, rgba(188,31,45,.55), transparent 38%),
+      radial-gradient(circle at 8% 95%, rgba(47,49,146,.9), transparent 45%),
+      radial-gradient(circle at 62% 115%, rgba(248,173,64,.35), transparent 40%),
+      var(--night);
+  }
+  .tagline { font-size: 14px; margin: 0 0 26px; display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; }
+  .tagline .p { color: #ff6b78; } .tagline .k { color: #9da1ff; } .tagline .e { color: var(--experience); }
+  .tagline .bar { color: #5b5e8f; }
+  .tagline { position: relative; z-index: 5; }
+  .tw { font: inherit; letter-spacing: inherit; text-transform: inherit; background: none; border: 0; padding: 4px 0; cursor: pointer;
+    background-image: linear-gradient(currentColor, currentColor); background-size: 0 2px; background-repeat: no-repeat; background-position: 0 100%;
+    transition: background-size .25s; }
+  .tw:hover, .tw:focus-visible, .tw[aria-expanded="true"] { background-size: 100% 2px; outline: none; }
+  .tw::after { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: currentColor; margin-left: 7px; vertical-align: 3px; animation: blink 1.6s infinite; }
+  @keyframes blink { 50% { opacity: .2; } }
+
+  /* tagline pop-ups */
+  .tw-pop { position: absolute; top: calc(100% + 12px); left: 0; width: 380px; padding: 20px 22px 18px; border-radius: 16px;
+    background: #fff; color: var(--ink); font-family: "IBM Plex Sans", sans-serif; letter-spacing: 0; text-transform: none;
+    box-shadow: 0 24px 60px rgba(0,0,0,.45); border-top: 5px solid var(--c);
+    opacity: 0; transform: translateY(8px); pointer-events: none; transition: opacity .2s, transform .2s; }
+  .tw-pop.open { opacity: 1; transform: none; pointer-events: auto; }
+  .tw-pop p { margin: 12px 0 0; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+  .tw-pop.passion { --c: var(--passion); }
+  .tw-pop.knowledge { --c: var(--knowledge); }
+  .tw-pop.experience { --c: #e08a12; }
+
+  .ecg { width: 100%; height: 70px; display: block; }
+  .ecg path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .ecg-bg { stroke: var(--line); stroke-width: 1; stroke-dasharray: 3 5; }
+  .ecg-line { stroke: var(--passion); stroke-width: 3; stroke-dasharray: 420; stroke-dashoffset: 420; }
+  .open .ecg-line { animation: ecg 1.8s linear infinite; }
+  @keyframes ecg { 0% { stroke-dashoffset: 420; } 70%, 100% { stroke-dashoffset: 0; } }
+  .runs { display: flex; gap: 6px; flex-wrap: wrap; }
+  .runs span { font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: #e9f6ee; color: #1f8a4c; opacity: 0; }
+  .open .runs span { animation: pop .3s forwards; }
+  .open .runs span:nth-child(2) { animation-delay: .25s; } .open .runs span:nth-child(3) { animation-delay: .5s; }
+  .open .runs span:nth-child(4) { animation-delay: .75s; } .open .runs span:nth-child(5) { animation-delay: 1s; }
+  @keyframes pop { from { opacity: 0; transform: scale(.7); } to { opacity: 1; transform: none; } }
+
+  .term { background: #0d0f2b; border-radius: 10px; padding: 0 0 12px; font: 13px/1.7 ui-monospace, "SF Mono", Menlo, monospace; color: #c9cbff; overflow: hidden; }
+  .term-bar { display: flex; align-items: center; gap: 6px; padding: 8px 10px; background: #1a1d48; margin-bottom: 8px; }
+  .term-bar i { width: 9px; height: 9px; border-radius: 50%; background: #ff5f57; } .term-bar i:nth-child(2) { background: #febc2e; } .term-bar i:nth-child(3) { background: #28c840; }
+  .term-bar span { margin-left: 8px; font-size: 11px; color: #8d90c9; }
+  .ln { display: block; white-space: pre; overflow: hidden; width: 0; margin-left: 12px; }
+  .ln:nth-of-type(2), .ln:nth-of-type(3) { color: #ffc15e; }
+  .open .ln { animation: type .8s steps(var(--n)) var(--d) forwards; }
+  @keyframes type { to { width: calc(var(--n) * 1ch); } }
+  .caret { display: inline-block; width: 7px; height: 14px; background: #c9cbff; vertical-align: -2px; margin-left: 2px; animation: blink 1s infinite; }
+
+  .years { display: flex; align-items: baseline; gap: 10px; }
+  .years b { font-size: 34px; color: #e08a12; font-variant-numeric: tabular-nums; }
+  .years span { font-size: 14px; color: var(--muted); }
+  .tl { position: relative; height: 70px; margin: 10px 14px 0; }
+  .tl-line { position: absolute; left: 0; right: 0; top: 10px; height: 3px; background: linear-gradient(90deg, var(--experience), var(--passion)); transform: scaleX(0); transform-origin: left; }
+  .open .tl-line { animation: grow 1.5s ease-out forwards; }
+  @keyframes grow { to { transform: scaleX(1); } }
+  .ms { position: absolute; left: var(--x); top: 0; transform: translateX(-50%); text-align: center; opacity: 0; }
+  .open .ms { animation: pop .35s var(--d) forwards; }
+  .ms i { display: block; width: 14px; height: 14px; margin: 4px auto 6px; border-radius: 50%; background: #fff; border: 3px solid #e08a12; }
+  .ms span { display: block; font-size: 11px; line-height: 1.3; color: var(--ink-2); white-space: nowrap; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .open .ecg-line, .open .runs span, .open .ln, .open .tl-line, .open .ms { animation-duration: .01s; animation-delay: 0s; }
+  }
+  .hero h1 { font-size: 52px; line-height: 1.08; letter-spacing: -.02em; margin: 0 0 24px; max-width: 820px; }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); gap: 20px; align-items: center; }
+  .hero-map { position: relative; margin: -40px -24px -30px 0; }
+  .net-hero .lbl { font-size: 17px; }
+  .net-hero.focused .lane { opacity: .7; }
+  .hero-map-cap { margin: -6px 0 0; text-align: center; font-size: 12.5px; color: #8d90b3; }
+  @media (max-width: 1000px) { .hero-grid { grid-template-columns: 1fr; } .hero-map { display: none; } }
+  .grad { background: var(--brand-bright); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero p.lede { font-size: 20px; color: #d3d5f0; max-width: 680px; margin: 0 0 38px; }
+  .btn { display: inline-block; padding: 15px 26px; border-radius: 999px; font-weight: 600; text-decoration: none; font-size: 16px; }
+  .btn-primary { background: var(--passion); color: #fff; box-shadow: 0 8px 24px rgba(188,31,45,.4); }
+  .btn-primary:hover { background: #d42636; }
+  .btn-ghost { color: #fff; border: 1px solid rgba(255,255,255,.35); margin-left: 12px; }
+  .btn-ghost:hover { border-color: #fff; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 72px; }
+  .stat { border-top: 3px solid; padding-top: 16px; }
+  .stat b { display: block; font-size: 38px; font-weight: 700; line-height: 1.1; }
+  .stat span { color: #b7badc; font-size: 14px; }
+  .s1 { border-color: var(--experience); } .s1 b { color: var(--experience); }
+  .s2 { border-color: #ff6b78; } .s2 b { color: #ff6b78; }
+  .s3 { border-color: #9da1ff; } .s3 b { color: #9da1ff; }
+  .s4 { border-color: #ffc15e; } .s4 b { color: #ffc15e; }
+
+  /* pillars */
+  .pillars-wrap { position: relative; z-index: 2; margin-top: -72px; }
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); border-radius: 20px; box-shadow: 0 24px 60px rgba(16,18,58,.28); }
+  .pillar { padding: 44px 36px; color: #fff; position: relative; overflow: hidden; transition: transform .35s cubic-bezier(.2,.8,.2,1.2), box-shadow .35s, filter .35s; }
+  .pillar:first-child { border-radius: 20px 0 0 20px; } .pillar:last-child { border-radius: 0 20px 20px 0; }
+  .pillar::after { content: ""; position: absolute; top: 0; bottom: 0; left: -60%; width: 40%; transform: skewX(-20deg);
+    background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.28), rgba(255,255,255,0)); pointer-events: none; }
+  .pillar .wide, .pillar h3 { transition: transform .35s ease; }
+  @media (hover: hover) {
+    .pillar:hover { transform: translateY(-14px) scale(1.04); z-index: 3; border-radius: 20px; box-shadow: 0 30px 60px rgba(16,18,58,.4); }
+    .pillar:hover::after { left: 130%; transition: left .8s ease; }
+    .pillar:hover .wide { transform: translateX(4px); letter-spacing: .2em; }
+    .pillar:hover h3 { transform: translateX(4px); }
+    .pillars:hover .pillar:not(:hover) { filter: saturate(.75) brightness(.92); }
+  }
+  .pillar .wide { font-size: 15px; margin: 0 0 16px; opacity: .95; transition: transform .35s ease, letter-spacing .35s ease; }
+  .pillar h3 { font-size: 26px; line-height: 1.25; margin: 0 0 12px; }
+  .pillar p { margin: 0; font-size: 16px; opacity: .92; }
+  .pillar.passion { background: linear-gradient(160deg, #d0293a, #9c1824); }
+  .pillar.knowledge { background: linear-gradient(160deg, #3a3db0, #22246f); }
+  .pillar.experience { background: linear-gradient(160deg, #ffbe58, #f39a1f); color: var(--ink); }
+
+  section { padding: 92px 0; }
+  .kicker { font-size: 13px; margin: 0 0 12px; color: var(--passion); }
+  h2 { font-size: 38px; letter-spacing: -.015em; margin: 0 0 12px; line-height: 1.15; }
+  .sub { color: var(--muted); font-size: 18px; margin: 0 0 48px; max-width: 660px; }
+
+  /* services */
+  .grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 28px; box-shadow: 0 2px 0 rgba(20,21,43,.02); transition: transform .15s, box-shadow .15s; }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(20,21,43,.08); }
+  .card h3 { margin: 0 0 10px; font-size: 21px; }
+  .card p { margin: 0 0 14px; color: var(--ink-2); font-size: 16px; }
+  .card ul { margin: 0; padding-left: 18px; color: var(--ink-2); font-size: 15px; }
+  .card li::marker { color: var(--c); }
+  .card .tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    color: #fff; background: var(--c); padding: 4px 10px; border-radius: 999px; margin-bottom: 14px; }
+  .svc { border-top: 5px solid var(--c); }
+  .card.svc { display: flex; flex-direction: column; }
+  .card.svc .tag { align-self: flex-start; }
+  .card .best { font-size: 14px; color: var(--ink); background: color-mix(in srgb, var(--c) 8%, #fff); border-radius: 8px; padding: 8px 10px; }
+  .card .best b { color: var(--c); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; margin-right: 4px; }
+  .svc-links { margin-top: auto; padding-top: 18px; display: flex; flex-wrap: wrap; gap: 6px 16px; }
+  .svc-links a { font-size: 14px; font-weight: 600; color: var(--c); text-decoration: none; }
+  .svc-links a:hover { text-decoration: underline; }
+
+  /* service art: plays when the card scrolls into view, replays on hover */
+  .svc-art { position: relative; height: 104px; margin: -4px 0 18px; border-radius: 10px; overflow: hidden;
+    background: radial-gradient(circle at 30% 30%, #1f2366, var(--night) 75%); }
+  .art-build svg { width: 100%; height: 100%; display: block; }
+  .ab-line { fill: none; stroke: #ffc15e; stroke-width: 2.5; stroke-dasharray: 160; stroke-dashoffset: 160; }
+  .ab-wd { fill: #10123a; stroke: #ff6b78; stroke-width: 2.5; } .ab-v { fill: #10123a; stroke: #9da1ff; stroke-width: 2.5; }
+  .ab-t { fill: #fff; font: 700 11px "IBM Plex Sans", sans-serif; text-anchor: middle; }
+  .ab-dot { fill: #ffc15e; }
+  .play .ab-line { animation: draw 1s ease forwards; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+
+  .art-fix { display: flex; flex-direction: column; justify-content: center; gap: 10px; padding: 0 14px; }
+  .af-err { white-space: nowrap; font: 12px ui-monospace, Menlo, monospace; color: #ff8a95; position: relative; display: inline-block; align-self: flex-start; }
+  .af-err::after { content: ""; position: absolute; left: 0; top: 50%; height: 1.5px; width: 0; background: #ff8a95; }
+  .af-ok { align-self: flex-start; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #0d0f2b; background: #6ee7b0;
+    padding: 4px 10px; border-radius: 999px; opacity: 0; transform: scale(.6); }
+  .play .af-err::after { animation: strike .6s ease .5s forwards; }
+  .play .af-err { animation: dim .4s ease 1.1s forwards; }
+  .play .af-ok { animation: pop .35s ease 1.3s forwards; }
+  @keyframes strike { to { width: 100%; } }
+  @keyframes dim { to { color: #6b6e9a; } }
+  .art-fix .af-ok { animation-fill-mode: forwards; }
+
+  .art-assess ul { list-style: none; margin: 0; padding: 10px 14px; display: grid; gap: 5px; }
+  .art-assess li { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #c9cbe6; }
+  .art-assess b { font-size: 10px; letter-spacing: .06em; text-transform: uppercase; padding: 1px 7px; border-radius: 999px; opacity: 0; }
+  .art-assess b.ok { background: rgba(110,231,176,.18); color: #6ee7b0; } .art-assess b.risk { background: #ffc15e; color: #0d0f2b; }
+  .aa-scan { position: absolute; left: 0; right: 0; top: 0; height: 22px; background: linear-gradient(180deg, transparent, rgba(255,193,94,.35), transparent); opacity: 0; }
+  .play .aa-scan { animation: scan 1.6s ease-in-out forwards; }
+  .play .art-assess li:nth-child(1) b { animation: pop .3s .45s forwards; } .play .art-assess li:nth-child(2) b { animation: pop .3s .8s forwards; }
+  .play .art-assess li:nth-child(3) b { animation: pop .3s 1.15s forwards; } .play .art-assess li:nth-child(4) b { animation: pop .3s 1.5s forwards; }
+  @keyframes scan { 0% { top: 0; opacity: 1; } 95% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+
+  .art-support { padding: 10px 14px; }
+  .art-support svg { width: 100%; height: 40px; display: block; }
+  .as-ecg { fill: none; stroke: #ff6b78; stroke-width: 2.5; stroke-linejoin: round; stroke-dasharray: 320; stroke-dashoffset: 320; }
+  .play .as-ecg { animation: ecgline 2s linear infinite; }
+  @keyframes ecgline { 0% { stroke-dashoffset: 320; } 70%, 100% { stroke-dashoffset: 0; } }
+  .as-runs { display: flex; gap: 5px; margin-top: 10px; }
+  .as-runs span { flex: 1; text-align: center; font-size: 11px; font-weight: 600; padding: 4px 0; border-radius: 6px; background: rgba(255,255,255,.08); color: #8d90b3; transition: all .3s; }
+  .play .as-runs span { animation: rungreen .3s forwards; }
+  .play .as-runs span:nth-child(2) { animation-delay: .35s; } .play .as-runs span:nth-child(3) { animation-delay: .7s; }
+  .play .as-runs span:nth-child(4) { animation-delay: 1.05s; } .play .as-runs span:nth-child(5) { animation-delay: 1.4s; }
+  @keyframes rungreen { to { background: #e3f5ea; color: #1f8a4c; } }
+  @media (prefers-reduced-motion: reduce) {
+    .svc-art * { animation-duration: .01s !important; animation-delay: 0s !important; animation-iteration-count: 1 !important; }
+  }
+
+  .c-red { --c: var(--passion); } .c-blue { --c: var(--knowledge); } .c-gold { --c: #e08a12; } .c-plum { --c: var(--plum); }
+  .card.c-gold .tag { color: var(--ink); }
+  /* readable text versions of the bright gold and green (fills keep the bright colours) */
+  .c-gold .tk-area, .c-gold .svc-links a, .c-gold .tl-get span, .c-gold .label, .c-gold .best b, .c-gold .vgroup h4,
+  .jr.c-gold .jr-y, .hb.c-gold .hb-tag, .c-gold .card .tag + h3 ~ .svc-links a, .hb-k .e { color: #8f5400 !important; }
+  .years b { color: #8f5400 !important; }
+  .tk-status.open { color: #7f4b00 !important; }
+  .tk-fix .tk-result, .jr-now .jr-y { color: #187040 !important; }
+  .avail { color: #145f34 !important; }
+
+  /* vendors */
+  .warm { background: var(--warm); }
+  .vgroups { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  @media (max-width: 1000px) { .vgroups { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .vgroups { grid-template-columns: 1fr; } }
+  .vgroup { background: #fff; border-radius: 14px; padding: 22px 22px 18px; border-left: 5px solid var(--c); }
+  .vgroup h4 { margin: 0 0 12px; font-size: 15px; color: var(--c); text-transform: uppercase; letter-spacing: .06em; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { background: var(--warm); border-radius: 999px; padding: 5px 13px; font-size: 14px; }
+
+  .reach { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 0 0 32px; }
+  .reach .r { background: #fff; border-radius: 14px; padding: 18px 20px; border-bottom: 4px solid var(--c); }
+  .reach b { display: block; font-size: 34px; line-height: 1.1; color: var(--c); }
+  .reach span { font-size: 14px; color: var(--muted); }
+  .formats-strip { margin-top: 20px; background: var(--night); border-radius: 18px; padding: 24px; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 28px; align-items: stretch; }
+  .fm-demo { background: #0b0d2a; border: 1px solid #23265a; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
+  .fm-bar { display: flex; align-items: center; gap: 6px; padding: 9px 12px; background: #1a1d48; }
+  .fm-bar i { width: 10px; height: 10px; border-radius: 50%; background: #ff5f57; } .fm-bar i:nth-child(2) { background: #febc2e; } .fm-bar i:nth-child(3) { background: #28c840; }
+  .fm-file { margin-left: 8px; font: 12px ui-monospace, Menlo, monospace; color: #c9cbff; }
+  .fm-k { margin-left: auto; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--experience); }
+  .fm-code { flex: 1; margin: 0; padding: 16px 18px; min-height: 168px; font: 13px/1.6 ui-monospace, "SF Mono", Menlo, monospace; color: #e6e7f7; white-space: pre; overflow: hidden; }
+  .fm-code .t { color: #9da1ff; } .fm-code .v { color: #ffc15e; } .fm-code .s { color: #ff8a95; } .fm-code .c { color: #6b6e9a; }
+  .fm-code.in { animation: fmin .4s ease; }
+  @keyframes fmin { from { opacity: 0; transform: translateY(6px); filter: blur(2px); } }
+  .fm-tabs { display: flex; border-top: 1px solid #23265a; }
+  .fm-tabs button { flex: 1; font: 600 12px ui-monospace, Menlo, monospace; color: #8d90b3; background: none; border: 0; padding: 9px 4px; cursor: pointer; border-top: 2px solid transparent; }
+  .fm-tabs button.on { color: #fff; border-top-color: var(--experience); background: rgba(255,255,255,.04); }
+  .fm-groups h4 { margin: 0 0 16px; font-size: 15px; color: var(--experience); text-transform: uppercase; letter-spacing: .06em; }
+  .fm-g p { margin: 0 0 8px; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #8d90b3; }
+  .fm-g { margin-bottom: 16px; }
+  .fm-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .formats-strip .chips { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 8px; }
+  .formats-strip .chip { background: rgba(255,255,255,.08); color: #e6e7f7; text-align: center; border: 1px solid rgba(255,255,255,.1); transition: all .3s; }
+  .formats-strip .chip.lit { background: var(--experience); color: var(--night); border-color: var(--experience); font-weight: 700; transform: translateY(-2px); }
+  @media (max-width: 900px) { .formats-strip { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .fm-row { grid-template-columns: 1fr; } .fm-code { font-size: 11.5px; } }
+  @media (max-width: 760px) { .reach { grid-template-columns: repeat(2, 1fr); } }
+
+  /* integration map (built by script; the vendor grid is the no-script fallback) */
+  .netwrap, .legend, .marquee { display: none; }
+  html.js .vgroups { display: none; }
+  html.js .netwrap { display: grid; grid-template-columns: 1fr 330px; gap: 8px; align-items: stretch;
+    border-radius: 22px; overflow: hidden; padding: 14px;
+    background: radial-gradient(circle at 40% 50%, #1d2160 0%, var(--night) 65%); }
+  html.js .legend { display: flex; flex-wrap: wrap; gap: 10px 24px; justify-content: center; margin: 16px 0 0; font-size: 14px; color: var(--ink-2); }
+  .net { width: 100%; height: auto; display: block; }
+  .net text { font-family: "IBM Plex Sans", sans-serif; }
+  .net .lane { fill: none; stroke: rgba(255,255,255,.13); stroke-width: 1.5; transition: stroke .3s, stroke-width .3s, opacity .3s; }
+  .net .lane.ws { stroke-dasharray: 4 5; }
+  .net.focused .lane { opacity: .6; }
+  .net .lane.hot { stroke: var(--hc); stroke-width: 2.6; opacity: 1; }
+  .net .hub { cursor: pointer; }
+  .net .hub circle.ring { fill: #171a4a; stroke: var(--hc); stroke-width: 2.5; transition: all .3s; }
+  .net .hub.hot circle.ring { fill: var(--hc); }
+  .net .hub circle.glow { fill: var(--hc); opacity: 0; transition: opacity .3s; }
+  .net .hub.hot circle.glow { opacity: .25; animation: glow 1.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+  @keyframes glow { 50% { transform: scale(1.35); opacity: .08; } }
+  .net .ico { fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
+  .net .sat { opacity: .55; transition: opacity .3s; pointer-events: none; }
+  .net .sat.hot { opacity: 1; }
+  .net .star { fill: #fff; animation: twinkle 4s ease-in-out infinite; }
+  @keyframes twinkle { 50% { opacity: .03; } }
+  .netpanel .chip.more { background: transparent; border: 1px dashed rgba(255,255,255,.4); color: #c9cbe6; font-style: italic; }
+  .net .hub .lbl { fill: #c9cbe6; font-size: 14px; font-weight: 600; transition: fill .3s; }
+  .net .hub.hot .lbl { fill: #fff; }
+  .net .core-ring { fill: #10123a; stroke: url(#coreGrad); stroke-width: 5; }
+  .net .core-pulse { fill: none; stroke: url(#coreGrad); stroke-width: 2; opacity: .6; transform-box: fill-box; transform-origin: center; animation: corepulse 2.6s ease-out infinite; }
+  @keyframes corepulse { to { transform: scale(1.5); opacity: 0; } }
+  .net .core-t { fill: #fff; font-size: 22px; font-weight: 700; text-anchor: middle; }
+  .net .core-s { fill: #a9acd6; font-size: 12px; text-anchor: middle; letter-spacing: .08em; text-transform: uppercase; }
+  .net .boom-lbl { fill: #6ee7b0; font-size: 13px; font-weight: 600; text-anchor: middle; cursor: pointer; }
+  .net .lane.boom { stroke: rgba(110,231,176,.35); stroke-width: 2; cursor: pointer; }
+  .net .lane.boom.hot { stroke: #6ee7b0; }
+
+  .netpanel { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 16px; padding: 24px 22px; color: #fff;
+    display: flex; flex-direction: column; }
+  .netpanel .np-k { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: #a9acd6; margin: 0 0 6px; }
+  .netpanel h3 { margin: 0 0 14px; font-size: 22px; line-height: 1.2; color: var(--hc); }
+  .netpanel .flow { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: #d3d5f0; margin: 0 0 10px; }
+  .netpanel .flow i { flex: none; margin-top: 5px; }
+  .netpanel .chips { margin-top: 10px; }
+  .netpanel .chip { background: rgba(255,255,255,.1); color: #fff; font-size: 13px; animation: pop .3s backwards; }
+  .netpanel .hint { margin-top: auto; padding-top: 16px; font-size: 12px; color: #8d90b3; }
+  .lg { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 8px; vertical-align: 0; }
+  .lg.out { background: #ffc15e; } .lg.in { background: #9da1ff; } .lg.boom { background: #6ee7b0; }
+  .lg.ws { background: transparent; border: 2px solid #ff6b78; width: 11px; height: 11px; }
+
+  /* phones: scrolling vendor wall instead of the map */
+  .mq-row { display: flex; width: max-content; gap: 8px; animation: mq 50s linear infinite; margin-bottom: 8px; }
+  .mq-row:nth-child(2) { animation-direction: reverse; animation-duration: 58s; }
+  .mq-row:nth-child(3) { animation-duration: 46s; }
+  .mq-row .chip { background: #fff; border: 1px solid var(--line); white-space: nowrap; font-size: 14px; padding: 7px 14px; }
+  @keyframes mq { to { transform: translateX(-50%); } }
+  @media (max-width: 760px) {
+    html.js .netwrap, html.js .legend { display: none; }
+    html.js .marquee { display: block; overflow: hidden; margin: 0 -24px; padding: 4px 0;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  }
+  @media (max-width: 1000px) and (min-width: 761px) { html.js .netwrap { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { .mq-row { animation: none; flex-wrap: wrap; width: auto; } }
+
+  /* work */
+  .case { position: relative; padding-left: 32px; }
+  .case::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; border-radius: 14px 0 0 14px; background: var(--c); }
+  .case .label { font-size: 12px; color: var(--c); text-transform: uppercase; letter-spacing: .08em; margin: 14px 0 4px; display: block; font-weight: 700; }
+  .case p { margin: 0; }
+
+  /* selected work: ticket merry-go-round */
+  .tk-bar { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin: -16px 0 10px; }
+  .tk-filters { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tk-f { font: inherit; font-size: 14px; font-weight: 600; padding: 7px 14px; border-radius: 999px; border: 1.5px solid var(--line); background: #fff; color: var(--ink-2); cursor: pointer; }
+  .tk-f:hover { border-color: var(--ink-2); }
+  .tk-f.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+  .tk-nav { display: flex; gap: 8px; }
+  .tk-arrow { width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--line); background: #fff; font-size: 18px; cursor: pointer; color: var(--ink); }
+  .tk-arrow:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .tk-stage { position: relative; height: 440px; perspective: 1600px; overflow: hidden; outline: none; touch-action: pan-y; }
+  .tk-stage::before, .tk-stage::after { content: ""; position: absolute; top: 0; bottom: 0; width: 7%; z-index: 60; pointer-events: none; }
+  .tk-stage::before { left: 0; background: linear-gradient(90deg, #fff, rgba(255,255,255,0)); }
+  .tk-stage::after { right: 0; background: linear-gradient(270deg, #fff, rgba(255,255,255,0)); }
+  .tk-ring { position: absolute; inset: 0; transform-style: preserve-3d; }
+  .ticket { position: absolute; left: 50%; top: 30px; width: 340px; margin-left: -170px; background: #fff; border: 1px solid var(--line); border-radius: 16px;
+    padding: 22px 22px 20px; display: flex; flex-direction: column; box-shadow: 0 18px 40px rgba(20,21,43,.12);
+    transition: transform .55s cubic-bezier(.2,.7,.2,1), opacity .45s, visibility 0s; backface-visibility: hidden; cursor: pointer; will-change: transform, opacity; }
+  .ticket::after { content: ""; position: absolute; inset: 0; border-radius: 16px; background: #f4f5fb; opacity: var(--veil, 0); transition: opacity .45s; pointer-events: none; }
+  .ticket.far { visibility: hidden; transition: transform .55s cubic-bezier(.2,.7,.2,1), opacity .45s, visibility 0s .55s; }
+  .ticket.front { cursor: default; box-shadow: 0 26px 60px rgba(20,21,43,.22); }
+  .ticket::before { content: ""; position: absolute; left: 0; top: 0; right: 0; height: 5px; border-radius: 16px 16px 0 0; background: var(--c); }
+  .ticket.hide { display: none; }
+  .tk-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .tk-area { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--c); }
+  .tk-status { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; transition: all .4s; }
+  .tk-status.failed { background: #fde8ea; color: var(--passion); }
+  .tk-status.open { background: #fff1db; color: #b26a00; }
+  .tk-status.resolved { background: #e3f5ea; color: #1f8a4c; animation: pop .35s; }
+  .tk-status.resolved::before { content: "✓ "; }
+  .tk-err { display: block; font: 12.5px/1.5 ui-monospace, "SF Mono", Menlo, monospace; background: var(--night); color: #ff8a95; padding: 9px 12px; border-radius: 8px; margin-bottom: 14px; transition: color .4s; }
+  .resolved-card .tk-err { color: #8d90b3; text-decoration: line-through; text-decoration-color: rgba(255,255,255,.3); }
+  .ticket h3 { margin: 0 0 6px; font-size: 19px; line-height: 1.3; }
+  .tk-fix { opacity: .15; filter: blur(3px); transform: translateY(6px); transition: all .6s ease .2s; }
+  .resolved-card .tk-fix { opacity: 1; filter: none; transform: none; }
+  .tk-fix .label { font-size: 12px; color: var(--c); text-transform: uppercase; letter-spacing: .08em; margin: 8px 0 4px; display: block; font-weight: 700; }
+  .tk-fix p { margin: 0; font-size: 15px; color: var(--ink-2); }
+  .tk-fix .tk-result { margin-top: 12px; font-weight: 700; color: #1f8a4c; font-size: 15px; }
+  .tk-dots { display: flex; justify-content: center; gap: 8px; margin-top: 4px; }
+  .tk-dot { width: 8px; height: 8px; border-radius: 999px; border: 0; padding: 0; background: var(--line); cursor: pointer; transition: all .3s; }
+  .tk-dot.on { width: 26px; background: var(--passion); }
+  @media (max-width: 760px) {
+    .tk-stage { height: 470px; }
+    .ticket { width: 78vw; margin-left: -39vw; }
+    .tk-nav { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { .ticket, .tk-fix { transition: none; } }
+
+  /* approach: timeline + test plan + promises */
+  .ap-grid { display: grid; grid-template-columns: 1fr 400px; gap: 56px; align-items: start; }
+  .tline { margin: 0; padding: 0 0 0 64px; position: relative; }
+  .tl-rail { position: absolute; left: 21px; top: 10px; bottom: 30px; width: 4px; border-radius: 4px; background: #dcdef3; }
+  .tl-fill { position: absolute; left: 0; top: 0; width: 100%; height: 0; border-radius: 4px; background: linear-gradient(180deg, var(--passion), var(--knowledge) 45%, #e08a12 75%, var(--plum)); }
+  .tl-step { position: relative; padding: 0 0 44px; opacity: .45; transform: translateX(8px); transition: opacity .5s, transform .5s; }
+  .tl-step.lit { opacity: 1; transform: none; }
+  .tl-node { position: absolute; left: -64px; top: -4px; width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;
+    background: #fff; border: 3px solid #dcdef3; color: var(--muted); font-weight: 700; transition: all .4s; }
+  .tl-step.lit .tl-node { background: var(--c); border-color: var(--c); color: #fff; box-shadow: 0 0 0 6px color-mix(in srgb, var(--c) 18%, transparent); }
+  .tl-step.lit .tl-node b { font-size: 0; }
+  .tl-step.lit .tl-node b::after { content: "✓"; font-size: 20px; }
+  .tl-step h3 { margin: 0 0 6px; font-size: 22px; }
+  .tl-step p { margin: 0; color: var(--ink-2); font-size: 16px; max-width: 560px; }
+  .tl-get { margin-top: 12px !important; display: inline-flex; gap: 10px; align-items: baseline; background: #fff; border: 1px solid var(--line);
+    border-left: 4px solid var(--c); border-radius: 10px; padding: 10px 14px; color: var(--ink) !important; font-weight: 500; }
+  .tl-get span { flex: none; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--c); }
+
+  .xl { position: sticky; top: 120px; }
+  .xl-steps { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
+  .xl-steps span { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-right: auto; }
+  .xl-steps button { width: 30px; height: 30px; border-radius: 8px; border: 1.5px solid var(--line); background: #fff; font: 600 13px "IBM Plex Sans", sans-serif; color: var(--ink-2); cursor: pointer; }
+  .xl-steps button.on { background: #217346; border-color: #217346; color: #fff; }
+  .xl-win { background: #fff; border: 1px solid #cfd3da; border-radius: 12px; overflow: hidden; box-shadow: 0 24px 50px rgba(16,18,58,.18); }
+  .xl-sheet[hidden] { display: none; }
+  .xl-sheet { animation: xlin .35s ease; }
+  @keyframes xlin { from { opacity: 0; transform: translateY(6px); } }
+  .xl-title { display: flex; align-items: center; gap: 10px; background: #217346; color: #fff; padding: 9px 12px; font-size: 13px; }
+  .xl-logo { width: 20px; height: 20px; border-radius: 4px; background: #fff; color: #217346; font-weight: 800; font-size: 12px; display: grid; place-items: center; }
+  .xl-file { font-weight: 600; }
+  .xl-ex { margin-left: auto; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; background: rgba(255,255,255,.18); padding: 2px 8px; border-radius: 999px; }
+  .xl-fx { display: flex; gap: 10px; align-items: center; padding: 5px 10px; border-bottom: 1px solid #e1e4e8; font-size: 12px; color: #5f6672; background: #fafbfc; }
+  .xl-fx span:first-child { font-style: italic; font-weight: 700; color: #217346; border-right: 1px solid #e1e4e8; padding-right: 10px; }
+  .xl-grid table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 13px; }
+  .xl-grid col.rn { width: 30px; }
+  .xl-grid th, .xl-grid td { border: 1px solid #e3e6ea; padding: 7px 8px; text-align: left; vertical-align: top; line-height: 1.35; color: var(--ink); }
+  .xl-grid th { background: #f3f4f6; color: #7a808b; font-weight: 500; font-size: 11px; text-align: center; }
+  .xl-grid tr.letters th { padding: 3px; }
+  .xl-grid tr.hdr td { background: #e8f3ec; font-weight: 700; color: #1a5c38; }
+  .xl-sheet:not([hidden]) tr.row { animation: xlrow .35s backwards; animation-delay: calc(var(--r) * 90ms + .15s); }
+  @keyframes xlrow { from { opacity: 0; } }
+  .cause { font-size: 11.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+  .cause.cfg { background: #fff1db; color: #b26a00; } .cause.int { background: #e9eaff; color: var(--knowledge); } .cause.ven { background: #fde8ea; color: var(--passion); }
+  .xl-grid td.res { text-align: center; }
+  .pass { display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: .06em; color: #fff; background: #1f8a4c; padding: 2px 8px; border-radius: 4px; opacity: 0; transform: scale(.6); transition: all .25s; }
+  .pass.on { opacity: 1; transform: none; }
+  .xl-tabs { display: flex; gap: 2px; padding: 0 8px; background: #f3f4f6; border-top: 1px solid #e1e4e8; overflow: hidden; }
+  .xl-tabs span { font-size: 12px; padding: 6px 12px; color: #5f6672; white-space: nowrap; }
+  .xl-tabs span.on { background: #fff; color: #217346; font-weight: 700; border-bottom: 2px solid #217346; }
+  .xl-status { padding: 5px 12px; font-size: 12px; background: #217346; color: #e6f4ea; }
+  .xl-cap { margin: 10px 2px 0; font-size: 13px; color: var(--muted); }
+  .tl-step { cursor: pointer; }
+  .promises { margin-top: 40px; background: var(--night); border-radius: 20px; padding: 34px 34px 30px; color: #fff; position: relative; overflow: hidden; }
+  .promises::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 4px; background: var(--brand); }
+  .promises h3 { margin: 0 0 22px; font-size: 14px; color: var(--experience); font-weight: 400; }
+  .promises ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+  .promises li { display: flex; flex-direction: column; gap: 12px; }
+  .pr-ic { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; color: #fff; background: var(--brand); }
+  .promises p { margin: 0; font-size: 16px; line-height: 1.45; color: #c9cbe6; }
+  .promises p b { color: #fff; font-weight: 600; }
+  @media (max-width: 1000px) {
+    .ap-grid { grid-template-columns: 1fr; }
+    .xl { position: static; max-width: 560px; }
+    .promises ul { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .tline { padding-left: 54px; }
+    .tl-node { left: -54px; width: 40px; height: 40px; }
+    .tl-rail { left: 18px; }
+    .tl-get { display: flex; flex-direction: column; gap: 4px; }
+    .promises { padding: 26px 22px; }
+    .promises ul { grid-template-columns: 1fr; }
+    .promises li { flex-direction: row; align-items: center; }
+  }
+  @media (prefers-reduced-motion: reduce) { .tl-step, .tl-node, .pass { transition: none; } .xl-sheet, .xl-sheet tr.row { animation: none !important; } }
+
+  /* about */
+  .about { display: grid; grid-template-columns: 280px 1fr; gap: 56px; align-items: start; }
+  @property --ang { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+  .photo-ring { padding: 5px; border-radius: 20px; width: max-content;
+    background: conic-gradient(from var(--ang), #f8ad40, #bc1f2d, #2f3192, #7a2470, #f8ad40); animation: spin 8s linear infinite; }
+  @keyframes spin { to { --ang: 360deg; } }
+  .photo { width: 270px; height: 330px; border-radius: 16px; object-fit: cover; object-position: 50% 30%; display: block; background: #fff; }
+  .avail { margin: 18px 0 6px; display: inline-flex; align-items: center; gap: 9px; font-size: 14px; font-weight: 600; color: #1f8a4c;
+    background: #e3f5ea; padding: 6px 14px; border-radius: 999px; }
+  .avail i { width: 9px; height: 9px; border-radius: 50%; background: #1f8a4c; box-shadow: 0 0 0 0 rgba(31,138,76,.5); animation: ping 1.8s infinite; }
+  @keyframes ping { 70% { box-shadow: 0 0 0 9px rgba(31,138,76,0); } 100% { box-shadow: 0 0 0 0 rgba(31,138,76,0); } }
+  .localtime { margin: 4px 0 0; font-size: 14px; color: var(--ink-2); }
+  .localtime span { color: var(--muted); }
+  .profile-req { margin-top: 4px; font-size: 15px; padding: 11px 20px; }
+  .hobbies { margin-top: 26px; }
+  .hb-k { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+  .hb-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .hb { display: flex; gap: 12px; align-items: flex-start; padding: 16px; border-radius: 14px; background: #fff; border: 1px solid var(--line);
+    border-top: 4px solid var(--c); transition: transform .2s, box-shadow .2s; }
+  .hb:hover { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(20,21,43,.08); }
+  .hb-ic { flex: none; width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: color-mix(in srgb, var(--c) 12%, #fff); color: var(--c); }
+  .hb svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .hb h4 { margin: 2px 0 6px; font-size: 16px; }
+  .hb-tag { display: inline-block; font-family: "Michroma", sans-serif; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--c); }
+  .hb-k .p { color: var(--passion); } .hb-k .k { color: var(--knowledge); } .hb-k .e { color: #e08a12; }
+  .hb p { margin: 0; font-size: 14px; line-height: 1.5; color: var(--ink-2); font-style: italic; }
+  @media (max-width: 1000px) { .hb-row { grid-template-columns: 1fr; } }
+
+  .journey { margin-top: 64px; }
+  .journey h3 { font-size: 14px; color: var(--passion); font-weight: 400; margin: 0 0 28px; }
+  .jr-line { margin: 0; padding: 0; position: relative; display: grid; grid-template-columns: repeat(9, 1fr); gap: 10px; }
+  .jr-rail { position: absolute; left: 0; right: 0; top: 46px; height: 4px; border-radius: 4px; background: var(--line); }
+  .jr-fill { position: absolute; inset: 0; width: 0; border-radius: 4px; background: var(--brand); transition: width 2.2s cubic-bezier(.3,.6,.2,1); }
+  .journey.in .jr-fill { width: 100%; }
+  .jr { position: relative; padding-top: 0; }
+  .jr-y { display: block; font-size: 18px; font-weight: 700; color: var(--c, var(--ink)); height: 30px; }
+  .jr-dot { position: absolute; left: 0; top: 40px; width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 3px solid var(--line); transition: all .3s; }
+  .journey.in .jr-dot { border-color: var(--c, var(--passion)); background: var(--c, var(--passion)); transition-delay: calc(var(--k) * .24s); }
+  .jr-card { margin-top: 34px; opacity: 0; transform: translateY(10px); transition: opacity .5s, transform .5s; }
+  .journey.in .jr-card { opacity: 1; transform: none; transition-delay: calc(var(--k) * .24s + .1s); }
+  .jr-card h4 { margin: 0 0 4px; font-size: 15px; line-height: 1.3; }
+  .jr-card p { margin: 0; font-size: 13px; line-height: 1.45; color: var(--ink-2); }
+  .jr-now .jr-dot { width: 18px; height: 18px; top: 39px; }
+  .journey.in .jr-now .jr-dot { animation: ping 1.8s infinite 2.2s; border-color: #1f8a4c; background: #1f8a4c; }
+  .jr-now .jr-y { color: #1f8a4c; }
+
+  .badges { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 48px; }
+  .badge { display: flex; gap: 14px; align-items: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 18px;
+    transition: transform .2s, box-shadow .2s, border-color .2s; }
+  .badge:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(20,21,43,.1); border-color: var(--c); }
+  .bd-ic { flex: none; width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; background: var(--c); }
+  .bd-ic svg { width: 24px; height: 24px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform .3s; }
+  .badge:hover .bd-ic svg { transform: rotate(-8deg) scale(1.1); }
+  .badge h4 { margin: 0 0 4px; font-size: 16px; }
+  .badge p { margin: 0; font-size: 13.5px; color: var(--ink-2); line-height: 1.45; }
+  @media (max-width: 1000px) { .badges { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 760px) {
+    .jr-line { grid-template-columns: 1fr; gap: 0; padding-left: 34px; }
+    .jr-rail { left: 6px; right: auto; top: 6px; bottom: 6px; width: 4px; height: auto; }
+    .jr-fill { width: 100% !important; height: 0; transition: height 2.2s cubic-bezier(.3,.6,.2,1); }
+    .journey.in .jr-fill { height: 100%; }
+    .jr { padding: 0 0 18px; }
+    .jr-dot { left: -34px; top: 4px; }
+    .jr-y { height: auto; font-size: 16px; }
+    .jr-card { margin-top: 2px; }
+    .jr-now .jr-dot { top: 3px; }
+    .badges { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) { .photo-ring { animation: none; } .jr-fill, .jr-card, .jr-dot { transition: none; } }
+
+  /* what's breaking */
+  .paste { display: grid; grid-template-columns: 1fr 1fr; gap: 0; background: var(--night); border-radius: 18px; overflow: hidden; box-shadow: 0 18px 44px rgba(16,18,58,.2); }
+  .ps-in { padding: 22px; border-right: 1px solid rgba(255,255,255,.08); }
+  .ps-in label { display: block; margin-bottom: 10px; }
+  .ps-k { display: block; color: var(--experience); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  .ps-note { display: block; color: #8d90b3; font-size: 13px; margin-top: 4px; }
+  .paste textarea { width: 100%; resize: vertical; background: #0b0d2a; color: #ffb0b8; border: 1px solid #2b2e5c; border-radius: 10px; padding: 12px 14px;
+    font: 13.5px/1.5 ui-monospace, "SF Mono", Menlo, monospace; outline: none; }
+  .paste textarea:focus { border-color: #9da1ff; }
+  .paste textarea::placeholder { color: #565a8f; }
+  .ps-out { padding: 22px; color: #e6e7f7; }
+  .ps-idle { color: #8d90b3; margin: 0; font-size: 15px; }
+  .ps-hit { margin-bottom: 16px; animation: hcin .3s ease; }
+  .ps-hit h4 { margin: 0 0 6px; font-size: 16px; color: #fff; display: flex; align-items: center; gap: 8px; }
+  .ps-hit h4 i { font-style: normal; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; background: var(--experience); color: var(--night); }
+  .ps-hit h4 i.maybe { background: rgba(255,255,255,.14); color: #c9cbe6; }
+  .ps-hit p { margin: 0 0 6px; font-size: 14.5px; color: #d3d5f0; }
+  .ps-hit ul { margin: 0; padding-left: 18px; font-size: 14px; color: #a9acd6; }
+  .ps-disc { font-size: 12px; color: #8d90b3; margin: 4px 0 0; }
+  .or { text-align: center; margin: 34px 0 22px; color: var(--muted); font-size: 14px; position: relative; }
+  .or::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; border-top: 1px solid #d9dbee; }
+  .or span { position: relative; background: var(--cool); padding: 0 14px; }
+  /* a soft red tint sets the 'something is broken' section apart from Services above it */
+  .alert-bg { background: linear-gradient(180deg, #ffffff 0%, #fdeff1 140px, #fbf3f4 100%); }
+  .alert-bg .or span { background: #fcf1f3; }
+  .alert-bg .or::before { border-top-color: #efd3d8; }
+
+  .triage { display: grid; grid-template-columns: 300px 1fr; gap: 28px; align-items: start; }
+  .symptoms { display: flex; flex-direction: column; gap: 10px; }
+  .sym { text-align: left; font: inherit; font-size: 16px; font-weight: 600; color: var(--ink); background: #fff;
+    border: 2px solid var(--line); border-radius: 12px; padding: 14px 16px; cursor: pointer; transition: all .15s; }
+  .sym:hover { border-color: var(--c); }
+  .sym[aria-selected="true"] { background: var(--c); border-color: var(--c); color: #fff; }
+  .diag { background: #fff; border-radius: 16px; padding: 28px 30px; border-top: 6px solid var(--c); box-shadow: 0 14px 34px rgba(20,21,43,.08); }
+  .diag h3 { margin: 0 0 6px; font-size: 24px; }
+  .diag .means { color: var(--ink-2); margin: 0 0 20px; }
+  .diag h4 { margin: 0 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--c); }
+  .fq { background: var(--cool); border-radius: 12px; padding: 16px 18px; margin-bottom: 22px; }
+  .fq p.q { margin: 0 0 10px; font-weight: 700; }
+  .fq-opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .fq-o { font: inherit; font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 999px; border: 1.5px solid #cfd2ea; background: #fff; color: var(--ink-2); cursor: pointer; }
+  .fq-o:hover { border-color: var(--c); }
+  .fq-o.on { background: var(--c); border-color: var(--c); color: #fff; }
+  .fq-res { margin: 12px 0 0; padding: 10px 12px; border-left: 4px solid var(--c); background: #fff; border-radius: 8px; font-size: 15px; animation: hcin .3s ease; }
+  .fq-res b { color: var(--c); }
+  .dn-list { list-style: none; margin: 0 0 22px; padding: 0; }
+  .dn-list li { border-top: 1px solid var(--line); }
+  .dn-list label { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; cursor: pointer; font-size: 15px; color: var(--ink-2); }
+  .dn-list input { appearance: none; flex: none; width: 20px; height: 20px; margin: 1px 0 0; border: 2px solid #c9ccdf; border-radius: 6px; cursor: pointer; display: grid; place-items: center; transition: all .15s; }
+  .dn-list input:checked { background: #1f8a4c; border-color: #1f8a4c; }
+  .dn-list input:checked::after { content: "✓"; color: #fff; font-size: 13px; font-weight: 700; }
+  .dn-list input:checked + span { color: var(--muted); text-decoration: line-through; }
+  .diag-acts { display: flex; flex-wrap: wrap; gap: 10px; }
+  .diag-acts .btn { font-size: 15px; padding: 12px 20px; }
+  .xlink { margin: 26px 0 0; font-size: 15px; color: var(--ink-2); }
+  .xlink a { font-weight: 600; }
+  @media (max-width: 860px) { .paste { grid-template-columns: 1fr; } .ps-in { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.08); } }
+
+  /* testimonials */
+  .quotes-sec { background: var(--night); color: #fff; }
+  .quotes-sec h2 { color: #fff; }
+  .quotes-sec .kicker { color: var(--experience); }
+  .quotes { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+  .quote { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 16px; padding: 34px 32px 28px; position: relative; }
+  .quote::before { content: "\201C"; position: absolute; top: -18px; left: 26px; font: 700 88px/1 Georgia, serif;
+    background: var(--brand-bright); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .quote blockquote { margin: 0 0 22px; font-size: 18px; line-height: 1.6; color: #e6e7f7; }
+  .quote .who { font-weight: 700; }
+  .quote .role { color: #a9acd6; font-size: 14px; }
+  .quote figcaption { display: flex; gap: 14px; align-items: center; }
+  .quote .hl { background: none; color: transparent; font-weight: 600; background-image: var(--brand-bright); -webkit-background-clip: text; background-clip: text; }
+  .avatar { flex: none; width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 16px; color: #fff; letter-spacing: .04em; }
+  .avatar.a-red { background: linear-gradient(135deg, #ff7a45, #bc1f2d); }
+  .avatar.a-blue { background: linear-gradient(135deg, #8f93ff, #2f3192); }
+  .li-link { margin: 26px 0 0; text-align: center; }
+  .li-link a { display: inline-flex; align-items: center; gap: 10px; color: #c9cbe6; text-decoration: none; font-weight: 600; font-size: 15px;
+    padding: 10px 18px; border: 1px solid rgba(255,255,255,.2); border-radius: 999px; transition: all .2s; }
+  .li-link a:hover { color: #fff; border-color: #fff; }
+  .industries { margin-top: 64px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,.12); text-align: center; }
+  .industries h3 { font-size: 14px; color: var(--experience); margin: 0 0 22px; font-weight: 400; }
+  .ind-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 900px; margin: 0 auto; }
+  .ind { --c: #ff6b78; padding: 9px 16px 9px 30px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14);
+    color: #e6e7f7; font-size: 15px; position: relative; transition: opacity .5s, transform .5s, border-color .2s; }
+  html.js .industries:not(.in) .ind { opacity: 0; transform: translateY(10px); }
+  .ind::before { content: ""; position: absolute; left: 13px; top: 50%; width: 8px; height: 8px; margin-top: -4px; border-radius: 50%; background: var(--c); }
+  .ind:nth-child(3n+2) { --c: #9da1ff; } .ind:nth-child(3n) { --c: var(--experience); }
+  .ind:hover { border-color: var(--c); }
+  .industries.in .ind { opacity: 1; transform: none; transition-delay: calc(var(--i) * 45ms); }
+  @media (prefers-reduced-motion: reduce) { .ind { opacity: 1; transform: none; } }
+
+  /* health check */
+  .hc { background: #fff; border-radius: 20px; box-shadow: 0 18px 44px rgba(20,21,43,.09); padding: 26px 30px 30px; }
+  .hc-top { display: flex; align-items: center; gap: 16px; }
+  .hc-prog { flex: 1; display: grid; grid-template-columns: repeat(8, 1fr); gap: 5px; }
+  .hc-prog i { height: 6px; border-radius: 4px; background: var(--line); position: relative; overflow: hidden; }
+  .hc-prog i::after { content: ""; position: absolute; inset: 0; background: var(--a); transform: scaleX(0); transform-origin: left; transition: transform .35s; }
+  .hc-prog i.done::after { transform: none; } .hc-prog i.now { outline: 2px solid var(--a); outline-offset: 1px; }
+  .hc-shuffle { font: inherit; font-size: 13px; font-weight: 600; color: var(--ink-2); background: none; border: 1.5px solid var(--line); border-radius: 999px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+  .hc-shuffle:hover { border-color: var(--ink-2); }
+  .hc-last { margin: 14px 0 0; font-size: 14px; color: var(--ink-2); background: var(--cool); border-radius: 10px; padding: 10px 14px; }
+  .hc-stage { margin-top: 22px; min-height: 230px; }
+  .hc-card { animation: hcin .35s ease; }
+  .hc-card.out { animation: hcout .2s ease forwards; }
+  @keyframes hcin { from { opacity: 0; transform: translateX(24px); } }
+  @keyframes hcout { to { opacity: 0; transform: translateX(-24px); } }
+  .hc-meta { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); }
+  .hc-area { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #fff; background: var(--a); padding: 3px 10px; border-radius: 999px; }
+  .hc-card[style*='#e08a12'] .hc-area { color: var(--ink); }
+  .hc-crit { font-size: 11px; font-weight: 700; color: var(--passion); }
+  .hc-q { font-size: 24px; line-height: 1.35; font-weight: 600; margin: 14px 0 24px; max-width: 720px; }
+  .hc-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+  .hc-b { font: inherit; font-size: 16px; font-weight: 700; padding: 13px 24px; border-radius: 12px; border: 2px solid var(--line); background: #fff; cursor: pointer; min-width: 120px; transition: all .15s; }
+  .hc-b kbd { font: 600 11px ui-monospace, Menlo, monospace; color: var(--muted); margin-left: 8px; border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; }
+  .hc-b.yes:hover, .hc-b.yes.sel { border-color: #1f8a4c; background: #1f8a4c; color: #fff; }
+  .hc-b.unsure:hover, .hc-b.unsure.sel { border-color: var(--experience); background: var(--experience); }
+  .hc-b.no:hover, .hc-b.no.sel { border-color: var(--passion); background: var(--passion); color: #fff; }
+  .hc-b:hover kbd, .hc-b.sel kbd { color: inherit; border-color: currentColor; }
+  .hc-back { margin-top: 18px; font: inherit; font-size: 14px; color: var(--muted); background: none; border: 0; cursor: pointer; padding: 0; }
+  .hc-back:hover { color: var(--ink); }
+
+  .hc-res { display: grid; grid-template-columns: 240px 1fr; gap: 34px; align-items: start; animation: hcin .4s ease; }
+  .gauge { width: 240px; }
+  .gauge svg { width: 100%; display: block; }
+  .ecg-res { margin-top: 10px; }
+  .ecg-res path { fill: none; stroke-width: 2.6; stroke-linejoin: round; stroke-linecap: round; stroke-dasharray: 520; stroke-dashoffset: 520; animation: ecgrun 2.4s linear infinite; }
+  .ecg-res.good path { stroke: #1f8a4c; } .ecg-res.mid path { stroke: #e08a12; animation-duration: 3s; } .ecg-res.low path { stroke: var(--passion); animation-duration: 4s; }
+  @keyframes ecgrun { 0% { stroke-dashoffset: 520; } 75%, 100% { stroke-dashoffset: 0; } }
+  .ecg-cap { margin: 2px 0 0; text-align: center; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .gauge .g-bg { fill: none; stroke: var(--line); stroke-width: 18; stroke-linecap: round; }
+  .gauge .g-val { fill: none; stroke: url(#gGrad); stroke-width: 18; stroke-linecap: round; transition: stroke-dashoffset 1.4s cubic-bezier(.2,.7,.2,1); }
+  .gauge .g-num { font: 700 38px "IBM Plex Sans", sans-serif; fill: var(--ink); text-anchor: middle; }
+  .gauge .g-lbl { font: 600 12px "IBM Plex Sans", sans-serif; fill: var(--muted); text-anchor: middle; letter-spacing: .08em; text-transform: uppercase; }
+  .hc-res h3 { margin: 0 0 6px; font-size: 28px; color: var(--a); }
+  .hc-res .what { margin: 0 0 18px; color: var(--ink-2); }
+  .areas { display: grid; gap: 9px; margin-bottom: 20px; }
+  .ar { display: grid; grid-template-columns: 160px 1fr 44px; align-items: center; gap: 12px; font-size: 14px; }
+  .ar .bar { height: 10px; border-radius: 999px; background: var(--line); overflow: hidden; }
+  .ar .bar span { display: block; height: 100%; width: 0; background: var(--a); border-radius: 999px; transition: width 1s ease .3s; }
+  .ar b { text-align: right; font-variant-numeric: tabular-nums; }
+  .unsure-note { font-size: 14px; background: #fff6e5; border-left: 4px solid var(--experience); border-radius: 8px; padding: 10px 14px; margin: 0 0 18px; }
+  .start h4 { margin: 0 0 10px; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .gap { display: grid; grid-template-columns: 14px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
+  .gap i { width: 10px; height: 10px; border-radius: 50%; background: var(--a); margin-top: 6px; }
+  .gap p { margin: 0; font-size: 15px; }
+  .gap p b { display: block; font-weight: 600; }
+  .gap p span { color: var(--ink-2); font-size: 14px; }
+  .gap .crit { font-size: 10px; font-weight: 700; letter-spacing: .08em; color: var(--passion); margin-left: 6px; }
+  .hc-acts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+  .hc-acts .btn { font-size: 15px; padding: 12px 20px; }
+  .btn-line { border: 1.5px solid var(--line); color: var(--ink); background: #fff; }
+  .btn-line:hover { border-color: var(--ink); }
+  @media (max-width: 760px) {
+    .hc { padding: 20px 16px 24px; }
+    .hc-top { flex-direction: column; align-items: stretch; }
+    .hc-shuffle { align-self: flex-end; }
+    .hc-q { font-size: 20px; }
+    .hc-b { flex: 1; min-width: 0; padding: 12px 8px; }
+    .hc-b kbd { display: none; }
+    .hc-res { grid-template-columns: 1fr; }
+    .gauge { margin: 0 auto; }
+    .ar { grid-template-columns: 120px 1fr 40px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .hc-card, .hc-res { animation: none; } .gauge .g-val, .ar .bar span { transition: none; } }
+
+  /* contact */
+  .contact { background: linear-gradient(120deg, #bc1f2d 0%, #7a2470 50%, #2f3192 100%); color: #fff; text-align: center; }
+  .contact h2 { color: #fff; font-size: 42px; }
+  .contact .sub { color: #f1e6f2; margin-left: auto; margin-right: auto; }
+  .btn-white { background: #fff; color: var(--passion); box-shadow: 0 10px 30px rgba(0,0,0,.2); }
+  .btn-white:hover { background: #fff6ea; }
+  .contact .line { margin-top: 28px; color: #f1e6f2; font-size: 15px; }
+  .contact .line a { color: #ffd38a; }
+  .need-k { margin: 6px 0 12px; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #ffd38a; }
+  .needs { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 30px; }
+  .need { font: inherit; font-size: 15px; font-weight: 600; color: #fff; background: rgba(255,255,255,.1); border: 1.5px solid rgba(255,255,255,.3);
+    border-radius: 999px; padding: 8px 16px; cursor: pointer; transition: all .15s; }
+  .need:hover { border-color: #fff; }
+  .need.on { background: #fff; color: var(--passion); border-color: #fff; }
+  .reach-out { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 860px; margin: 0 auto; }
+  .ro { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 22px 16px; border-radius: 16px; text-decoration: none; color: #fff;
+    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22); transition: transform .2s, background .2s; }
+  .ro:hover { transform: translateY(-3px); background: rgba(255,255,255,.18); }
+  .ro:first-child { background: #fff; color: var(--passion); border-color: #fff; box-shadow: 0 14px 34px rgba(0,0,0,.2); }
+  .ro:first-child span:not(.ro-ic) { color: var(--ink-2); }
+  .ro-ic { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: rgba(255,255,255,.16); margin-bottom: 6px; }
+  .ro:first-child .ro-ic { background: #fde8ea; }
+  .ro-ic svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .ro b { font-size: 17px; }
+  .ro span:not(.ro-ic) { font-size: 13.5px; color: #f1e6f2; }
+  .assure { margin: 28px 0 0; font-size: 14.5px; color: #f1e6f2; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px 8px; }
+  .assure > span { display: inline-flex; align-items: center; gap: 6px; }
+  .assure .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #6ee7b0; animation: ping 1.8s infinite; box-shadow: 0 0 0 0 rgba(110,231,176,.6); }
+  .assure .sep { opacity: .5; }
+  @media (max-width: 760px) { .reach-out { grid-template-columns: 1fr; } .assure .sep { display: none; } .assure { flex-direction: column; } }
+
+  footer { background: #0b0c24; color: #8d90b3; font-size: 13px; padding: 36px 0; }
+  footer .wrap { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px; }
+  footer img { height: 54px; display: block; margin-bottom: 12px; }
+  footer .legal { text-align: right; line-height: 1.6; }
+  footer a { color: #c9cbe6; }
+  .privacy { margin-top: 18px; width: 100%; border-top: 1px solid rgba(255,255,255,.08); padding-top: 14px; }
+  .privacy summary { cursor: pointer; color: #c9cbe6; font-weight: 600; width: max-content; }
+  .privacy p { max-width: 760px; margin: 8px 0 0; color: #a9acd6; }
+  @media (max-width: 760px) { footer .legal { text-align: left; } }
+
+  @media (max-width: 860px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .pillars { grid-template-columns: 1fr; }
+    .pillar:first-child { border-radius: 20px 20px 0 0; } .pillar:last-child { border-radius: 0 0 20px 20px; }
+    .pillar { padding: 32px 24px; }
+    .pillars-wrap { margin-top: -48px; }
+  }
+  @media (max-width: 760px) {
+    header.nav .wrap { height: 68px; }
+    .brand img { height: 38px; }
+    nav a:not(.btn-sm) { display: none; }
+    nav a.btn-sm { white-space: nowrap; padding: 8px 14px; font-size: 14px; margin-left: 12px; }
+    .tagline { letter-spacing: .05em; gap: 6px 8px; }
+    .tw::after { width: 5px; height: 5px; margin-left: 5px; }
+    .tw-pop { width: auto; right: 0; }
+    .hero { padding: 64px 0; }
+    .hero h1 { font-size: 36px; }
+    .hero p.lede { font-size: 18px; }
+    .tagline { font-size: 10.5px; }
+    .btn-ghost { margin: 12px 0 0; }
+    .about { grid-template-columns: 1fr; }
+    .me { display: flex; flex-direction: column; align-items: flex-start; }
+    .triage { grid-template-columns: 1fr; }
+    .symptoms { flex-direction: row; flex-wrap: wrap; }
+    .sym { font-size: 14px; padding: 10px 12px; }
+    .diag { padding: 24px 20px; }
+    .q { grid-template-columns: 30px 1fr; padding: 14px 16px; }
+    .opts { grid-column: 2; }
+    .quiz-foot, .result { padding-left: 16px; padding-right: 16px; }
+    section { padding: 64px 0; }
+    h2 { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="hdr-pulse" aria-hidden="true"><svg viewBox="0 0 120 18"><path d="M0 13 H38 L44 13 L48 4 L54 17 L59 1 L64 15 L68 13 H120"/></svg></div>
+  <div class="wrap">
+    <a class="brand" href="#"><img src="{{LOGO}}" alt="IntSys Guru · Passion | Knowledge | Experience"></a>
+    <nav>
+      <a href="#services">Services</a>
+      <a href="#work">Work</a>
+      <a href="#approach">Approach</a>
+      <a href="#about">About</a>
+      <a href="#pulse-check" class="nav-pulse"><svg viewBox="0 0 26 12" aria-hidden="true"><path d="M0 7h7l2-5 3 9 2-7 2 3h10"/></svg>Pulse check</a>
+      <a class="btn-sm" href="https://fantastical.app/bharatrathaur" target="_blank" rel="noopener">Book a call</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid"><div class="hero-copy">
+    <div class="tagline wide" id="tagline">
+      <button type="button" class="tw p" data-k="passion" aria-expanded="false">Passion</button><span class="bar">|</span>
+      <button type="button" class="tw k" data-k="knowledge" aria-expanded="false">Knowledge</button><span class="bar">|</span>
+      <button type="button" class="tw e" data-k="experience" aria-expanded="false">Experience</button>
+
+      <div class="tw-pop passion" data-k="passion" role="dialog" aria-label="Passion">
+        <svg class="ecg" viewBox="0 0 320 70" aria-hidden="true">
+          <path class="ecg-bg" d="M0 40 H320"/>
+          <path class="ecg-line" d="M0 40 H60 L70 40 L78 18 L88 62 L98 6 L108 52 L116 40 H180 L190 40 L198 22 L206 56 L214 40 H320"/>
+        </svg>
+        <div class="runs"><span>Mon ✓</span><span>Tue ✓</span><span>Wed ✓</span><span>Thu ✓</span><span>Fri ✓</span></div>
+        <p>Every run is a heartbeat. A missed one means someone's pay, benefits or 401(k) is wrong, so I don't stop at a workaround.</p>
+      </div>
+
+      <div class="tw-pop knowledge" data-k="knowledge" role="dialog" aria-label="Knowledge">
+        <div class="term">
+          <div class="term-bar"><i></i><i></i><i></i><span>worker_to_vendor.xsl</span></div>
+          <code class="ln" style="--n:33;--d:0s">&lt;xsl:template match="wd:Worker"&gt;</code>
+          <code class="ln" style="--n:34;--d:.9s">  &lt;Record id="{wd:Employee_ID}"&gt;</code>
+          <code class="ln" style="--n:35;--d:1.8s">    &lt;Plan&gt;{wd:Benefit_Plan}&lt;/Plan&gt;</code>
+          <code class="ln" style="--n:17;--d:2.7s">&lt;/xsl:template&gt;<b class="caret"></b></code>
+        </div>
+        <p>Studio, EIB, XSLT, PECI and 834 files. I know the tools down to the line of code.</p>
+      </div>
+
+      <div class="tw-pop experience" data-k="experience" role="dialog" aria-label="Experience">
+        <div class="years"><b class="yr">2010</b><span>Workday Release 11 (2010) to today</span></div>
+        <div class="tl">
+          <div class="tl-line"></div>
+          <div class="ms" style="--x:0%;--d:.2s"><i></i><span>2010<br>Release 11</span></div>
+          <div class="ms" style="--x:31%;--d:.6s"><i></i><span>2015<br>Sanofi</span></div>
+          <div class="ms" style="--x:62.5%;--d:1s"><i></i><span>2020<br>IntSysGuru</span></div>
+          <div class="ms" style="--x:100%;--d:1.4s"><i></i><span>2026<br>Today</span></div>
+        </div>
+        <p>16 years of Workday integrations. I've seen most failures before, so fixes come faster.</p>
+      </div>
+    </div>
+    <h1>Workday integrations, <span class="grad">built fast and built right.</span></h1>
+    <p class="lede">16 years building, fixing and supporting Workday integrations. Studio, EIB, Cloud Connect, PECI and PICOF. I help Workday customers spend less time and money keeping their integrations running.</p>
+    <a class="btn btn-primary" href="https://fantastical.app/bharatrathaur" target="_blank" rel="noopener">Book a 30-minute call</a>
+    <a class="btn btn-ghost" href="mailto:bharat@intsys.guru">bharat@intsys.guru</a>
+    </div>
+    <div class="hero-map">
+      <svg class="net net-hero" viewBox="0 0 700 560" role="img" aria-label="Live map of data flowing between Workday and the systems around it"></svg>
+      <p class="hero-map-cap">Live: data flowing between Workday and the systems around it. Click a hub to explore.</p>
+    </div></div>
+    <div class="stats">
+      <div class="stat s1"><b>16 yrs</b><span>in Workday integrations</span></div>
+      <div class="stat s2"><b>20+</b><span>Workday customers since 2020</span></div>
+      <div class="stat s3"><b>56</b><span>countries of payroll integrated</span></div>
+      <div class="stat s4"><b>150</b><span>production integrations supported at one client</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap pillars-wrap">
+<div class="pillars">
+  <div class="pillar passion">
+    <p class="wide">Passion</p>
+    <h3>Every record is someone's paycheck.</h3>
+    <p>Pay, benefits, retirement. I treat each integration that way, and I don't stop at a workaround.</p>
+  </div>
+  <div class="pillar knowledge">
+    <p class="wide">Knowledge</p>
+    <h3>Deep in the Workday toolset.</h3>
+    <p>Studio, EIB, Cloud Connect, PECI, PICOF, BIRT, SOAP and REST. Former Workday Partner Product Lead for Studio and Cloud Connect for Benefits.</p>
+  </div>
+  <div class="pillar experience">
+    <p class="wide">Experience</p>
+    <h3>Since Workday Release 11 (2010).</h3>
+    <p>16 years in Workday and 30+ in enterprise software. 20+ Workday customers, payroll for 56 countries, and teams of 100+ integrations delivered.</p>
+  </div>
+</div>
+</div>
+
+<section id="services">
+  <div class="wrap">
+    <p class="kicker wide">Services</p>
+    <h2>What I do</h2>
+    <p class="sub">Four ways to work together. Most clients start with one problem and stay for support.</p>
+    <div class="grid">
+      <div class="card svc c-red">
+        <div class="svc-art art-build" aria-hidden="true">
+          <svg viewBox="0 0 240 96"><path class="ab-line" d="M62 48 C110 18 130 78 178 48"/>
+            <circle class="ab-wd" cx="40" cy="48" r="22"/><text x="40" y="52" class="ab-t">WD</text>
+            <rect class="ab-v" x="178" y="28" width="50" height="40" rx="8"/><text x="203" y="52" class="ab-t">Vendor</text><circle class="ab-dot" r="4" opacity="0"><animateMotion dur="2.2s" repeatCount="indefinite" begin="indefinite" path="M62 48 C110 18 130 78 178 48"/><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.9;1" dur="2.2s" repeatCount="indefinite" begin="indefinite"/></circle><circle class="ab-dot" r="4" opacity="0"><animateMotion dur="2.2s" repeatCount="indefinite" begin="indefinite" path="M62 48 C110 18 130 78 178 48"/><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.9;1" dur="2.2s" repeatCount="indefinite" begin="indefinite"/></circle><circle class="ab-dot" r="4" opacity="0"><animateMotion dur="2.2s" repeatCount="indefinite" begin="indefinite" path="M62 48 C110 18 130 78 178 48"/><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.9;1" dur="2.2s" repeatCount="indefinite" begin="indefinite"/></circle></svg>
+        </div>
+        <span class="tag">Build</span>
+        <h3>New integrations</h3>
+        <p>Designed, built, tested and handed over with a design document.</p>
+        <p class="best"><b>Best for</b> a new vendor, a new country, or a new process.</p>
+        <ul>
+          <li>Workday Studio, including boomerangs</li>
+          <li>EIB and Document Transformation</li>
+          <li>Cloud Connect for Benefits, HCM, Payroll</li>
+          <li>Payroll Interface: PECI, PICOF, GPC</li>
+          <li>BIRT statements and documents</li>
+          <li>SSO / SAML</li>
+        </ul>
+        <div class="svc-links"><a href="#work" data-filter="global">See examples →</a></div>
+      </div>
+      <div class="card svc c-blue">
+        <div class="svc-art art-fix" aria-hidden="true">
+          <code class="af-err"><span>&gt; ERROR rejected: missing ID</span></code>
+          <span class="af-ok">✓ Resolved</span>
+        </div>
+        <span class="tag">Fix</span>
+        <h3>Failing integrations</h3>
+        <p>Runs that fail, finish with warnings, or send data the vendor rejects.</p>
+        <p class="best"><b>Best for</b> a run that fails, warns, or gets rejected.</p>
+        <ul>
+          <li>Root cause from the live build, not guesswork</li>
+          <li>Vendor rejection and error files explained</li>
+          <li>Fix tested before it touches production</li>
+        </ul>
+        <div class="svc-links"><a href="#work" data-filter="rescue">See examples →</a><a href="#breaking">What's breaking? →</a></div>
+      </div>
+      <div class="card svc c-gold">
+        <div class="svc-art art-assess" aria-hidden="true">
+          <ul><li><span>Benefits feed</span><b class="ok">OK</b></li><li><span>Payroll feed</span><b class="risk">At risk</b></li>
+          <li><span>401(k) feed</span><b class="ok">OK</b></li><li><span>Time feed</span><b class="risk">At risk</b></li></ul>
+          <i class="aa-scan"></i>
+        </div>
+        <span class="tag">Assess</span>
+        <h3>Impact analysis</h3>
+        <p>Know what breaks before it breaks.</p>
+        <p class="best"><b>Best for</b> a Workday release, a merger, or a tenant move.</p>
+        <ul>
+          <li>Twice-yearly Workday release impact</li>
+          <li>Tenant move to public cloud</li>
+          <li>New companies, locations, mergers</li>
+          <li>Integration inventory and field-level catalog</li>
+        </ul>
+        <div class="svc-links"><a href="#work" data-filter="rescue">See examples →</a></div>
+      </div>
+      <div class="card svc c-plum">
+        <div class="svc-art art-support" aria-hidden="true">
+          <svg viewBox="0 0 240 40"><path class="as-ecg" d="M0 22 H70 L78 22 L84 8 L92 34 L100 4 L108 28 L114 22 H170 L178 22 L184 12 L190 30 L196 22 H240"/></svg>
+          <div class="as-runs"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span></div>
+        </div>
+        <span class="tag">Support</span>
+        <h3>Ongoing support</h3>
+        <p>A set block of hours each month for the integrations you already run.</p>
+        <p class="best"><b>Best for</b> teams without an integration specialist on staff.</p>
+        <ul>
+          <li>Post go-live and hypercare</li>
+          <li>Open Enrollment readiness</li>
+          <li>Vendor file changes and new fields</li>
+          <li>Documentation your team can keep</li>
+        </ul>
+        <div class="svc-links"><a href="#work" data-filter="boomerang">See examples →</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="breaking" class="alert-bg">
+  <div class="wrap">
+    <p class="kicker wide">What's breaking?</p>
+    <h2>Something broken right now? Start here.</h2>
+    <p class="sub">Paste the error, or pick what you're seeing. You'll get the likely cause and what to check first.</p>
+
+    <div class="paste">
+      <div class="ps-in">
+        <label for="ps-text"><span class="ps-k">Paste your error</span><span class="ps-note">Runs in your browser; nothing is sent. Don't paste names, employee IDs or SSNs.</span></label>
+        <textarea id="ps-text" rows="4" spellcheck="false" placeholder="e.g. Validation error: Required field 'Plan ID' cannot be blank"></textarea>
+      </div>
+      <div class="ps-out" aria-live="polite"><p class="ps-idle">The likely cause shows here as you paste.</p></div>
+    </div>
+
+    <p class="or"><span>or pick what you're seeing</span></p>
+    <div class="triage">
+      <div class="symptoms" role="tablist" aria-label="Symptoms"></div>
+      <div class="diag" role="tabpanel" aria-live="polite"></div>
+    </div>
+    <p class="xlink">Nothing on fire? <a href="#pulse-check">Take the Integration Pulse Check →</a></p>
+  </div>
+</section>
+
+<section class="warm" id="connections">
+  <div class="wrap">
+    <p class="kicker wide">Connections</p>
+    <h2>Connected to the systems your people depend on</h2>
+    <p class="sub">From global payroll to the smallest benefits carrier. Wherever a wrong record means a wrong paycheck or a missed deduction.</p>
+    <div class="netwrap">
+      <div class="netmap"><svg class="net" viewBox="0 0 700 560" role="img" aria-label="Map of Workday integrations: outbound, inbound, web service and boomerang flows"></svg></div>
+      <aside class="netpanel" aria-live="polite"></aside>
+    </div>
+    <div class="legend">
+      <span><i class="lg out"></i>Outbound from Workday</span>
+      <span><i class="lg in"></i>Inbound to Workday</span>
+      <span><i class="lg ws"></i>Vendor pulls via web service</span>
+      <span><i class="lg boom"></i>Boomerang (Workday to Workday)</span>
+    </div>
+    <div class="marquee" aria-hidden="true"></div>
+    <div class="vgroups">
+      <div class="vgroup c-red" data-short="Retirement" data-out="Census, deferrals and loan data" data-in="Savings elections and loans back into Workday" data-ws="">
+        <h4>Retirement &amp; savings</h4>
+        <div class="chips">
+          <span class="chip">Vanguard</span><span class="chip">Schwab</span><span class="chip">Fidelity</span><span class="chip">TIAA</span>
+          <span class="chip">Empower</span><span class="chip">John Hancock</span><span class="chip">Ascensus</span><span class="chip">Relius</span><span class="chip">Merrill Lynch</span><span class="chip">MassMutual</span>
+          <span class="chip">Towers Watson</span><span class="chip">Mercer</span><span class="chip">Smith Barney</span><span class="chip">EASi</span>
+        </div>
+      </div>
+      <div class="vgroup c-blue" data-short="Insurance" data-out="834 enrollment files, EOI, life and disability data" data-in="" data-ws="">
+        <h4>Medical, dental, vision &amp; insurance</h4>
+        <div class="chips">
+          <span class="chip">Aetna</span><span class="chip">Cigna</span><span class="chip">Kaiser Permanente</span><span class="chip">Express Scripts</span>
+          <span class="chip">VSP</span><span class="chip">Guardian</span><span class="chip">Sun Life</span><span class="chip">Unum</span><span class="chip">Voya</span><span class="chip">Strickland</span>
+          <span class="chip">Anthem</span><span class="chip">UnitedHealthcare</span><span class="chip">MetLife</span><span class="chip">Delta Dental</span><span class="chip">Humana</span><span class="chip">Regence BlueShield</span><span class="chip">Superior Vision</span><span class="chip">Medco</span><span class="chip">Reliance Standard</span>
+        </div>
+      </div>
+      <div class="vgroup c-gold" data-short="Benefits admin" data-out="Eligibility, contributions and COBRA events" data-in="Commuter and fitness deductions back into Workday" data-ws="">
+        <h4>Benefits admin, FSA, HSA &amp; COBRA</h4>
+        <div class="chips">
+          <span class="chip">WageWorks</span><span class="chip">HealthEquity</span><span class="chip">WEX</span><span class="chip">Navia</span><span class="chip">Forma</span>
+          <span class="chip">PlanSource</span><span class="chip">bswift</span><span class="chip">Sequoia</span><span class="chip">ADP ACA</span><span class="chip">Bright Horizons</span><span class="chip">PeakOne</span>
+          <span class="chip">Conexis</span><span class="chip">ClearBenefits</span><span class="chip">Benefit Resource</span><span class="chip">TransitCenter</span><span class="chip">Crosby</span><span class="chip">EmployEase</span>
+        </div>
+      </div>
+      <div class="vgroup c-plum" data-short="Payroll &amp; time" data-out="PECI and PICOF payroll changes, GL" data-in="Pay rates, time off and leave" data-ws="">
+        <h4>Payroll, time &amp; leave</h4>
+        <div class="chips">
+          <span class="chip">ADP Workforce Now</span><span class="chip">ADP GlobalView</span><span class="chip">Dayforce</span><span class="chip">SAP</span>
+          <span class="chip">activPayroll</span><span class="chip">Lawson</span><span class="chip">Sage (UK)</span><span class="chip">DATEV (Germany)</span><span class="chip">eBlox (Belgium)</span><span class="chip">Exactus (Costa Rica)</span><span class="chip">Kronos (Lithuania)</span><span class="chip">UKG</span><span class="chip">Palm Virtual Roster</span><span class="chip">Sparrow</span>
+          <span class="chip">Kronos</span><span class="chip">ADP PayForce</span><span class="chip">ADP Tax</span><span class="chip">Ceridian</span><span class="chip">PeopleSoft Payroll</span>
+        </div>
+      </div>
+      <div class="vgroup c-gold" data-short="Recruiting" data-out="Verification and profile exports" data-in="New hires from the applicant tracking system" data-ws="">
+        <h4>Recruiting &amp; onboarding</h4>
+        <div class="chips">
+          <span class="chip">Greenhouse</span><span class="chip">Taleo</span><span class="chip">Enboarder</span><span class="chip">IQN</span>
+          <span class="chip">E-Verify</span><span class="chip">LinkedIn</span>
+          <span class="chip">Jobvite</span><span class="chip">Virtual Edge</span><span class="chip">viRecruit</span><span class="chip">TALX</span>
+        </div>
+      </div>
+      <div class="vgroup c-plum" data-short="Identity &amp; finance" data-out="Positive Pay, expense and travel profiles" data-in="Active Directory updates" data-ws="Systems like OpenAir pull worker data through Workday web services">
+        <h4>Identity, finance &amp; travel</h4>
+        <div class="chips">
+          <span class="chip">Okta</span><span class="chip">Active Directory</span><span class="chip">SAP GL</span><span class="chip">OpenAir</span>
+          <span class="chip">PNC Positive Pay</span><span class="chip">Navan</span><span class="chip">TravelBank</span><span class="chip">Expensify</span><span class="chip">Lyft</span>
+          <span class="chip">Wells Fargo</span><span class="chip">JPMorgan</span><span class="chip">BNY Mellon</span><span class="chip">American Express</span><span class="chip">Salesforce</span><span class="chip">Dynamics GP</span><span class="chip">Elite</span><span class="chip">CyberShift</span><span class="chip">LDAP</span>
+        </div>
+      </div>
+      <div class="vgroup c-red" data-short="Wellbeing" data-out="Eligibility and employee data" data-in="" data-ws="">
+        <h4>Wellbeing, engagement &amp; compliance</h4>
+        <div class="chips">
+          <span class="chip">Spring Health</span><span class="chip">Modern Health</span><span class="chip">Maven</span><span class="chip">Culture Amp</span><span class="chip">Ethena</span><span class="chip">Coda</span><span class="chip">SnapLogic</span>
+          <span class="chip">Cornerstone</span><span class="chip">Maritz</span><span class="chip">EEO-1</span>
+        </div>
+      </div>
+    </div>
+      <div class="formats-strip">
+        <div class="fm-demo" aria-hidden="true">
+          <div class="fm-bar"><i></i><i></i><i></i><span class="fm-file">worker.xml</span><span class="fm-k">One record, many formats</span></div>
+          <pre class="fm-code"></pre>
+          <div class="fm-tabs"></div>
+        </div>
+        <div class="fm-groups">
+          <h4>Formats &amp; protocols</h4>
+          <div class="fm-g"><p>Files &amp; standards</p><div class="chips">
+            <span class="chip" data-fm="834">ANSI X12 834</span><span class="chip">PECI</span><span class="chip">PICOF</span><span class="chip">GPC</span>
+            <span class="chip">NACHA / ACH</span><span class="chip">BAI2</span><span class="chip">Canada T4</span><span class="chip" data-fm="fixed">Fixed-width</span>
+            <span class="chip" data-fm="csv">CSV &amp; Excel</span><span class="chip" data-fm="xml">XML / XSLT</span><span class="chip" data-fm="json">JSON</span><span class="chip">BIRT PDF</span>
+          </div></div>
+          <div class="fm-row">
+            <div class="fm-g"><p>Transport</p><div class="chips"><span class="chip">SFTP</span><span class="chip">SOAP</span><span class="chip">REST</span></div></div>
+            <div class="fm-g"><p>Security</p><div class="chips"><span class="chip">PGP</span><span class="chip">SAML SSO</span></div></div>
+          </div>
+        </div>
+      </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <p class="kicker wide">Results</p>
+    <h2>Selected work</h2>
+    <p class="sub">Problems I've been handed, and how they ended. Client names left out on purpose.</p>
+    <div class="tk-bar">
+      <div class="tk-filters" role="group" aria-label="Filter stories">
+        <button type="button" class="tk-f on" data-f="all" aria-pressed="true">All</button>
+        <button type="button" class="tk-f" data-f="payroll" aria-pressed="false">Payroll</button>
+        <button type="button" class="tk-f" data-f="benefits" aria-pressed="false">Benefits &amp; retirement</button>
+        <button type="button" class="tk-f" data-f="boomerang" aria-pressed="false">Boomerang</button>
+        <button type="button" class="tk-f" data-f="global" aria-pressed="false">Global</button>
+        <button type="button" class="tk-f" data-f="rescue" aria-pressed="false">Rescue &amp; support</button>
+      </div>
+      <div class="tk-nav">
+        <button type="button" class="tk-arrow prev" aria-label="Previous stories">←</button>
+        <button type="button" class="tk-arrow next" aria-label="Next stories">→</button>
+      </div>
+    </div>
+  </div>
+  <div class="tk-stage" tabindex="0" aria-label="Selected work stories, use arrow keys to turn"><div class="tk-ring">
+        <article class="ticket c-red" data-tags="global payroll">
+          <div class="tk-top"><span class="tk-area">Global</span><span class="tk-status open" data-start="Open">Open</span></div>
+          <code class="tk-err">&gt; need: payroll feeds for 56 countries</code>
+          <h3>Payroll for 56 countries</h3>
+          <div class="tk-fix">
+            <span class="label">What I did</span>
+            <p>Led the integration team through a phased build on Workday&#x27;s Payroll Interface (PICOF), alongside 100+ other integrations.</p>
+            <p class="tk-result">✓ 100+ integrations delivered in phases</p>
+          </div>
+        </article>
+        <article class="ticket c-blue" data-tags="global payroll">
+          <div class="tk-top"><span class="tk-area">Global</span><span class="tk-status open" data-start="Open">Open</span></div>
+          <code class="tk-err">&gt; uk payslips arrive by post</code>
+          <h3>Payslips in Workday, not the post</h3>
+          <div class="tk-fix">
+            <span class="label">What I did</span>
+            <p>Built a payslip import that loads each PDF payslip into Workday.</p>
+            <p class="tk-result">✓ Employees see payslips in Workday</p>
+          </div>
+        </article>
+        <article class="ticket c-plum" data-tags="benefits rescue">
+          <div class="tk-top"><span class="tk-area">Benefits</span><span class="tk-status failed" data-start="Failed">Failed</span></div>
+          <code class="tk-err">&gt; rehire_date is in the future</code>
+          <h3>Wrong dates at the 401(k) provider</h3>
+          <div class="tk-fix">
+            <span class="label">What I did</span>
+            <p>Traced the record through the live integration to the root cause.</p>
+            <p class="tk-result">✓ Root cause found and fix agreed</p>
+          </div>
+        </article>
+        <article class="ticket c-gold" data-tags="benefits">
+          <div class="tk-top"><span class="tk-area">Benefits</span><span class="tk-status open" data-start="Open">Open</span></div>
+          <code class="tk-err">&gt; need: census out, savings data back</code>
+          <h3>Two-way retirement feeds</h3>
+          <div class="tk-fix">
+            <span class="label">What I did</span>
+            <p>Built bi-directional integrations with Schwab for retirement savings.</p>
+            <p class="tk-result">✓ Data flows both ways</p>
+          </div>
+        </article>
+        <article class="ticket c-blue" data-tags="payroll global">
+          <div class="tk-top"><span class="tk-area">Payroll</span><span class="tk-status open" data-start="Open">Open</span></div>
+          <code class="tk-err">&gt; need: timekeeping for US and Canada</code>
+          <h3>One timekeeping design, two countries</h3>
+          <div class="tk-fix">
+            <span class="label">What I did</span>
+            <p>Architected and built the integrations with UKG Timekeeping for US and Canadian team members.</p>
+            <p class="tk-result">✓ Both countries live</p>
+          </div>
+        </article>
+        <article class="ticket c-red" data-tags="benefits rescue">
+          <div class="tk-top"><span class="tk-area">Benefits</span><span class="tk-status failed" data-start="Failed">Failed</span></div>
+          <code class="tk-err">&gt; live carrier feed with known defects</code>
+          <h3>A benefits feed with bugs in production</h3>
+          <div class="tk-fix">
+            <span class="label">What I did</span>
+            <p>Found and fixed the defects in the live Sun Life integration.</p>
+            <p class="tk-result">✓ Fixed in production</p>
+          </div>
+        </article>
+        <article class="ticket c-plum" data-tags="payroll global">
+          <div class="tk-top"><span class="tk-area">Payroll</span><span class="tk-status open" data-start="Open">Open</span></div>
+          <code class="tk-err">&gt; merger: two companies, one payroll</code>
+          <h3>Payroll through a merger</h3>
+          <div class="tk-fix">
+            <span class="label">What I did</span>
+            <p>Supported the Dayforce payroll integration through a multi-company merger and migrated worker data into Workday.</p>
+            <p class="tk-result">✓ Worker data in one Workday</p>
+          </div>
+        </article>
+        <article class="ticket c-gold" data-tags="payroll global">
+          <div class="tk-top"><span class="tk-area">Payroll</span><span class="tk-status open" data-start="Open">Open</span></div>
+          <code class="tk-err">&gt; need: ACH + ADP tax for Canada</code>
+          <h3>Launching payroll in Canada</h3>
+          <div class="tk-fix">
+            <span class="label">What I did</span>
+            <p>Designed and built ACH and ADP tax integrations that run on their own after payroll settlement and deliver to SFTP.</p>
+            <p class="tk-result">✓ Hands-off after settlement</p>
+          </div>
+        </article>
+        <article class="ticket c-blue" data-tags="benefits">
+          <div class="tk-top"><span class="tk-area">Benefits</span><span class="tk-status open" data-start="Open">Open</span></div>
+          <code class="tk-err">&gt; 834 template deprecated</code>
+          <h3>Off a retired benefits template</h3>
+          <div class="tk-fix">
+            <span class="label">What I did</span>
+            <p>Moved benefit integrations from a deprecated template to the generic ANSI X12 834 template.</p>
+            <p class="tk-result">✓ On the supported template</p>
+          </div>
+        </article>
+        <article class="ticket c-red" data-tags="boomerang">
+          <div class="tk-top"><span class="tk-area">Boomerang</span><span class="tk-status open" data-start="Open">Open</span></div>
+          <code class="tk-err">&gt; need: statements for every worker</code>
+          <h3>Statements in every worker&#x27;s file</h3>
+          <div class="tk-fix">
+            <span class="label">What I did</span>
+            <p>A Studio integration calls BIRT to build bonus, stock and merit statements and loads each one to the worker&#x27;s documents.</p>
+            <p class="tk-result">✓ No manual uploads</p>
+          </div>
+        </article>
+        <article class="ticket c-plum" data-tags="boomerang">
+          <div class="tk-top"><span class="tk-area">Boomerang</span><span class="tk-status open" data-start="Open">Open</span></div>
+          <code class="tk-err">&gt; timecards start empty every week</code>
+          <h3>Next week&#x27;s timecards, pre-filled</h3>
+          <div class="tk-fix">
+            <span class="label">What I did</span>
+            <p>A boomerang integration pre-populates next week&#x27;s timecards from Workday data.</p>
+            <p class="tk-result">✓ Less time entry for employees</p>
+          </div>
+        </article>
+        <article class="ticket c-gold" data-tags="boomerang">
+          <div class="tk-top"><span class="tk-area">Boomerang</span><span class="tk-status open" data-start="Open">Open</span></div>
+          <code class="tk-err">&gt; new hires keyed in twice</code>
+          <h3>Hires straight from recruiting</h3>
+          <div class="tk-fix">
+            <span class="label">What I did</span>
+            <p>Built integrations, from discovery to deploy, that create hires in Workday from Greenhouse and Enboarder.</p>
+            <p class="tk-result">✓ No re-keying of new hires</p>
+          </div>
+        </article>
+        <article class="ticket c-blue" data-tags="payroll">
+          <div class="tk-top"><span class="tk-area">Payroll</span><span class="tk-status open" data-start="Open">Open</span></div>
+          <code class="tk-err">&gt; need: payment file for the bank</code>
+          <h3>Positive Pay with the bank</h3>
+          <div class="tk-fix">
+            <span class="label">What I did</span>
+            <p>Built the Positive Pay integration with PNC.</p>
+            <p class="tk-result">✓ Payments checked by the bank</p>
+          </div>
+        </article>
+        <article class="ticket c-blue" data-tags="global rescue">
+          <div class="tk-top"><span class="tk-area">Global</span><span class="tk-status open" data-start="Open">Open</span></div>
+          <code class="tk-err">&gt; need: one hub for 70 downstream systems</code>
+          <h3>One feed for 70 systems</h3>
+          <div class="tk-fix">
+            <span class="label">What I did</span>
+            <p>Led the team that fed a central data hub from Workday, which in turn feeds 70 downstream systems, plus payroll interfaces for the UK, Germany and Belgium.</p>
+            <p class="tk-result">✓ One source, 70 systems</p>
+          </div>
+        </article>
+        <article class="ticket c-gold" data-tags="global">
+          <div class="tk-top"><span class="tk-area">Global</span><span class="tk-status open" data-start="Open">Open</span></div>
+          <code class="tk-err">&gt; need: 50+ integrations for a pilot</code>
+          <h3>A healthcare pilot, fully connected</h3>
+          <div class="tk-fix">
+            <span class="label">What I did</span>
+            <p>Led the consultants delivering 50+ integrations for a healthcare Phase 1 pilot: Lawson payroll, benefits, several SSO providers and E-Verify.</p>
+            <p class="tk-result">✓ 50+ integrations live</p>
+          </div>
+        </article>
+        <article class="ticket c-red" data-tags="rescue">
+          <div class="tk-top"><span class="tk-area">Support</span><span class="tk-status open" data-start="Open">Open</span></div>
+          <code class="tk-err">&gt; 150 integrations in production</code>
+          <h3>Steady hands on a big estate</h3>
+          <div class="tk-fix">
+            <span class="label">What I did</span>
+            <p>Troubleshot production issues, ran release impact analysis twice a year, and put Studio builds under version control.</p>
+            <p class="tk-result">✓ Issues resolved, releases covered</p>
+          </div>
+        </article>
+        <article class="ticket c-plum" data-tags="rescue">
+          <div class="tk-top"><span class="tk-area">Support</span><span class="tk-status open" data-start="Open">Open</span></div>
+          <code class="tk-err">&gt; workday release twice a year</code>
+          <h3>Release testing that went global</h3>
+          <div class="tk-fix">
+            <span class="label">What I did</span>
+            <p>Set up a Workday release-testing process with impact analysis across all integrations.</p>
+            <p class="tk-result">✓ Adopted globally</p>
+          </div>
+        </article>
+  </div></div>
+  <div class="tk-dots" role="group" aria-label="Choose a story"></div>
+</section>
+
+<section class="quotes-sec">
+  <div class="wrap">
+    <p class="kicker wide">In their words</p>
+    <h2>What people I've worked with say</h2>
+    <p class="sub" style="color:#b7badc">From recommendations on LinkedIn.</p>
+    <div class="quotes">
+      <figure class="quote" style="margin:0">
+        <blockquote>Bharat consistently demonstrated <mark class="hl">deep technical expertise, efficiency, and reliability.</mark> What truly sets Bharat apart is his ability to navigate complex challenges with a <mark class="hl">solution-oriented mindset</mark> &hellip; always delivering on time, communicating transparently, and ensuring smooth execution.</blockquote>
+        <figcaption><span class="avatar a-red" aria-hidden="true">PM</span><div><div class="who">Prisco Morelos</div><div class="role">Global People Solutions Leader · managed Bharat on a Workday and Greenhouse integration project</div></div></figcaption>
+      </figure>
+      <figure class="quote" style="margin:0">
+        <blockquote>Bharat is one of the few who created a very positive impression! &hellip; he is <mark class="hl">so passionate about Workday!</mark> &hellip; At Sanofi, he made <mark class="hl">key contributions in delivering many Workday related initiatives.</mark></blockquote>
+        <figcaption><span class="avatar a-blue" aria-hidden="true">VV</span><div><div class="who">Veene Varadarajan</div><div class="role">Chief Architect · managed Bharat at Sanofi</div></div></figcaption>
+      </figure>
+    </div>
+    <p class="li-link"><a href="https://www.linkedin.com/in/bharatrathaur/details/recommendations/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect width="24" height="24" rx="4" fill="currentColor"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 10v7" stroke="#10123a" stroke-width="2" stroke-linecap="round" fill="none"/></svg>See these recommendations on LinkedIn</a></p>
+    <div class="industries">
+      <h3 class="wide">Industries I've worked in</h3>
+      <div class="ind-chips">
+        <span class="ind" style="--i:0">Construction</span>
+        <span class="ind" style="--i:1">Healthcare</span>
+        <span class="ind" style="--i:2">Hospitality &amp; gaming</span>
+        <span class="ind" style="--i:3">Financial services &amp; payments</span>
+        <span class="ind" style="--i:4">Insurance</span>
+        <span class="ind" style="--i:5">Legal</span>
+        <span class="ind" style="--i:6">Energy &amp; utilities</span>
+        <span class="ind" style="--i:7">Retail &amp; e-commerce</span>
+        <span class="ind" style="--i:8">Staffing</span>
+        <span class="ind" style="--i:9">Consumer goods</span>
+        <span class="ind" style="--i:10">Higher education</span>
+        <span class="ind" style="--i:11">Publishing</span>
+        <span class="ind" style="--i:12">Technology &amp; SaaS</span>
+        <span class="ind" style="--i:13">Telecom</span>
+        <span class="ind" style="--i:14">Logistics</span>
+        <span class="ind" style="--i:15">Life sciences &amp; pharma</span>
+        <span class="ind" style="--i:16">Medical devices</span>
+        <span class="ind" style="--i:17">Food tech</span>
+        <span class="ind" style="--i:18">Professional associations</span>
+        <span class="ind" style="--i:19">Real estate</span>
+        <span class="ind" style="--i:20">Forest products</span>
+        <span class="ind" style="--i:21">Public sector</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="approach" class="cool">
+  <div class="wrap">
+    <p class="kicker wide">Approach</p>
+    <h2>What working with me looks like</h2>
+    <p class="sub">No mystery. Here's how an engagement runs, and what you get at each step.</p>
+    <div class="ap-grid">
+      <div class="tline" role="list">
+        <span class="tl-rail" aria-hidden="true"><span class="tl-fill"></span></span>
+        <div class="tl-step c-red" role="listitem" data-step="1">
+          <span class="tl-node" aria-hidden="true"><b>1</b></span>
+          <h3>We talk it through</h3>
+          <p>A 30-minute call about what's breaking or what you need. Then I get the access I need, and nothing more.</p>
+          <p class="tl-get"><span>You get</span>A plain read of what's likely wrong, and what it will take.</p>
+        </div>
+        <div class="tl-step c-blue" role="listitem" data-step="2">
+          <span class="tl-node" aria-hidden="true"><b>2</b></span>
+          <h3>I trace the live build</h3>
+          <p>I read what's actually running in your tenant: the integration, its reports and the business processes around it. Not old documents.</p>
+          <p class="tl-get"><span>You get</span>Written findings, including when the cause is configuration and not the integration.</p>
+        </div>
+        <div class="tl-step c-gold" role="listitem" data-step="3">
+          <span class="tl-node" aria-hidden="true"><b>3</b></span>
+          <h3>Fix and test</h3>
+          <p>I fix it in a sandbox and test it with masked data against a written test plan, before anything reaches production.</p>
+          <p class="tl-get"><span>You get</span>The test cases and their results.</p>
+        </div>
+        <div class="tl-step c-plum" role="listitem" data-step="4">
+          <span class="tl-node" aria-hidden="true"><b>4</b></span>
+          <h3>Go live and hand over</h3>
+          <p>We move it to production together, and I watch the first runs.</p>
+          <p class="tl-get"><span>You get</span>A design document and a decision log your team keeps.</p>
+        </div>
+      </div>
+      <aside class="xl" aria-label="Example deliverable for each step">
+        <div class="xl-steps" role="tablist" aria-label="Choose a step">
+          <span>Deliverable</span>
+          <button type="button" class="on" data-step="1" aria-label="Step 1">1</button><button type="button" data-step="2" aria-label="Step 2">2</button><button type="button" data-step="3" aria-label="Step 3">3</button><button type="button" data-step="4" aria-label="Step 4">4</button>
+        </div>
+        <div class="xl-win">
+        <div class="xl-sheet" data-step="1">
+          <div class="xl-title"><span class="xl-logo">X</span><span class="xl-file">call-notes.xlsx</span><span class="xl-ex">Example</span></div>
+          <div class="xl-fx"><span>fx</span><span class="xl-fx-v">Answer</span></div>
+          <div class="xl-grid"><table><colgroup><col class="rn"><col style="width:40%"><col style="width:60%"></colgroup><tr class="letters"><th></th><th>A</th><th>B</th></tr><tr class="hdr"><th>1</th><td>Question</td><td>Answer</td></tr><tr class="row" style="--r:0"><th>2</th><td>What is happening</td><td>Vendor rejected last night’s file</td></tr><tr class="row" style="--r:1"><th>3</th><td>Since when</td><td>After last week’s change</td></tr><tr class="row" style="--r:2"><th>4</th><td>Who is affected</td><td>New hires this month</td></tr><tr class="row" style="--r:3"><th>5</th><td>Likely area</td><td>Report filter or mapping</td></tr><tr class="row" style="--r:4"><th>6</th><td>Next step</td><td>Trace the live build</td></tr></table></div>
+          <div class="xl-tabs"><span class="on">Summary</span></div>
+          <div class="xl-status">Ready</div>
+        </div>
+        <div class="xl-sheet" data-step="2" hidden>
+          <div class="xl-title"><span class="xl-logo">X</span><span class="xl-file">findings.xlsx</span><span class="xl-ex">Example</span></div>
+          <div class="xl-fx"><span>fx</span><span class="xl-fx-v">Finding</span></div>
+          <div class="xl-grid"><table><colgroup><col class="rn"><col style="width:8%"><col style="width:38%"><col style="width:24%"><col style="width:30%"></colgroup><tr class="letters"><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr><tr class="hdr"><th>1</th><td>#</td><td>Finding</td><td>Cause in</td><td>Fix</td></tr><tr class="row" style="--r:0"><th>2</th><td>1</td><td>Rehires sent with future dates</td><td><span class="cause cfg">Configuration</span></td><td>Change the report filter</td></tr><tr class="row" style="--r:1"><th>3</th><td>2</td><td>Contractors missing an ID</td><td><span class="cause int">Integration</span></td><td>Map the alternate ID</td></tr><tr class="row" style="--r:2"><th>4</th><td>3</td><td>Dates rejected by the vendor</td><td><span class="cause ven">Vendor spec</span></td><td>Send dates as YYYYMMDD</td></tr></table></div>
+          <div class="xl-tabs"><span class="on">Findings</span><span class="">Evidence</span></div>
+          <div class="xl-status">3 findings</div>
+        </div>
+        <div class="xl-sheet" data-step="3" hidden>
+          <div class="xl-title"><span class="xl-logo">X</span><span class="xl-file">test-cases.xlsx</span><span class="xl-ex">Example</span></div>
+          <div class="xl-fx"><span>fx</span><span class="xl-fx-v">Case</span></div>
+          <div class="xl-grid"><table><colgroup><col class="rn"><col style="width:7%"><col style="width:43%"><col style="width:32%"><col style="width:18%"></colgroup><tr class="letters"><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr><tr class="hdr"><th>1</th><td>#</td><td>Case</td><td>Expected</td><td>Result</td></tr><tr class="row" style="--r:0"><th>2</th><td>1</td><td>Value differs from Workday</td><td>Record updated</td><td class="res"><span class="pass">PASS</span></td></tr><tr class="row" style="--r:1"><th>3</th><td>2</td><td>Value already matches</td><td>No change</td><td class="res"><span class="pass">PASS</span></td></tr><tr class="row" style="--r:2"><th>4</th><td>3</td><td>Worker not in Workday</td><td>Skipped, logged</td><td class="res"><span class="pass">PASS</span></td></tr><tr class="row" style="--r:3"><th>5</th><td>4</td><td>Terminated worker</td><td>Skipped</td><td class="res"><span class="pass">PASS</span></td></tr><tr class="row" style="--r:4"><th>6</th><td>5</td><td>Same person twice</td><td>Both flagged</td><td class="res"><span class="pass">PASS</span></td></tr><tr class="row" style="--r:5"><th>7</th><td>6</td><td>Blank or invalid value</td><td>Skipped, logged</td><td class="res"><span class="pass">PASS</span></td></tr><tr class="row" style="--r:6"><th>8</th><td>7</td><td>Header-only file</td><td>Stops, clear error</td><td class="res"><span class="pass">PASS</span></td></tr><tr class="row" style="--r:7"><th>9</th><td>8</td><td>No file on SFTP</td><td>Stops, clear error</td><td class="res"><span class="pass">PASS</span></td></tr><tr class="row" style="--r:8"><th>10</th><td>9</td><td>Whole file matches</td><td>Completes cleanly</td><td class="res"><span class="pass">PASS</span></td></tr></table></div>
+          <div class="xl-tabs"><span class="on">UAT</span><span class="">Evidence</span></div>
+          <div class="xl-status"><span class="xl-count">0</span>/9 passed</div>
+        </div>
+        <div class="xl-sheet" data-step="4" hidden>
+          <div class="xl-title"><span class="xl-logo">X</span><span class="xl-file">design-document.xlsx</span><span class="xl-ex">Example</span></div>
+          <div class="xl-fx"><span>fx</span><span class="xl-fx-v">Decision</span></div>
+          <div class="xl-grid"><table><colgroup><col class="rn"><col style="width:16%"><col style="width:42%"><col style="width:42%"></colgroup><tr class="letters"><th></th><th>A</th><th>B</th><th>C</th></tr><tr class="hdr"><th>1</th><td>When</td><td>Decision</td><td>Why</td></tr><tr class="row" style="--r:0"><th>2</th><td>Day 2</td><td>Skip terminated workers</td><td>Vendor accepts actives only</td></tr><tr class="row" style="--r:1"><th>3</th><td>Day 4</td><td>Send a full file, not changes</td><td>Vendor cannot merge changes</td></tr><tr class="row" style="--r:2"><th>4</th><td>Day 6</td><td>Run daily after payroll sync</td><td>Data is final by then</td></tr><tr class="row" style="--r:3"><th>5</th><td>Go-live</td><td>Alert a named owner on failure</td><td>Not a shared mailbox</td></tr></table></div>
+          <div class="xl-tabs"><span class="">Overview</span><span class="">Flow</span><span class="">Mapping</span><span class="">Test Cases</span><span class="on">Decision Log</span></div>
+          <div class="xl-status">Ready</div>
+        </div>
+        </div>
+        <p class="xl-cap">What you get at this step. Content shown is an example.</p>
+      </aside>
+    </div>
+    <div class="promises">
+      <h3 class="wide">My promises</h3>
+      <ul>
+        <li><span class="pr-ic" aria-hidden="true">✓</span><p><b>I'll tell you what I find,</b> even when it isn't the integration.</p></li>
+        <li><span class="pr-ic" aria-hidden="true">✓</span><p><b>If I don't know yet, I'll say so.</b> I won't guess.</p></li>
+        <li><span class="pr-ic" aria-hidden="true">✓</span><p><b>You work with me,</b> not a junior team.</p></li>
+        <li><span class="pr-ic" aria-hidden="true">✓</span><p><b>Everything I build is yours,</b> documented.</p></li>
+        <li><span class="pr-ic" aria-hidden="true">✓</span><p><b>Your employee data</b> stays masked.</p></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="about">
+      <div class="me">
+        <div class="photo-ring"><img class="photo" src="{{PHOTO}}" alt="Bharat Rathaur"></div>
+        <p class="avail"><i></i>Available for new projects</p>
+        <p class="localtime">It's <b class="lt-time">—</b> in New Jersey <span>(US Eastern)</span></p>
+      </div>
+      <div>
+        <p class="kicker wide">About</p>
+        <h2>Hi, I'm Bharat.</h2>
+        <p>I've worked on Workday integrations since Workday Release 11 (2010), and in enterprise software since 1993.</p>
+        <p>I started at DayNine as one of the first integration consultants at a Workday partner, led teams on projects with 50 to 100+ integrations, then spent five years at Sanofi running HR integration. Since 2020 I've worked independently through IntSysGuru LLC, with Workday customers directly and through implementation and staffing partners.</p>
+        <p>You work with me directly. No hand-offs to a junior team.</p>
+        <a class="btn btn-line profile-req" href="mailto:bharat@intsys.guru?subject=Request%3A%20full%20profile&amp;body=Hi%20Bharat%2C%0A%0ACould%20you%20send%20your%20full%20profile%3F%20We're%20looking%20at%3A%20%0A%0AThanks%2C%0A">Request my full profile</a>
+        <div class="hobbies"><p class="hb-k"><span class="p">Passion</span> | <span class="k">Knowledge</span> | <span class="e">Experience</span>, away from the keyboard</p><div class="hb-row"><div class="hb c-red"><span class="hb-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20l6-10 4 6 3-4 5 8z"/></svg></span><div><span class="hb-tag">Passion</span><h4>Hiking</h4><p>Nature, and the law of nature. Life's stubbornness to grow anywhere. Like a river: continuous and changing, the greatest constant.</p></div></div><div class="hb c-blue"><span class="hb-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h4l2-3h6l2 3h4v12H3zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg></span><div><span class="hb-tag">Knowledge</span><h4>Photography</h4><p>Making memories, and the joy of reliving the moment. The details. Focusing on one thing, or on everything. The colors, and the lack of them.</p></div></div><div class="hb c-gold"><span class="hb-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM6 21c1-4 3-6 6-6s5 2 6 6M4 14c2 1 5 1 8-2 3 3 6 3 8 2"/></svg></span><div><span class="hb-tag">Experience</span><h4>Meditation</h4><p>Calm, peace, content, equanimity. The sensations, the good and the bad. It is what it is.</p></div></div></div></div>
+      </div>
+    </div>
+
+    <div class="journey">
+      <h3 class="wide">The road here</h3>
+      <div class="jr-line" role="list">
+        <span class="jr-rail" aria-hidden="true"><span class="jr-fill"></span></span>
+        <div class="jr c-plum" role="listitem" style="--k:0"><span class="jr-dot"></span><b class="jr-y">1993</b>
+          <div class="jr-card"><h4>First production code</h4><p>A finance system, written in Clipper.</p></div></div>
+        <div class="jr c-blue" role="listitem" style="--k:1"><span class="jr-dot"></span><b class="jr-y">1998</b>
+          <div class="jr-card"><h4>Enterprise CRM</h4><p>Vantive field service and help desk projects.</p></div></div>
+        <div class="jr c-gold" role="listitem" style="--k:2"><span class="jr-dot"></span><b class="jr-y">2001</b>
+          <div class="jr-card"><h4>PeopleSoft</h4><p>CRM consultant. Pride Consulting Resource winner, 2002.</p></div></div>
+        <div class="jr c-red" role="listitem" style="--k:3"><span class="jr-dot"></span><b class="jr-y">2005</b>
+          <div class="jr-card"><h4>Oracle Consulting</h4><p>Principal Consultant, PeopleSoft CRM.</p></div></div>
+        <div class="jr c-plum" role="listitem" style="--k:4"><span class="jr-dot"></span><b class="jr-y">2010</b>
+          <div class="jr-card"><h4>DayNine · Workday Release 11 (2010)</h4><p>One of the first integration consultants. Later led teams of up to eight.</p></div></div>
+        <div class="jr c-blue" role="listitem" style="--k:5"><span class="jr-dot"></span><b class="jr-y">2012</b>
+          <div class="jr-card"><h4>Workday Altitude</h4><p>Presenter in 2012 and 2013. Partner Product Lead for Studio and Cloud Connect for Benefits.</p></div></div>
+        <div class="jr c-gold" role="listitem" style="--k:6"><span class="jr-dot"></span><b class="jr-y">2015</b>
+          <div class="jr-card"><h4>Sanofi</h4><p>Senior Manager, HR Integration. Release testing adopted globally.</p></div></div>
+        <div class="jr c-red" role="listitem" style="--k:7"><span class="jr-dot"></span><b class="jr-y">2020</b>
+          <div class="jr-card"><h4>IntSysGuru LLC</h4><p>Independent. 20+ Workday customers and counting.</p></div></div>
+        <div class="jr jr-now" role="listitem" style="--k:8"><span class="jr-dot"></span><b class="jr-y">Today</b></div>
+      </div>
+    </div>
+
+    <div class="badges">
+        <div class="badge c-red"><span class="bd-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.2 6.6.8-4.9 4.6 1.3 6.6L12 17l-5.9 3.2 1.3-6.6L2.5 9l6.6-.8z"/></svg></span><div><h4>Partner Product Lead</h4><p>Workday Studio and Cloud Connect for Benefits</p></div></div>
+        <div class="badge c-blue"><span class="bd-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3zM19 10v2a7 7 0 0 1-14 0v-2M12 19v3M8 22h8"/></svg></span><div><h4>Altitude presenter</h4><p>Workday partner conference, 2012 and 2013</p></div></div>
+        <div class="badge c-gold"><span class="bd-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></span><div><h4>PeopleSoft Pride award</h4><p>Consulting Resource winner, 2002</p></div></div>
+        <div class="badge c-plum"><span class="bd-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 2.2 3.7-.2.9 3.6 3 2.2-1.4 3.4 1.4 3.4-3 2.2-.9 3.6-3.7-.2L12 24l-3-2.2-3.7.2-.9-3.6-3-2.2 1.4-3.4L1.4 9.8l3-2.2.9-3.6 3.7.2zM8 12l3 3 5-6"/></svg></span><div><h4>Formerly Workday certified</h4><p>Studio, Cloud Connect for Benefits, Payroll Interface</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="pulse-check" class="warm">
+  <div class="wrap">
+    <p class="kicker wide">Integration Pulse Check</p>
+    <h2>Take your integrations' pulse.</h2>
+    <p class="sub">Find your integration risk pattern: <b>Flying blind</b>, <b>Tribal knowledge</b>, <b>Release roulette</b> or <b>One person away from trouble</b>. Questions rotate each visit; answers stay in your browser. Something broken right now? <a href="#breaking">Start here →</a></p>
+    <div class="hc">
+      <div class="hc-top">
+        <div class="hc-prog" aria-hidden="true"></div>
+        <button type="button" class="hc-shuffle" title="Deal a fresh set of questions">↻ Shuffle questions</button>
+      </div>
+      <p class="hc-last" hidden></p>
+      <div class="hc-stage" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="wrap">
+    <h2>Let's build it right.</h2>
+    <p class="sub">A new build, a fix, or a second opinion. Tell me what you need; I reply within one business day.</p>
+    <p class="need-k">What do you need?</p>
+    <div class="needs" role="group" aria-label="What do you need?">
+      <button type="button" class="need on" data-s="New integration" data-b="I'm looking to build a new integration between Workday and ">New integration</button>
+      <button type="button" class="need" data-s="Fixing an integration" data-b="One of our integrations needs fixing. What's happening: ">Fix something</button>
+      <button type="button" class="need" data-s="Release or change review" data-b="We have a Workday release or business change coming and want an integration review. What's changing: ">Release or change review</button>
+      <button type="button" class="need" data-s="Ongoing integration support" data-b="We're looking for ongoing support for our Workday integrations. Roughly how many we run: ">Ongoing support</button>
+      <button type="button" class="need" data-s="A quick question" data-b="Quick question: ">Just a question</button>
+    </div>
+    <div class="reach-out">
+      <a class="ro" href="https://fantastical.app/bharatrathaur" target="_blank" rel="noopener">
+        <span class="ro-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v14H4zM4 10h16M8 3v5M16 3v5"/></svg></span>
+        <b>Book a 30-minute call</b><span>Pick a time that suits you</span></a>
+      <a class="ro ro-mail" href="mailto:bharat@intsys.guru">
+        <span class="ro-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v12H3zM3 7l9 7 9-7"/></svg></span>
+        <b>Email me</b><span class="ro-sub">About: New integration</span></a>
+      <a class="ro" href="https://www.linkedin.com/in/bharatrathaur/" target="_blank" rel="noopener">
+        <span class="ro-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 10v7M3 3h18v18H3z"/></svg></span>
+        <b>LinkedIn</b><span>Connect or message me</span></a>
+    </div>
+    <p class="assure"><span><span class="dot"></span> Available for new projects</span><span class="sep">·</span><span>It's <b class="lt-time2">—</b> in New Jersey</span><span class="sep">·</span><span>Reply within one business day</span></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span><img src="{{LOGO_WHITE}}" alt="IntSys Guru · Passion | Knowledge | Experience">© 2026 IntSysGuru LLC</span>
+    <span class="legal">Independent consultant. Not affiliated with Workday, Inc. Workday is a trademark of Workday, Inc.<br>
+      All other product names and trademarks belong to their owners and are used only to describe experience.</span>
+  </div>
+  <div class="wrap">
+    <details class="privacy" id="privacy"><summary>Privacy</summary>
+      <p>This site uses no cookies. It counts visits and button clicks anonymously with <a href="https://umami.is" target="_blank" rel="noopener">Umami</a>: no personal data, no tracking across sites.</p>
+      <p>The Pulse Check keeps your last score in your own browser only. The "paste your error" box runs in your browser; nothing you paste is sent anywhere. Emails you send me go only to me.</p>
+      <p>Booking a call opens Fantastical's scheduling page, which has its own privacy policy. Questions: <a href="mailto:bharat@intsys.guru">bharat@intsys.guru</a>.</p>
+    </details>
+  </div>
+</footer>
+
+<script>
+const BOOK = 'https://fantastical.app/bharatrathaur';
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+/* Analytics: counts only (no answers, no personal data); does nothing until Umami loads on intsys.guru */
+const track = (name, data) => { try { window.umami && umami.track(name, data); } catch (e) {} };
+const once = new Set(), trackOnce = (name, data) => { if (!once.has(name)) { once.add(name); track(name, data); } };
+
+/* Tagline pop-ups: hover on desktop, tap on phones */
+const tagline = document.getElementById('tagline');
+const words = [...tagline.querySelectorAll('.tw')];
+let openKey = null, closeTimer = null, yearTimer = null;
+function openPop(k) {
+  trackOnce('tagline_open_' + k, { word: k });
+  clearTimeout(closeTimer);
+  if (openKey === k) return;
+  closePop();
+  const word = tagline.querySelector(`.tw[data-k="${k}"]`), pop = tagline.querySelector(`.tw-pop[data-k="${k}"]`);
+  if (innerWidth > 760) pop.style.left = Math.min(word.offsetLeft, tagline.clientWidth - 380) + 'px';
+  else pop.style.left = '';
+  void pop.offsetWidth;                       // restart the CSS animations
+  pop.classList.add('open'); word.setAttribute('aria-expanded', 'true'); openKey = k;
+  if (k === 'experience') {                   // count the year up from 2010 to 2026
+    const el = pop.querySelector('.yr'); let y = 2010; el.textContent = y;
+    yearTimer = setInterval(() => { el.textContent = ++y; if (y >= 2026) clearInterval(yearTimer); }, 90);
+  }
+}
+function closePop() {
+  clearInterval(yearTimer);
+  tagline.querySelectorAll('.tw-pop.open').forEach(p => p.classList.remove('open'));
+  words.forEach(w => w.setAttribute('aria-expanded', 'false'));
+  openKey = null;
+}
+const later = () => { closeTimer = setTimeout(closePop, 180); };
+words.forEach(w => {
+  w.addEventListener('mouseenter', () => openPop(w.dataset.k));
+  w.addEventListener('mouseleave', later);
+  w.addEventListener('focus', () => openPop(w.dataset.k));
+  w.addEventListener('blur', later);
+  w.addEventListener('click', e => { e.stopPropagation(); openKey === w.dataset.k && matchMedia('(hover: none)').matches ? closePop() : openPop(w.dataset.k); });
+});
+tagline.querySelectorAll('.tw-pop').forEach(p => {
+  p.addEventListener('mouseenter', () => clearTimeout(closeTimer));
+  p.addEventListener('mouseleave', later);
+});
+document.addEventListener('click', e => { if (!tagline.contains(e.target)) closePop(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePop(); });
+
+/* Integration map: one builder, used compact in the hero and with the side panel in Connections */
+function makeMap(svg, panel, opt = {}) {
+  const HEX = { 'c-red': '#ff5468', 'c-blue': '#9da1ff', 'c-gold': '#ffc15e', 'c-plum': '#d27bd0' };
+  const OUT = '#ffc15e', IN = '#9da1ff', WS = '#ff6b78', BOOM = '#6ee7b0';
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); (parent || svg).appendChild(e); return e; };
+
+  const groups = [...document.querySelectorAll('.vgroups .vgroup')].map(g => ({
+    title: g.querySelector('h4').textContent, short: g.dataset.short,
+    color: HEX[[...g.classList].find(c => c.startsWith('c-'))] || '#fff',
+    out: g.dataset.out, in: g.dataset.in, ws: g.dataset.ws,
+    vendors: [...g.querySelectorAll('.chip')].map(c => c.textContent),
+  }));
+  const BOOMERANG = { title: 'Boomerang', short: 'Boomerang', color: BOOM, boom: true,
+    text: 'Integrations that read Workday and write back to Workday.',
+    vendors: ['Position titles on termination', "Next week's timecards", 'Candidate names in proper case', 'Default payment elections', 'Salary top-offs', 'Goals and MBOs'] };
+
+  // geometry
+  const C = { x: 350, y: 286 }, R0 = 64, RH = 31, RX = 268, RY = 194;
+  const defs = el('defs', {});
+  const lg = el('linearGradient', { id: 'coreGrad-' + opt.id, x1: '0', y1: '0', x2: '1', y2: '1' }, defs);
+  [['0', '#f8ad40'], ['.5', '#bc1f2d'], ['1', '#5a5df0']].forEach(([o, c]) => el('stop', { offset: o, 'stop-color': c }, lg));
+  const starLayer = el('g', {}), laneLayer = el('g', {}), dotLayer = el('g', {}), satLayer = el('g', {}), hubLayer = el('g', {});
+  // faint background field: the long tail of systems beyond the named ones
+  for (let k = 0; k < 90; k++) {
+    const x = 10 + Math.random() * 680, y = 10 + Math.random() * 540;
+    if (Math.hypot(x - C.x, y - C.y) < R0 + 30) continue;
+    const st = el('circle', { class: 'star', cx: x, cy: y, r: .7 + Math.random() * 1.1, opacity: (.12 + Math.random() * .3).toFixed(2) }, starLayer);
+    st.style.animationDelay = (-Math.random() * 4).toFixed(2) + 's';
+  }
+  const ICONS = {
+    'Retirement': 'M3 17l6-6 4 4 8-8M15 7h6v6',
+    'Insurance': 'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z',
+    'Benefits admin': 'M3 6h18v12H3zM3 10h18M7 15h4',
+    'Payroll & time': 'M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6',
+    'Recruiting': 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M19 8v6M22 11h-6',
+    'Identity & finance': 'M8 20a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9zM11.2 12.3L21 2.5M17.5 6l3 3M14.8 8.7l2.2 2.2',
+    'Wellbeing': 'M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.6 1-1.1a5.5 5.5 0 0 0 0-7.7z',
+  };
+
+  const flows = [];   // {path, len, color, kind, gi}
+  function lane(d, cls, gi, kind, color) {
+    const p = el('path', { d, class: 'lane ' + cls }, laneLayer);
+    p.style.setProperty('--hc', groups[gi] ? groups[gi].color : BOOM);
+    const f = { path: p, len: p.getTotalLength(), gi, kind, color, dots: [] };
+    const n = kind === 'ws' ? 2 : 3;
+    for (let i = 0; i < n; i++) {
+      const dot = el('circle', { r: kind === 'boom' ? 4 : 4.5, fill: color }, dotLayer);
+      f.dots.push({ el: dot, t: i / n });
+    }
+    flows.push(f);
+  }
+
+  groups.forEach((g, i) => {
+    const a = (-55 + i * 48.33) * Math.PI / 180, ux = Math.cos(a), uy = Math.sin(a);
+    const hx = C.x + RX * ux, hy = C.y + RY * uy;
+    const dx = hx - C.x, dy = hy - C.y, L = Math.hypot(dx, dy), nx = dx / L, ny = dy / L, px = -ny, py = nx;
+    const sx = C.x + nx * R0, sy = C.y + ny * R0, ex = hx - nx * RH, ey = hy - ny * RH, mx = (sx + ex) / 2, my = (sy + ey) / 2;
+    const curve = b => `M${sx + px * b * .25},${sy + py * b * .25} Q${mx + px * b},${my + py * b} ${ex + px * b * .25},${ey + py * b * .25}`;
+    const single = !g.in && !g.ws;              // a single lane stays straight
+    if (g.out) lane(curve(single ? 0 : 16), 'out', i, 'out', OUT);
+    if (g.in) lane(curve(-16), 'in', i, 'in', IN);
+    if (g.ws) lane(curve(0), 'ws', i, 'ws', WS);
+
+    const hub = el('g', { class: 'hub', tabindex: '0', role: 'button', 'aria-label': g.title }, hubLayer);
+    hub.style.setProperty('--hc', g.color);
+    el('circle', { class: 'glow', cx: hx, cy: hy, r: RH + 10 }, hub);
+    el('circle', { class: 'ring', cx: hx, cy: hy, r: RH }, hub);
+    el('path', { class: 'ico', d: ICONS[g.short] || '', transform: `translate(${hx - 12} ${hy - 12})` }, hub);
+    const above = uy < -.3;                     // labels sit above the top hubs, below the rest
+    el('text', { class: 'lbl', x: hx, y: above ? hy - RH - 24 : hy + RH + 34, 'text-anchor': 'middle' }, hub).textContent = g.short;
+    // a swarm of small dots orbiting each hub: there is always more than the list shows
+    const sat = el('g', { class: 'sat' }, satLayer);
+    sat.style.setProperty('--hc', g.color);
+    for (let k = 0; k < 18; k++) {
+      const ang = k / 18 * Math.PI * 2 + Math.random() * .25, rr = RH + (k % 2 ? 9 : 16) + Math.random() * 3;
+      el('circle', { cx: hx + Math.cos(ang) * rr, cy: hy + Math.sin(ang) * rr, r: (k % 3 ? 1.6 : 2.4), fill: g.color }, sat);
+    }
+    g.sat = { el: sat, x: hx, y: hy, a: Math.random() * 360 };
+    g.hub = hub;
+  });
+
+  // boomerang: a loop that leaves Workday and comes back
+  lane(`M${C.x - 26},${C.y - R0 + 6} C${C.x - 120},${C.y - 250} ${C.x + 120},${C.y - 250} ${C.x + 26},${C.y - R0 + 6}`, 'boom', groups.length, 'boom', BOOM);
+  const boomLane = flows[flows.length - 1].path;
+  const bl = el('text', { class: 'boom-lbl', x: C.x, y: C.y - 214, tabindex: '0', role: 'button', 'aria-label': 'Boomerang' }, hubLayer);
+  bl.textContent = '↻ Boomerang';
+
+  // core
+  el('circle', { class: 'core-pulse', cx: C.x, cy: C.y, r: R0 }, hubLayer).style.stroke = `url(#coreGrad-${opt.id})`;
+  el('circle', { class: 'core-ring', cx: C.x, cy: C.y, r: R0 }, hubLayer).style.stroke = `url(#coreGrad-${opt.id})`;
+  el('text', { class: 'core-t', x: C.x, y: C.y + 4 }, hubLayer).textContent = 'Workday';
+  el('text', { class: 'core-s', x: C.x, y: C.y + 24 }, hubLayer).textContent = 'your tenant';
+
+  // panel + focus
+  let current = -1, userUntil = 0;
+  const flowRow = (cls, label, text) => text ? `<div class="flow"><i class="lg ${cls}"></i><div><b>${label}:</b> ${esc(text)}</div></div>` : '';
+  function focus(i) {
+    if (i === current) return;
+    current = i;
+    const g = i < groups.length ? groups[i] : BOOMERANG;
+    svg.classList.add('focused');
+    flows.forEach(f => f.path.classList.toggle('hot', f.gi === i));
+    groups.forEach((x, j) => { x.hub.classList.toggle('hot', j === i); x.sat.el.classList.toggle('hot', j === i); });
+    if (!panel) return;
+    panel.style.setProperty('--hc', g.color);
+    panel.innerHTML = `<p class="np-k">${g.boom ? 'Workday → Workday' : 'Including'}</p><h3>${esc(g.title)}</h3>`
+      + (g.boom ? `<div class="flow"><i class="lg boom"></i><div>${g.text}</div></div>`
+                : flowRow('out', 'Outbound', g.out) + flowRow('in', 'Inbound', g.in) + flowRow('ws', 'Web service', g.ws))
+      + `<div class="chips">${g.vendors.map((v, k) => `<span class="chip" style="animation-delay:${k * 40}ms">${esc(v)}</span>`).join('')}${g.boom ? '' : `<span class="chip more" style="animation-delay:${g.vendors.length * 40}ms">and many more</span>`}</div>`
+      + `<p class="hint">Hover or tap a circle to explore.</p>`;
+  }
+  const take = i => { userUntil = performance.now() + 12000; focus(i); trackOnce('map_explore_' + opt.id); };
+  const pick = i => opt.onPick ? opt.onPick(i) : take(i);   // the hero map hands clicks to the Connections map
+  groups.forEach((g, i) => { ['mouseenter', 'focus'].forEach(ev => g.hub.addEventListener(ev, () => take(i))); g.hub.addEventListener('click', () => pick(i)); });
+  [bl, boomLane].forEach(n => { ['mouseenter', 'focus'].forEach(ev => n.addEventListener(ev, () => take(groups.length))); n.addEventListener('click', () => pick(groups.length)); });
+  focus(0);
+
+  // animation
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let last = performance.now(), visible = false, nextCycle = performance.now() + 3500;
+  new IntersectionObserver(es => { visible = es[0].isIntersecting; }).observe(svg);
+  function place(f) {
+    f.dots.forEach(d => {
+      let t = d.t, along, hollow = false;
+      if (f.kind === 'in') along = 1 - t;
+      else if (f.kind === 'ws') { along = t < .5 ? 1 - t * 2 : (t - .5) * 2; hollow = t < .5; }   // request in, response out
+      else along = t;
+      const p = f.path.getPointAtLength(along * f.len);
+      d.el.setAttribute('cx', p.x); d.el.setAttribute('cy', p.y);
+      if (f.kind === 'ws') { d.el.setAttribute('fill', hollow ? 'none' : WS); d.el.setAttribute('stroke', WS); d.el.setAttribute('stroke-width', hollow ? 2 : 0); }
+      const dim = current >= 0 && f.gi !== current;
+      d.el.setAttribute('opacity', dim ? .5 : 1);
+    });
+  }
+  function tick(now) {
+    const dt = Math.min(now - last, 60) / 1000; last = now;
+    if (visible && !still) {
+      flows.forEach(f => {
+        const speed = (f.kind === 'ws' ? .22 : .32) * (f.gi === current ? 2.1 : 1) * (f.kind === 'boom' ? .8 : 1);
+        f.dots.forEach(d => { d.t = (d.t + speed * dt) % 1; });
+        place(f);
+      });
+      groups.forEach((g, j) => { g.sat.a = (g.sat.a + dt * (j === current ? 40 : 12)) % 360;
+        g.sat.el.setAttribute('transform', `rotate(${g.sat.a.toFixed(2)} ${g.sat.x} ${g.sat.y})`); });
+      if (now > nextCycle) { nextCycle = now + 3500; if (now > userUntil) focus((current + 1) % (groups.length + 1)); }
+    }
+    requestAnimationFrame(tick);
+  }
+  flows.forEach(place);
+  requestAnimationFrame(tick);
+  return { take };
+}
+const connMap = makeMap(document.querySelector('.netwrap .net'), document.querySelector('.netpanel'), { id: 'conn' });
+const heroNet = document.querySelector('.net-hero');
+if (heroNet) makeMap(heroNet, null, { id: 'hero', onPick: i => { document.getElementById('connections').scrollIntoView({ behavior: 'smooth' }); connMap.take(i); } });
+
+(() => {
+  const groups = [...document.querySelectorAll('.vgroups .vgroup')].map(g => ({ vendors: [...g.querySelectorAll('.chip')].map(c => c.textContent) }));
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // phones: three rows of scrolling vendor names
+  const all = groups.flatMap(g => g.vendors), mq = document.querySelector('.marquee');
+  [0, 1, 2].forEach(r => {
+    const names = all.filter((_, i) => i % 3 === r), row = document.createElement('div');
+    row.className = 'mq-row';
+    row.innerHTML = [...names, ...names].map(n => `<span class="chip">${esc(n)}</span>`).join('');
+    mq.appendChild(row);
+  });
+
+  // count the numbers up when they scroll into view
+  const nums = [...document.querySelectorAll('.reach b')];
+  const co = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return; co.unobserve(e.target);
+    const b = e.target, m = b.textContent.match(/(\d+)(.*)/), end = +m[1], suf = m[2], t0 = performance.now();
+    if (still) return;
+    const step = now => { const k = Math.min((now - t0) / 1200, 1); b.textContent = Math.round(end * (1 - Math.pow(1 - k, 3))) + suf; if (k < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }), { threshold: .6 });
+  nums.forEach(n => co.observe(n));
+})();
+
+/* Selected work: a merry-go-round; the front ticket plays open → resolved */
+(() => {
+  const stage = document.querySelector('.tk-stage'), all = [...stage.querySelectorAll('.ticket')], dotsBox = document.querySelector('.tk-dots');
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let cards = all.slice(), active = 0, resolveTimer = null, pausedUntil = 0, hovering = false, onScreen = false;
+
+  const setOpen = c => {
+    const st = c.querySelector('.tk-status');
+    c.classList.remove('resolved-card'); st.className = 'tk-status ' + st.dataset.start.toLowerCase(); st.textContent = st.dataset.start;
+  };
+  const setResolved = c => {
+    const st = c.querySelector('.tk-status');
+    c.classList.add('resolved-card'); st.className = 'tk-status resolved'; st.textContent = 'Resolved';
+  };
+  function layout() {
+    const phone = innerWidth <= 760, n = cards.length;
+    const R = phone ? 520 : 760, step = phone ? 34 : 24, show = phone ? 1 : 2;
+    cards.forEach((c, i) => {
+      let d = i - active;
+      if (d > n / 2) d -= n; if (d < -n / 2) d += n;          // shortest way round
+      const th = d * step * Math.PI / 180;
+      const x = R * Math.sin(th), z = R * (Math.cos(th) - 1);
+      const far = Math.abs(d) > show;
+      c.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${d * step}deg)`;
+      c.style.opacity = far ? 0 : 1 - Math.abs(d) * .18;
+      c.style.setProperty('--veil', d === 0 ? 0 : Math.min(.55, Math.abs(d) * .28));
+      c.classList.toggle('far', far);
+      c.style.zIndex = 50 - Math.abs(d);
+      c.style.pointerEvents = far ? 'none' : 'auto';
+      c.classList.toggle('front', d === 0);
+      c.setAttribute('aria-hidden', far);
+      if (d > 0) setOpen(c);                     // still to come: open
+      else if (d < 0) setResolved(c);            // already passed: stays resolved
+    });
+    [...dotsBox.children].forEach((b, i) => b.classList.toggle('on', i === active));
+    clearTimeout(resolveTimer);
+    const front = cards[active];
+    if (front && onScreen) resolveTimer = setTimeout(() => setResolved(front), still ? 0 : 900);
+  }
+  const go = k => { if (!cards.length) return; if (performance.now() < pausedUntil) trackOnce('work_browse'); active = (active + k + cards.length) % cards.length; layout(); };
+  const pause = () => { pausedUntil = performance.now() + 9000; };
+  function buildDots() {
+    dotsBox.innerHTML = '';
+    cards.forEach((c, i) => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'tk-dot';
+      b.setAttribute('aria-label', c.querySelector('h3').textContent);
+      b.onclick = () => { pause(); active = i; layout(); };
+      dotsBox.appendChild(b);
+    });
+  }
+
+  all.forEach(c => c.addEventListener('click', () => { const i = cards.indexOf(c); if (i !== active) { pause(); active = i; layout(); } }));
+  document.querySelector('.tk-arrow.next').onclick = () => { pause(); go(1); };
+  document.querySelector('.tk-arrow.prev').onclick = () => { pause(); go(-1); };
+  stage.addEventListener('keydown', e => { if (e.key === 'ArrowRight') { pause(); go(1); } if (e.key === 'ArrowLeft') { pause(); go(-1); } });
+  stage.addEventListener('mouseenter', () => hovering = true);
+  stage.addEventListener('mouseleave', () => hovering = false);
+  let sx = null;                                              // swipe or drag to turn
+  stage.addEventListener('pointerdown', e => { sx = e.clientX; });
+  stage.addEventListener('pointerup', e => { if (sx === null) return; const dx = e.clientX - sx; sx = null; if (Math.abs(dx) > 40) { pause(); go(dx < 0 ? 1 : -1); } });
+
+  document.querySelectorAll('.tk-f').forEach(b => b.onclick = () => {
+    track('work_filter', { filter: b.dataset.f });
+    document.querySelectorAll('.tk-f').forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b); });
+    const f = b.dataset.f;
+    all.forEach(c => c.classList.toggle('hide', f !== 'all' && !c.dataset.tags.split(' ').includes(f)));
+    cards = all.filter(c => !c.classList.contains('hide'));
+    active = 0; pause(); buildDots(); layout();
+  });
+
+  new IntersectionObserver(es => { const was = onScreen; onScreen = es[0].isIntersecting; if (onScreen && !was) layout(); }, { threshold: .5 }).observe(stage);
+  addEventListener('resize', layout);
+  if (!still) setInterval(() => { if (onScreen && !hovering && performance.now() > pausedUntil) go(1); }, 4200);
+  buildDots(); layout();
+})();
+
+/* Industries: chips ripple in when the strip scrolls into view */
+(() => {
+  const box = document.querySelector('.industries');
+  const io = new IntersectionObserver(es => { if (es[0].isIntersecting) { box.classList.add('in'); io.disconnect(); } }, { threshold: .3 });
+  io.observe(box);
+})();
+
+/* Approach: the timeline fills as you scroll; the Excel window shows each step's deliverable */
+(() => {
+  const tl = document.querySelector('.tline'), fill = tl.querySelector('.tl-fill'), steps = [...tl.querySelectorAll('.tl-step')];
+  const sheets = [...document.querySelectorAll('.xl-sheet')], btns = [...document.querySelectorAll('.xl-steps button')];
+  const passes = [...document.querySelectorAll('.xl-sheet[data-step="3"] .pass')], count = document.querySelector('.xl-count');
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let shown = 0, lastLit = 0, timers = [];
+  function runTests() {
+    timers.forEach(clearTimeout); timers = [];
+    passes.forEach(p => p.classList.remove('on')); count.textContent = 0;
+    passes.forEach((p, i) => timers.push(setTimeout(() => { p.classList.add('on'); count.textContent = i + 1; }, still ? 0 : 400 + 220 * i)));
+  }
+  function show(n) {
+    if (n === shown) return; shown = n;
+    sheets.forEach(sh => sh.hidden = sh.dataset.step !== String(n));
+    btns.forEach(b => b.classList.toggle('on', b.dataset.step === String(n)));
+    if (n === 3) runTests();
+  }
+  btns.forEach(b => b.onclick = () => show(+b.dataset.step));
+  steps.forEach(st => st.addEventListener('click', () => show(+st.dataset.step)));
+  function update() {
+    const r = tl.getBoundingClientRect(), line = innerHeight * .62;
+    const p = Math.max(0, Math.min(1, (line - r.top) / (r.height - 30)));
+    fill.style.height = (p * 100) + '%';
+    let lit = 0;
+    steps.forEach(st => {
+      const on = still || st.offsetTop + 18 <= p * (r.height - 30) + 2;
+      st.classList.toggle('lit', on);
+      if (on) lit = +st.dataset.step;
+    });
+    if (lit !== lastLit) { lastLit = lit; show(Math.max(1, lit)); }   // follow the scroll; clicks can still pick any step
+  }
+  addEventListener('scroll', update, { passive: true });
+  addEventListener('resize', update);
+  show(1); update();
+})();
+
+/* Services: play each card's art when it scrolls into view; hover replays it; links filter the stories */
+(() => {
+  const cards = [...document.querySelectorAll('.card.svc')];
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const replay = c => {
+    c.classList.remove('play'); void c.offsetWidth; c.classList.add('play');
+    if (still || c.dataset.flowing) return;
+    // Build card: start the data dots once the line has drawn, a third of a lap apart
+    const dots = [...c.querySelectorAll('.ab-dot')];
+    if (!dots.length) return;
+    c.dataset.flowing = 1;
+    dots.forEach((d, i) => setTimeout(() => d.querySelectorAll('animateMotion, animate').forEach(a => a.beginElement()), 1000 + i * 733));
+  };
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { replay(e.target); io.unobserve(e.target); } }), { threshold: .5 });
+  cards.forEach(c => { io.observe(c); c.addEventListener('mouseenter', () => replay(c)); });
+  document.querySelectorAll('.svc-links a[data-filter]').forEach(a => a.addEventListener('click', () => {
+    track('services_examples', { service: a.closest('.card').querySelector('.tag').textContent });
+    const b = document.querySelector(`.tk-f[data-f="${a.dataset.filter}"]`);
+    if (b) b.click();
+  }));
+})();
+
+/* About: New Jersey local time, and the career journey draws in when it scrolls into view */
+(() => {
+  const el = document.querySelector('.lt-time');
+  const fmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: 'numeric', minute: '2-digit' });
+  const tick = () => { el.textContent = fmt.format(new Date()); };
+  tick(); setInterval(tick, 20000);
+  const jr = document.querySelector('.journey');
+  const io = new IntersectionObserver(es => { if (es[0].isIntersecting) { jr.classList.add('in'); io.disconnect(); } }, { threshold: .35 });
+  io.observe(jr);
+})();
+
+/* Formats: one made-up worker record, shown in a different format every few seconds */
+(() => {
+  const T = (s, c) => `<span class="${c}">${s}</span>`;
+  const FM = [
+    { k: 'xml', label: 'XML', file: 'worker.xml', code:
+      `${T('&lt;Worker&gt;', 't')}\n  ${T('&lt;ID&gt;', 't')}${T('10427', 'v')}${T('&lt;/ID&gt;', 't')}\n  ${T('&lt;Name&gt;', 't')}${T('Alex Rivera', 'v')}${T('&lt;/Name&gt;', 't')}\n  ${T('&lt;Plan&gt;', 't')}${T('MED-PPO', 'v')}${T('&lt;/Plan&gt;', 't')}\n  ${T('&lt;Start&gt;', 't')}${T('2024-03-01', 'v')}${T('&lt;/Start&gt;', 't')}\n${T('&lt;/Worker&gt;', 't')}` },
+    { k: 'json', label: 'JSON', file: 'worker.json', code:
+      `{\n  ${T('"id"', 't')}: ${T('"10427"', 'v')},\n  ${T('"name"', 't')}: ${T('"Alex Rivera"', 'v')},\n  ${T('"plan"', 't')}: ${T('"MED-PPO"', 'v')},\n  ${T('"start"', 't')}: ${T('"2024-03-01"', 'v')}\n}` },
+    { k: 'csv', label: 'CSV', file: 'worker.csv', code:
+      `${T('id,name,plan,start', 't')}\n${T('10427', 'v')},${T('Alex Rivera', 'v')},${T('MED-PPO', 'v')},${T('2024-03-01', 'v')}` },
+    { k: 'fixed', label: 'Fixed', file: 'worker.txt', code:
+      `${T('ID        LAST      FIRST     PLAN    START', 'c')}\n${T('10427     ', 'v')}${T('RIVERA    ', 'v')}${T('ALEX      ', 'v')}${T('MEDPPO  ', 'v')}${T('20240301', 'v')}` },
+    { k: '834', label: '834', file: 'worker.834', code:
+      `${T('INS', 's')}*Y*18*021*28*A***FT~\n${T('REF', 's')}*0F*${T('10427', 'v')}~\n${T('NM1', 's')}*IL*1*${T('RIVERA', 'v')}*${T('ALEX', 'v')}~\n${T('HD', 's')}*021**HLT*${T('MED-PPO', 'v')}*EMP~\n${T('DTP', 's')}*348*D8*${T('20240301', 'v')}~` },
+  ];
+  const box = document.querySelector('.fm-demo'); if (!box) return;
+  const code = box.querySelector('.fm-code'), file = box.querySelector('.fm-file'), tabs = box.querySelector('.fm-tabs');
+  const chips = [...document.querySelectorAll('.formats-strip .chip[data-fm]')];
+  let i = 0, hold = 0, onScreen = false;
+  tabs.innerHTML = FM.map((f, k) => `<button type="button" data-k="${k}">${f.label}</button>`).join('');
+  function show(k) {
+    i = k; const f = FM[k];
+    code.innerHTML = f.code; code.classList.remove('in'); void code.offsetWidth; code.classList.add('in');
+    file.textContent = f.file;
+    [...tabs.children].forEach((b, n) => b.classList.toggle('on', n === k));
+    chips.forEach(c => c.classList.toggle('lit', c.dataset.fm === f.k));
+  }
+  tabs.querySelectorAll('button').forEach(b => b.onclick = () => { hold = performance.now() + 10000; show(+b.dataset.k); trackOnce('formats_tab'); });
+  new IntersectionObserver(es => { onScreen = es[0].isIntersecting; }, { threshold: .4 }).observe(box);
+  show(0);
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches)
+    setInterval(() => { if (onScreen && performance.now() > hold) show((i + 1) % FM.length); }, 3200);
+})();
+
+document.querySelector('.profile-req')?.addEventListener('click', () => track('profile_request'));
+
+/* Contact: a "what do you need?" chip pre-fills the email; live New Jersey time */
+(() => {
+  const chips = [...document.querySelectorAll('.need')], mail = document.querySelector('.ro-mail'), sub = mail.querySelector('.ro-sub');
+  const set = c => {
+    chips.forEach(x => x.classList.toggle('on', x === c));
+    mail.href = 'mailto:bharat@intsys.guru?subject=' + encodeURIComponent(c.dataset.s)
+      + '&body=' + encodeURIComponent(`Hi Bharat,\n\n${c.dataset.b}\n\nThanks,\n`);
+    sub.textContent = 'About: ' + c.textContent;
+  };
+  chips.forEach(c => c.onclick = () => { set(c); track('contact_need', { need: c.dataset.s }); });
+  mail.addEventListener('click', () => track('contact_email', { need: chips.find(c => c.classList.contains('on')).dataset.s }));
+  set(chips[0]);
+  const t = document.querySelector('.lt-time2'), fmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: 'numeric', minute: '2-digit' });
+  const tick = () => { t.textContent = fmt.format(new Date()); };
+  tick(); setInterval(tick, 20000);
+})();
+
+/* What's breaking?: read a pasted error, then symptom -> one follow-up question -> do-this-now checklist */
+(() => {
+  const PAT = [{"name": "Access & security", "re": "authenticat|unauthori[sz]ed|\\b401\\b|\\b403\\b|forbidden|access denied|not authori[sz]ed|permission", "cause": "The integration system user's password expired or is locked, its security group is missing a domain, or vendor credentials changed.", "checks": ["The integration user's password and lock status", "Domain permissions for what it reads or writes", "Vendor or SFTP credentials"]}, {"name": "Connection & endpoint", "re": "connection refused|connect(ion)? timed out|unknown ?host|\\bsftp\\b|\\bssh\\b|host ?key|handshake|no route", "cause": "The vendor's server or address changed, an allow-list or firewall blocks Workday, or the SFTP host key changed.", "checks": ["The endpoint address", "The vendor's allow-list of Workday's IP addresses", "The host key or fingerprint"]}, {"name": "Certificates & encryption", "re": "certificate|x\\.?509|\\bpgp\\b|encrypt|decrypt|public key|private key|signature", "cause": "An expired certificate, or the vendor rotated their PGP key.", "checks": ["Certificate expiry dates", "The vendor's current public key", "Which key the integration uses"]}, {"name": "Timeout & volume", "re": "time ?out|timed out|exceeded|memory|too large|\\blimit\\b", "cause": "More data than usual, a slow report or calculated field, or a slow vendor.", "checks": ["Record count against a normal run", "How long the report takes to run", "Batch or paging size"]}, {"name": "Invalid reference", "re": "invalid id|reference id|not found|does not exist|no matching", "cause": "Inbound data points to something Workday doesn't have (a plan, location, organization or worker), or uses the wrong ID type.", "checks": ["The value in the file against Workday's reference IDs", "Recently renamed or inactivated items"]}, {"name": "Validation & required data", "re": "validation|required|must be|cannot be blank|mandatory|invalid value", "cause": "Some records are missing a required field, often new hires or edge cases, or a rule changed.", "checks": ["What the failing records have in common", "Recent configuration changes", "The vendor's file spec"]}, {"name": "Date & number format", "re": "unparseable|invalid date|date format|\\bparse|number format", "cause": "A format mismatch, blank dates, or time-zone shifts.", "checks": ["The output format against the spec", "Blank or future dates"]}, {"name": "Transformation (XSLT/XML)", "re": "xslt|\\bxsl\\b|xpath|transform|saxon|malformed|well-formed|namespace", "cause": "The transformation hit unexpected data (special characters, a missing value) or a web service version changed.", "checks": ["Special characters (&, accents) in names", "The record where it stopped", "Web service version changes"]}, {"name": "Business process", "re": "business process|in progress|pending|rescind|conflicting", "cause": "The record is locked by an in-progress or conflicting event.", "checks": ["In-progress events for those workers", "Effective dates", "Re-running after the event completes"]}, {"name": "Duplicates", "re": "duplicate|already exists|unique", "cause": "The same record appears twice in the file, or the file was loaded twice.", "checks": ["Duplicates in the file", "Whether the run happened twice", "The matching key"]}].map(p => ({ ...p, rx: new RegExp(p.re, 'gi') }));
+  const SYM = [{"c": "c-red", "label": "The integration failed", "means": "Usually one bad record, an expired password or certificate, or a change on the vendor side.", "q": "Did it ever work?", "opts": [{"a": "Worked until recently", "p": "Something changed: credentials, the endpoint, a business process or a report."}, {"a": "Never worked", "p": "Setup: security, the endpoint, or launch parameters."}, {"a": "Fails some runs, not others", "p": "A specific record, the volume, or the vendor's server."}], "now": ["Copy the exact error from the integration event", "Note when it first failed, and what changed that day", "Check whether the integration user's password expired or is locked", "Don't keep re-running; note the event ID first"]}, {"c": "c-gold", "label": "It finishes with warnings", "means": "Records are being skipped quietly. Some warnings are harmless; some mean people never reach the vendor.", "q": "How long has it been warning?", "opts": [{"a": "Always", "p": "Issues accepted long ago, and some of them still matter."}, {"a": "Started recently", "p": "A change introduced it."}, {"a": "Not sure", "p": "Nobody's watching, and that's the first fix."}], "now": ["Download the event messages and sort them by type", "See whether the same workers repeat", "Check whether skipped workers reached the vendor"]}, {"c": "c-blue", "label": "The vendor rejected our file", "means": "The file no longer matches the vendor's rules: layout, date formats, IDs, or required fields.", "q": "Did anything change recently?", "opts": [{"a": "Workday release", "p": "Web service or delivered template changes."}, {"a": "Our configuration", "p": "A new plan, location or code the vendor doesn't know."}, {"a": "Vendor's spec", "p": "Their layout or rules changed."}, {"a": "Nothing we know of", "p": "Specific records: rehires, name characters, dates."}], "now": ["Get the vendor's rejection file", "Compare 2–3 rejected records with an accepted one", "Ask the vendor whether their spec or rules changed"]}, {"c": "c-plum", "label": "Records are missing or wrong", "means": "Usually report filters, effective dates, or change detection deciding who goes in the file.", "q": "Which records?", "opts": [{"a": "Specific people", "p": "Their events: future-dated, rehire, or mid-process."}, {"a": "A whole group", "p": "A filter or eligibility rule excludes them."}, {"a": "Everyone since a date", "p": "Something changed that day."}], "now": ["Pick one affected worker and check their recent events and effective dates", "Check the report behind the integration for that worker", "See whether they're in an in-progress business process"]}, {"c": "c-red", "label": "A release or tenant change is coming", "means": "Delivered templates and web service versions change. Integrations that worked yesterday can break quietly.", "q": "How soon?", "opts": [{"a": "Within 2 weeks", "p": "Test your top integrations in the preview tenant now."}, {"a": "This quarter", "p": "Time for a full impact analysis."}, {"a": "Just planning", "p": "Build the integration inventory first."}], "now": ["List your integrations by business impact", "Note the release dates and the preview window", "Read the release notes for the Workday-delivered integrations you use"]}, {"c": "c-blue", "label": "Nobody knows how it works", "means": "The person who built it left, and the documentation, if any, no longer matches what runs.", "q": "Is it working today?", "opts": [{"a": "Yes, but fragile", "p": "Document it before it breaks."}, {"a": "No, it's broken", "p": "Fix first, and document while fixing."}, {"a": "Not sure", "p": "Check the last runs and outputs."}], "now": ["Find the integration system, its owner and schedule", "Save the last good output file", "Write down who uses the output"]}];
+  const ta = document.getElementById('ps-text'), out = document.querySelector('.ps-out');
+  const symBox = document.querySelector('.symptoms'), diag = document.querySelector('.diag');
+  let pasted = '', cur = 0, picked = null, t = null, busy = false, hoverT = null;
+  const canHover = matchMedia('(hover: hover)').matches;
+
+  function read() {
+    pasted = ta.value.trim();
+    if (!pasted) { out.innerHTML = '<p class="ps-idle">The likely cause shows here as you paste.</p>'; return; }
+    const hits = PAT.map(p => ({ p, n: (pasted.match(p.rx) || []).length })).filter(h => h.n).sort((a, b) => b.n - a.n).slice(0, 2);
+    trackOnce('breaking_paste', { category: hits[0]?.p.name || 'none' });
+    out.innerHTML = hits.length
+      ? hits.map((h, i) => `<div class="ps-hit"><h4>${esc(h.p.name)}<i class="${i ? 'maybe' : ''}">${i ? 'Also possible' : 'Most likely'}</i></h4>
+          <p>${esc(h.p.cause)}</p><ul>${h.p.checks.map(c => `<li>${esc(c)}</li>`).join('')}</ul></div>`).join('')
+        + '<p class="ps-disc">A quick read of the words, not a diagnosis.</p>'
+      : `<div class="ps-hit"><h4>Not one I can read from the text alone</h4><p>Send it to me and I'll take a look.</p></div>
+         <a class="btn btn-primary" href="${mailto()}">Send me the error</a>`;
+  }
+  ta.addEventListener('input', () => { clearTimeout(t); t = setTimeout(read, 350); });
+
+  function mailto() {
+    const s = SYM[cur], done = [...diag.querySelectorAll('.dn-list input:checked')].map(i => '- ' + i.nextElementSibling.textContent);
+    const body = `Hi Bharat,\n\nIntegration name: \nEvent date and time: \n\nWhat I'm seeing: ${s.label}`
+      + (picked !== null ? `\n${s.q} ${s.opts[picked].a}` : '')
+      + `\n\nError message:\n${pasted || '(paste it here)'}\n\nWhat changed recently: \n\nWhat I've tried:\n${done.length ? done.join('\n') : '- '}\n`;
+    return 'mailto:bharat@intsys.guru?subject=' + encodeURIComponent('Integration issue: ' + s.label) + '&body=' + encodeURIComponent(body);
+  }
+  function show(i) {
+    cur = i; picked = null; busy = false;
+    const s = SYM[i];
+    symBox.querySelectorAll('.sym').forEach((b, j) => b.setAttribute('aria-selected', j === i));
+    diag.className = 'diag ' + s.c;
+    diag.innerHTML = `<h3>${esc(s.label)}</h3><p class="means">${esc(s.means)}</p>
+      <div class="fq"><p class="q">${esc(s.q)}</p><div class="fq-opts">${s.opts.map((o, k) => `<button type="button" class="fq-o" data-k="${k}">${esc(o.a)}</button>`).join('')}</div><div class="fq-slot"></div></div>
+      <h4>Do this now</h4>
+      <ul class="dn-list">${s.now.map(n => `<li><label><input type="checkbox"><span>${esc(n)}</span></label></li>`).join('')}</ul>
+      <div class="diag-acts"><a class="btn btn-primary diag-mail" href="#">Still stuck? Send me the details</a><a class="btn btn-line" href="${BOOK}" target="_blank" rel="noopener">Talk it through with me</a></div>`;
+    diag.querySelectorAll('.fq-o').forEach(b => b.onclick = () => {
+      picked = +b.dataset.k; busy = true;
+      diag.querySelectorAll('.fq-o').forEach(x => x.classList.toggle('on', x === b));
+      diag.querySelector('.fq-slot').innerHTML = `<p class="fq-res"><b>Points to:</b> ${esc(s.opts[picked].p)}</p>`;
+      track('breaking_followup', { symptom: s.label, answer: s.opts[picked].a });
+    });
+    diag.querySelectorAll('.dn-list input').forEach(c => c.addEventListener('change', () => { busy = true; }));
+    const m = diag.querySelector('.diag-mail');
+    m.addEventListener('click', () => { m.href = mailto(); track('breaking_email'); });
+  }
+  SYM.forEach((s, i) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'sym ' + s.c; b.setAttribute('role', 'tab'); b.textContent = s.label;
+    b.onclick = () => { clearTimeout(hoverT); show(i); track('breaking_symptom', { symptom: s.label }); };
+    // hover to preview (mouse only); a short pause avoids flicker, and a card you've started using stays put until you click another
+    if (canHover) {
+      b.addEventListener('mouseenter', () => { clearTimeout(hoverT); if (busy || i === cur) return;
+        hoverT = setTimeout(() => { show(i); trackOnce('breaking_hover_' + i, { symptom: s.label }); }, 120); });
+      b.addEventListener('mouseleave', () => clearTimeout(hoverT));
+    }
+    symBox.appendChild(b);
+  });
+  show(0);
+})();
+
+/* Analytics: counts only, sent to Umami when it is installed; a no-op until then */
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href*="fantastical.app"]');
+  if (a) track('book_call', { from: a.closest('section, header')?.id || a.closest('section, header')?.className.split(' ')[0] || 'page' });
+});
+
+/* Health check: a rotating bank of 24 questions; each visit deals 2 per area (one critical, one not) */
+(() => {
+  const BANK = [{"id": "mon", "name": "Monitoring", "color": "#bc1f2d", "pattern": "Flying blind", "what": "Problems are probably happening without anyone knowing. Fix alerts first; it is the cheapest win.", "qs": [{"key": "mon1", "crit": true, "q": "When an integration fails, a named person is alerted, not just a shared mailbox.", "tip": "Send failure notifications to a named owner and a backup."}, {"key": "mon2", "crit": true, "q": "Vendor error and rejection files are read after every run.", "tip": "Find out where each vendor's rejections land, and make reading them someone's job."}, {"key": "mon3", "crit": false, "q": "Runs that finish \"with warnings\" are reviewed, not ignored.", "tip": "List the warnings that repeat, then fix or formally accept each one."}, {"key": "mon4", "crit": false, "q": "You'd know within a day if a scheduled integration silently didn't run.", "tip": "Alert on a missing run, not just a failed one."}, {"key": "mon5", "crit": false, "q": "Record counts are checked against what you expect (say, a census file suddenly half the size).", "tip": "Add a count check or control total to your biggest feeds."}, {"key": "mon6", "crit": false, "q": "Key vendors confirm the first file after any change loaded cleanly.", "tip": "After each change, ask the vendor to confirm the first load."}]}, {"id": "doc", "name": "Documentation", "color": "#2f3192", "pattern": "Tribal knowledge", "what": "It works because certain people remember how. That is fine until they are on vacation.", "qs": [{"key": "doc1", "crit": true, "q": "Every integration has a named business owner and technical owner.", "tip": "Build a one-page inventory: integration, owner, vendor, schedule."}, {"key": "doc2", "crit": true, "q": "Before changing a field, calculated field or report, you can tell which integrations use it.", "tip": "Keep a field-level catalog of what each integration uses."}, {"key": "doc3", "crit": false, "q": "Each integration's documentation matches what's actually running.", "tip": "Document from the live build; old design docs drift."}, {"key": "doc4", "crit": false, "q": "You have a current list of every integration, with vendor, schedule and direction.", "tip": "Start from Workday's integration system list and add owners and contacts."}, {"key": "doc5", "crit": false, "q": "The reasons behind rules (\"why is this worker excluded?\") are written down.", "tip": "Keep a short decision log per integration."}, {"key": "doc6", "crit": false, "q": "The vendor file specs you have are the current versions.", "tip": "Ask each vendor yearly for their current spec."}]}, {"id": "chg", "name": "Change & testing", "color": "#e08a12", "pattern": "Release roulette", "what": "Every Workday release or business change is a gamble.", "qs": [{"key": "chg1", "crit": true, "q": "Integrations are tested before each Workday release goes live.", "tip": "Run your top integrations in the preview tenant every release window."}, {"key": "chg2", "crit": true, "q": "Changes are tested in a sandbox, never made directly in production.", "tip": "Make \"tested in sandbox\" a required step before migration."}, {"key": "chg3", "crit": false, "q": "Tests include messy cases: rehires, terminations, duplicates, blanks.", "tip": "Keep a standing set of edge-case test workers."}, {"key": "chg4", "crit": false, "q": "You know which web service versions your integrations use, and when they retire.", "tip": "Inventory versions and plan upgrades before deprecation."}, {"key": "chg5", "crit": false, "q": "A new company, location or plan triggers an integration impact review.", "tip": "Add \"integration impact\" to your change checklist."}, {"key": "chg6", "crit": false, "q": "Every benefits feed has a test plan before Open Enrollment starts.", "tip": "Test each carrier feed with plan-year changes before OE opens."}]}, {"id": "res", "name": "Resilience & security", "color": "#7a2470", "pattern": "One person away from trouble", "what": "A departure or an expired password could stop everything.", "qs": [{"key": "res1", "crit": true, "q": "More than one person can fix a failing integration.", "tip": "Pair on the next fix and write the steps down."}, {"key": "res2", "crit": true, "q": "Passwords, certificates and SFTP keys have an owner and tracked expiry dates.", "tip": "List every credential with its expiry and set reminders 30 days out."}, {"key": "res3", "crit": false, "q": "Integration system users have only the access they need.", "tip": "Review integration system user security groups yearly."}, {"key": "res4", "crit": false, "q": "Production employee data never sits on laptops or shared drives.", "tip": "Mask samples and delete files after use."}, {"key": "res5", "crit": false, "q": "Files to vendors go over secure channels (SFTP, with PGP where supported).", "tip": "Confirm each outbound feed's transport and encryption."}, {"key": "res6", "crit": false, "q": "If your integration person left tomorrow, someone could keep things running for a month.", "tip": "Write a short runbook for your top five integrations."}]}];
+  const VAL = { yes: 1, unsure: .25, no: 0 };
+  const ECG = {   // the beat under the gauge: steady when healthy, irregular with some risk, weak when at risk
+    good: 'M0 32 H30 L36 32 L40 16 L46 48 L52 8 L58 40 L62 32 H100 L106 32 L110 16 L116 48 L122 8 L128 40 L132 32 H170 L176 32 L180 16 L186 48 L192 8 L198 40 L202 32 H240',
+    mid: 'M0 32 H22 L28 32 L31 22 L36 42 L40 14 L45 38 L48 32 H88 L92 28 L96 36 L100 32 H150 L156 32 L159 18 L164 46 L169 10 L174 40 L177 32 H200 L203 26 L207 36 L210 32 H240',
+    low: 'M0 32 H70 L74 32 L77 26 L81 38 L84 30 L87 32 H190 L193 29 L196 34 L199 32 H240',
+  };
+  const LABEL = { yes: 'Yes', unsure: 'Not sure', no: 'No' };
+  const box = document.querySelector('.hc'), stage = box.querySelector('.hc-stage'), prog = box.querySelector('.hc-prog'), lastEl = box.querySelector('.hc-last');
+  const STORE = 'intsys-healthcheck';
+  const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+  let deck = [], answers = [], at = 0, started = false;
+
+  function deal() {
+    deck = BANK.flatMap(a => {
+      const crit = pick(a.qs.filter(q => q.crit)), other = pick(a.qs.filter(q => !q.crit));
+      return (Math.random() < .5 ? [crit, other] : [other, crit]).map(q => ({ ...q, area: a }));
+    });
+    // interleave areas so the same area never appears twice in a row
+    const by = BANK.map(a => deck.filter(q => q.area.id === a.id));
+    deck = [0, 1].flatMap(r => by.map(g => g[r]));
+    answers = new Array(deck.length).fill(null); at = 0;
+    prog.innerHTML = deck.map(q => `<i style="--a:${q.area.color}"></i>`).join('');
+    showQ();
+  }
+  function paintProg() {
+    [...prog.children].forEach((b, i) => { b.classList.toggle('done', answers[i] !== null); b.classList.toggle('now', i === at && at < deck.length); });
+  }
+  function showQ(dir) {
+    const q = deck[at];
+    paintProg();
+    const html = `<div class="hc-card" style="--a:${q.area.color}">
+      <div class="hc-meta"><span class="hc-area">${esc(q.area.name)}</span><span>Question ${at + 1} of ${deck.length}</span>${q.crit ? '<span class="hc-crit">★ Critical</span>' : ''}</div>
+      <p class="hc-q">${esc(q.q)}</p>
+      <div class="hc-btns">${['yes', 'unsure', 'no'].map(v => `<button type="button" class="hc-b ${v}${answers[at] === v ? ' sel' : ''}" data-v="${v}">${LABEL[v]}<kbd>${v === 'yes' ? 'Y' : v === 'no' ? 'N' : '?'}</kbd></button>`).join('')}</div>
+      ${at > 0 ? '<button type="button" class="hc-back">← Back</button>' : ''}
+    </div>`;
+    const old = stage.querySelector('.hc-card');
+    const put = () => {
+      lock = false;
+      stage.innerHTML = html;
+      stage.querySelectorAll('.hc-b').forEach(b => b.onclick = () => answer(b.dataset.v));
+      const back = stage.querySelector('.hc-back'); if (back) back.onclick = () => { at--; showQ(); };
+    };
+    if (old && dir === 'next') { old.classList.add('out'); setTimeout(put, 180); } else put();
+  }
+  let lock = false;   // ignore double clicks while the card is changing
+  function answer(v) {
+    if (lock || at >= deck.length) return; lock = true;
+    if (!started) { started = true; track('hc_start'); }
+    answers[at] = v;
+    stage.querySelector(`.hc-b.${v}`)?.classList.add('sel');
+    setTimeout(() => { at++; at < deck.length ? showQ('next') : result(); }, 220);
+  }
+  function score() {
+    const areas = BANK.map(a => {
+      let got = 0, max = 0;
+      deck.forEach((q, i) => { if (q.area.id !== a.id) return; const w = q.crit ? 2 : 1; max += w; got += w * VAL[answers[i]]; });
+      return { ...a, pct: Math.round(got / max * 100) };
+    });
+    let got = 0, max = 0;
+    deck.forEach((q, i) => { const w = q.crit ? 2 : 1; max += w; got += w * VAL[answers[i]]; });
+    const pct = Math.round(got / max * 100);
+    const weakest = [...areas].sort((x, y) => x.pct - y.pct)[0];
+    const pattern = areas.every(a => a.pct >= 75)
+      ? { name: 'Well run', what: 'Your integrations are in good hands. A yearly review keeps them that way.', color: '#1f8a4c' }
+      : { name: weakest.pattern, what: weakest.what, color: weakest.color };
+    const gaps = deck.map((q, i) => ({ ...q, a: answers[i] })).filter(g => g.a !== 'yes')
+      .sort((x, y) => (y.crit - x.crit) || (VAL[x.a] - VAL[y.a]));
+    const unsure = answers.filter(a => a === 'unsure').length;
+    return { pct, areas, pattern, gaps, unsure };
+  }
+  function result() {
+    paintProg();
+    const r = score();
+    const prev = load();
+    save({ pct: r.pct, pattern: r.pattern.name, date: new Date().toISOString().slice(0, 10) });
+    track('hc_finish', { pattern: r.pattern.name, band: r.pct >= 75 ? 'high' : r.pct >= 45 ? 'mid' : 'low' });
+    const C = 2 * Math.PI * 90 / 2;   // half-circle length
+    const mail = 'mailto:bharat@intsys.guru?subject=' + encodeURIComponent(`My Integration Pulse Check: ${r.pct}% (${r.pattern.name})`)
+      + '&body=' + encodeURIComponent(`Hi Bharat,\n\nI took the Integration Pulse Check on intsys.guru.\n\nScore: ${r.pct}% (${r.pattern.name})\n`
+        + r.areas.map(a => `${a.name}: ${a.pct}%`).join('\n')
+        + (r.gaps.length ? '\n\nGaps:\n' + r.gaps.map(g => `- ${g.q} (${LABEL[g.a]})`).join('\n') : '')
+        + '\n\nCan we talk it through?\n');
+    stage.innerHTML = `<div class="hc-res" style="--a:${r.pattern.color}">
+      <div class="gauge"><svg viewBox="0 0 220 130"><defs><linearGradient id="gGrad"><stop offset="0" stop-color="#bc1f2d"/><stop offset=".5" stop-color="#f8ad40"/><stop offset="1" stop-color="#1f8a4c"/></linearGradient></defs>
+        <path class="g-bg" d="M20 115 A90 90 0 0 1 200 115"/><path class="g-val" d="M20 115 A90 90 0 0 1 200 115" style="stroke-dasharray:${C};stroke-dashoffset:${C}"/>
+        <text class="g-num" x="110" y="100">0%</text><text class="g-lbl" x="110" y="124">Pulse score</text></svg>
+        <svg class="ecg-res ${r.pct >= 75 ? 'good' : r.pct >= 45 ? 'mid' : 'low'}" viewBox="0 0 240 60" aria-hidden="true"><path d="${ECG[r.pct >= 75 ? 'good' : r.pct >= 45 ? 'mid' : 'low']}"/></svg>
+        <p class="ecg-cap">${r.pct >= 75 ? 'Steady rhythm' : r.pct >= 45 ? 'Irregular rhythm' : 'Weak pulse'}</p></div>
+      <div>
+        <h3>${r.pattern.name}</h3>
+        <p class="what">${esc(r.pattern.what)}</p>
+        <div class="areas">${r.areas.map(a => `<div class="ar" style="--a:${a.color}"><span>${esc(a.name)}</span><div class="bar"><span data-w="${a.pct}"></span></div><b>${a.pct}%</b></div>`).join('')}</div>
+        ${r.unsure >= 3 ? `<p class="unsure-note">You answered <b>Not sure</b> ${r.unsure} times. Not knowing is the first finding: you can't fix what you can't see.</p>` : ''}
+        ${r.gaps.length ? `<div class="start"><h4>Start here</h4>${r.gaps.map(g => `<div class="gap" style="--a:${g.area.color}"><i></i><p><b>${esc(g.q)}${g.crit ? '<span class="crit">★ CRITICAL</span>' : ''}</b><span>${esc(g.tip)}</span></p></div>`).join('')}</div>` : ''}
+        <div class="hc-acts">
+          <a class="btn btn-primary" href="${BOOK}" target="_blank" rel="noopener">Talk through my results</a>
+          <a class="btn btn-line hc-mail" href="${mail}">Email my results to Bharat</a>
+          <button type="button" class="btn btn-line hc-again">↻ Take it again with new questions</button>
+        </div>
+      </div></div>`;
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      stage.querySelector('.g-val').style.strokeDashoffset = C * (1 - r.pct / 100);
+      stage.querySelectorAll('.ar .bar span').forEach(b => b.style.width = b.dataset.w + '%');
+      const num = stage.querySelector('.g-num'), t0 = performance.now();
+      const step = now => { const k = Math.min((now - t0) / 1400, 1); num.textContent = Math.round(r.pct * (1 - Math.pow(1 - k, 3))) + '%'; if (k < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    }));
+    stage.querySelector('.hc-mail').onclick = () => track('hc_email');
+    stage.querySelector('.hc-again').onclick = () => { track('hc_shuffle'); started = false; deal(); };
+    showLast(prev);
+  }
+  function load() { try { return JSON.parse(localStorage.getItem(STORE)); } catch (e) { return null; } }
+  function save(v) { try { localStorage.setItem(STORE, JSON.stringify(v)); } catch (e) {} }
+  function showLast(p) {
+    if (!p) { lastEl.hidden = true; return; }
+    const d = new Date(p.date + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    lastEl.innerHTML = `Last time (${d}) you scored <b>${p.pct}%</b>: ${esc(p.pattern)}. Take it again to see if anything has changed.`;
+    lastEl.hidden = false;
+  }
+  box.querySelector('.hc-shuffle').onclick = () => { track('hc_shuffle'); started = false; deal(); };
+  document.addEventListener('keydown', e => {
+    if (!stage.querySelector('.hc-card') || e.metaKey || e.ctrlKey || /input|textarea/i.test(e.target.tagName)) return;
+    const r = box.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return;
+    const v = { y: 'yes', n: 'no', '?': 'unsure', s: 'unsure' }[e.key.toLowerCase()];
+    if (v) { e.preventDefault(); answer(v); }
+  });
+  showLast(load());
+  deal();
+})();
+</script>
+
+</body>
+</html>
