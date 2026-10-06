@@ -150,6 +150,11 @@
   .btn-primary:hover { background: #d42636; }
   .btn-ghost { color: #fff; border: 1px solid rgba(255,255,255,.35); margin-left: 12px; }
   .btn-ghost:hover { border-color: #fff; }
+  .hero-broken { display: none; margin-top: 20px; color: #ffb3ba; font-size: 16px; font-weight: 600; text-decoration: none; }
+  .hero-broken:hover { color: #fff; }
+  /* the header has room for "What's breaking?" only on wide screens; below that the hero carries the link */
+  @media (max-width: 1180px) { nav a[data-from="nav"] { display: none; } .hero-broken { display: block; width: max-content; } }
+  @media (max-width: 1000px) and (min-width: 761px) { nav a { margin-left: 16px; font-size: 14px; } }
   .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 72px; }
   .stat { border-top: 3px solid; padding-top: 16px; }
   .stat b { display: block; font-size: 38px; font-weight: 700; line-height: 1.1; }
@@ -807,8 +812,7 @@
     .hero h1 { font-size: 36px; }
     .hero p.lede { font-size: 18px; }
     .tagline { font-size: 10.5px; }
-    .btn-ghost { margin: 12px 0 0; }
-    .about { grid-template-columns: 1fr; }
+    .btn-ghost { margin: 12px 0 0; }    .about { grid-template-columns: 1fr; }
     .me { display: flex; flex-direction: column; align-items: flex-start; }
     .triage { grid-template-columns: 1fr; }
     /* phones: all six symptoms visible at once, as short chips in about two rows */
@@ -837,6 +841,7 @@
       <a href="#work">Work</a>
       <a href="#approach">Approach</a>
       <a href="#about">About</a>
+      <a href="#breaking" data-from="nav">What's breaking?</a>
       <a href="#pulse-check" class="nav-pulse"><svg viewBox="0 0 26 12" aria-hidden="true"><path d="M0 7h7l2-5 3 9 2-7 2 3h10"/></svg>Pulse check</a>
       <a class="btn-sm" href="https://fantastical.app/bharatrathaur" target="_blank" rel="noopener">Book a call</a>
     </nav>
@@ -887,6 +892,7 @@
     <p class="lede">16 years building, fixing and supporting Workday integrations. Studio, EIB, Cloud Connect, PECI and PICOF. I help Workday customers spend less time and money keeping their integrations running.</p>
     <a class="btn btn-primary" href="https://fantastical.app/bharatrathaur" target="_blank" rel="noopener">Book a 30-minute call</a>
     <a class="btn btn-ghost" href="mailto:bharat@intsys.guru">bharat@intsys.guru</a>
+    <a class="hero-broken" href="#breaking" data-from="hero">Something broken right now? <span aria-hidden="true">→</span></a>
     </div>
     <div class="hero-map">
       <svg class="net net-hero" viewBox="0 0 700 560" role="img" aria-label="Live map of data flowing between Workday and the systems around it"></svg>
@@ -1438,7 +1444,7 @@
         <li><span class="pr-ic" aria-hidden="true">✓</span><p><b>I'll tell you what I find,</b> even when it isn't the integration.</p></li>
         <li><span class="pr-ic" aria-hidden="true">✓</span><p><b>If I don't know yet, I'll say so.</b> I won't guess.</p></li>
         <li><span class="pr-ic" aria-hidden="true">✓</span><p><b>You work with me,</b> not a junior team.</p></li>
-        <li><span class="pr-ic" aria-hidden="true">✓</span><p><b>Everything I build is yours,</b> documented.</p></li>
+        <li><span class="pr-ic" aria-hidden="true">✓</span><p><b>Everything I build is yours,</b> documented so your team can run it without me.</p></li>
         <li><span class="pr-ic" aria-hidden="true">✓</span><p><b>Your employee data</b> stays masked.</p></li>
       </ul>
     </div>
@@ -1451,13 +1457,13 @@
       <div class="me">
         <div class="photo-ring"><img class="photo" src="{{PHOTO}}" alt="Bharat Rathaur"></div>
         <p class="avail"><i></i>Available for new projects</p>
-        <p class="localtime">It's <b class="lt-time">—</b> in New Jersey <span>(US Eastern)</span></p>
+        <p class="localtime">Remote, US-wide. It's <b class="lt-time">—</b> in New Jersey <span>(US Eastern)</span></p>
       </div>
       <div>
         <p class="kicker wide">About</p>
         <h2>Hi, I'm Bharat.</h2>
-        <p>I've worked on Workday integrations since Workday Release 11 (2010), and in enterprise software since 1993.</p>
-        <p>I started at DayNine as one of the first integration consultants at a Workday partner, led teams on projects with 50 to 100+ integrations, then spent five years at Sanofi running HR integration. Since 2020 I've worked independently through IntSysGuru LLC, with Workday customers directly and through implementation and staffing partners.</p>
+        <p>I've worked on Workday integrations since Workday Release 11 (2010), and in the software industry since 1993, when I started as a developer in India.</p>
+        <p>I joined DayNine as one of the first integration consultants at a Workday partner, led teams on projects with 50 to 100+ integrations, then spent five years at Sanofi running HR integration. Since 2020 I've worked independently through IntSysGuru LLC, with Workday customers directly and through implementation and staffing partners.</p>
         <p>You work with me directly. No hand-offs to a junior team.</p>
         <a class="btn btn-line profile-req" href="mailto:bharat@intsys.guru?subject=Request%3A%20full%20profile&amp;body=Hi%20Bharat%2C%0A%0ACould%20you%20send%20your%20full%20profile%3F%20We're%20looking%20at%3A%20%0A%0AThanks%2C%0A">Request my full profile</a>
         <div class="hobbies"><p class="hb-k"><span class="p">Passion</span> | <span class="k">Knowledge</span> | <span class="e">Experience</span>, away from the keyboard</p><div class="hb-row"><div class="hb c-red"><span class="hb-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20l6-10 4 6 3-4 5 8z"/></svg></span><div><span class="hb-tag">Passion</span><h4>Hiking</h4><p>Nature, and the law of nature. Life's stubbornness to grow anywhere. Like a river: continuous and changing, the greatest constant.</p></div></div><div class="hb c-blue"><span class="hb-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h4l2-3h6l2 3h4v12H3zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg></span><div><span class="hb-tag">Knowledge</span><h4>Photography</h4><p>Making memories, and the joy of reliving the moment. The details. Focusing on one thing, or on everything. The colors, and the lack of them.</p></div></div><div class="hb c-gold"><span class="hb-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM6 21c1-4 3-6 6-6s5 2 6 6M4 14c2 1 5 1 8-2 3 3 6 3 8 2"/></svg></span><div><span class="hb-tag">Experience</span><h4>Meditation</h4><p>Calm, peace, content, equanimity. The sensations, the good and the bad. It is what it is.</p></div></div></div></div>
@@ -1469,7 +1475,7 @@
       <div class="jr-line" role="list">
         <span class="jr-rail" aria-hidden="true"><span class="jr-fill"></span></span>
         <div class="jr c-plum" role="listitem" style="--k:0"><span class="jr-dot"></span><b class="jr-y">1993</b>
-          <div class="jr-card"><h4>First production code</h4><p>A finance system, written in Clipper.</p></div></div>
+          <div class="jr-card"><h4>Developer, India</h4><p>Building parts of enterprise software, starting with a finance system in Clipper.</p></div></div>
         <div class="jr c-blue" role="listitem" style="--k:1"><span class="jr-dot"></span><b class="jr-y">1998</b>
           <div class="jr-card"><h4>Enterprise CRM</h4><p>Vantive field service and help desk projects.</p></div></div>
         <div class="jr c-gold" role="listitem" style="--k:2"><span class="jr-dot"></span><b class="jr-y">2001</b>
@@ -1524,6 +1530,7 @@
       <button type="button" class="need" data-s="Release or change review" data-b="We have a Workday release or business change coming and want an integration review. What's changing: ">Release or change review</button>
       <button type="button" class="need" data-s="Ongoing integration support" data-b="We're looking for ongoing support for our Workday integrations. Roughly how many we run: ">Ongoing support</button>
       <button type="button" class="need" data-s="A quick question" data-b="Quick question: ">Just a question</button>
+      <button type="button" class="need" data-s="Partner or subcontract" data-b="We're an implementation or staffing partner and would like to work with you on: ">Partner or subcontract</button>
     </div>
     <div class="reach-out">
       <a class="ro" href="https://fantastical.app/bharatrathaur" target="_blank" rel="noopener">
@@ -1536,7 +1543,7 @@
         <span class="ro-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 10v7M3 3h18v18H3z"/></svg></span>
         <b>LinkedIn</b><span>Connect or message me</span></a>
     </div>
-    <p class="assure"><span><span class="dot"></span> Available for new projects</span><span class="sep">·</span><span>It's <b class="lt-time2">—</b> in New Jersey</span><span class="sep">·</span><span>Reply within one business day</span></p>
+    <p class="assure"><span><span class="dot"></span> Available for new projects</span><span class="sep">·</span><span>Remote, US-wide</span><span class="sep">·</span><span>It's <b class="lt-time2">—</b> in New Jersey</span><span class="sep">·</span><span>Reply within one business day</span></p>
   </div>
 </section>
 
@@ -1560,6 +1567,7 @@ const BOOK = 'https://fantastical.app/bharatrathaur';
 const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 /* Analytics: counts only (no answers, no personal data); does nothing until Umami loads on intsys.guru */
 const track = (name, data) => { try { window.umami && umami.track(name, data); } catch (e) {} };
+document.querySelectorAll('a[data-from][href="#breaking"]').forEach(a => a.addEventListener('click', () => track('breaking_link', { from: a.dataset.from })));
 const once = new Set(), trackOnce = (name, data) => { if (!once.has(name)) { once.add(name); track(name, data); } };
 
 /* Tagline pop-ups: hover on desktop, tap on phones */
