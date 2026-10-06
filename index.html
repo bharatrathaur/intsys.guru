@@ -597,6 +597,7 @@
   .sym { text-align: left; font: inherit; font-size: 16px; font-weight: 600; color: var(--ink); background: #fff;
     border: 2px solid var(--line); border-radius: 12px; padding: 14px 16px; cursor: pointer; transition: all .15s; }
   .sym:hover { border-color: var(--c); }
+  .sym .s-short { display: none; }
   .sym[aria-selected="true"] { background: var(--c); border-color: var(--c); color: #fff; }
   .diag { background: #fff; border-radius: 16px; padding: 28px 30px; border-top: 6px solid var(--c); box-shadow: 0 14px 34px rgba(20,21,43,.08); }
   .diag h3 { margin: 0 0 6px; font-size: 24px; }
@@ -800,10 +801,10 @@
     .about { grid-template-columns: 1fr; }
     .me { display: flex; flex-direction: column; align-items: flex-start; }
     .triage { grid-template-columns: 1fr; }
-    .symptoms { flex-direction: row; flex-wrap: nowrap; overflow-x: auto; scroll-snap-type: x proximity; margin: 0 -24px; padding: 2px 24px 8px;
-      scrollbar-width: none; -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); mask-image: linear-gradient(90deg, #000 85%, transparent); }
-    .symptoms::-webkit-scrollbar { display: none; }
-    .sym { flex: none; font-size: 14px; padding: 9px 14px; border-radius: 999px; white-space: nowrap; scroll-snap-align: start; }
+    /* phones: all six symptoms visible at once, as short chips in about two rows */
+    .symptoms { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+    .sym { flex: none; font-size: 14px; padding: 8px 13px; border-radius: 999px; white-space: nowrap; }
+    .sym .s-long { display: none; } .sym .s-short { display: inline; }
     .triage { gap: 14px; }
     .diag { padding: 22px 18px; }
     .diag { padding: 24px 20px; }
@@ -2060,9 +2061,11 @@ document.querySelector('.profile-req')?.addEventListener('click', () => track('p
     const m = diag.querySelector('.diag-mail');
     m.addEventListener('click', () => { m.href = mailto(); track('breaking_email'); });
   }
+  const SHORT = ['Failed', 'Warnings', 'Vendor rejected', 'Missing or wrong', 'Release coming', 'Nobody knows it'];   // phone labels
   SYM.forEach((s, i) => {
     const b = document.createElement('button');
-    b.type = 'button'; b.className = 'sym ' + s.c; b.setAttribute('role', 'tab'); b.textContent = s.label;
+    b.type = 'button'; b.className = 'sym ' + s.c; b.setAttribute('role', 'tab'); b.setAttribute('aria-label', s.label);
+    b.innerHTML = `<span class="s-long">${esc(s.label)}</span><span class="s-short">${esc(SHORT[i])}</span>`;
     b.onclick = () => { clearTimeout(hoverT); show(i); track('breaking_symptom', { symptom: s.label }); };
     // hover to preview (mouse only); a short pause avoids flicker, and a card you've started using stays put until you click another
     if (canHover) {
