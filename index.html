@@ -459,6 +459,18 @@
   .xl-status { padding: 5px 12px; font-size: 12px; background: #217346; color: #e6f4ea; }
   .xl-cap { margin: 10px 2px 0; font-size: 13px; color: var(--muted); }
   .tl-step { cursor: pointer; }
+  .xl-mini { display: none; }
+  @media (max-width: 1000px) {
+    .ap-grid > .xl { display: none; }
+    .ap-grid, .tline, .tl-step { min-width: 0; }
+    .xl-mini { display: block; margin-top: 14px; max-width: 520px; width: 100%; }
+    .xl-mini .xl-grid table { font-size: 11.5px; }
+    .xl-mini .xl-grid th, .xl-mini .xl-grid td { padding: 6px 5px; overflow-wrap: break-word; }
+    .xl-mini .xl-grid col.rn { width: 22px; }
+    .xl-mini .cause { font-size: 10px; padding: 2px 5px; white-space: nowrap; }
+    .xl-mini tr.hdr td { overflow-wrap: normal; font-size: 10.5px; }
+    .xl-mini .pass { font-size: 9.5px; padding: 2px 4px; white-space: nowrap; letter-spacing: .02em; }
+  }
   .promises { margin-top: 40px; background: var(--night); border-radius: 20px; padding: 34px 34px 30px; color: #fff; position: relative; overflow: hidden; }
   .promises::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 4px; background: var(--brand); }
   .promises h3 { margin: 0 0 22px; font-size: 14px; color: var(--experience); font-weight: 400; }
@@ -634,6 +646,13 @@
   .industries { margin-top: 64px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,.12); text-align: center; }
   .industries h3 { font-size: 14px; color: var(--experience); margin: 0 0 22px; font-weight: 400; }
   .ind-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 900px; margin: 0 auto; }
+  .ind-rows { display: none; }
+  @media (max-width: 760px) {
+    .industries .ind-chips { display: none; }
+    .ind-rows { display: block; overflow: hidden; margin: 0 -24px;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+    .ind-rows .mq-row .ind { opacity: 1 !important; transform: none !important; white-space: nowrap; }
+  }
   .ind { --c: #ff6b78; padding: 9px 16px 9px 30px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14);
     color: #e6e7f7; font-size: 15px; position: relative; transition: opacity .5s, transform .5s, border-color .2s; }
   html.js .industries:not(.in) .ind { opacity: 0; transform: translateY(10px); }
@@ -771,7 +790,7 @@
     nav a:not(.btn-sm) { display: none; }
     nav a.btn-sm { white-space: nowrap; padding: 8px 14px; font-size: 14px; margin-left: 12px; }
     .tagline { letter-spacing: .05em; gap: 6px 8px; }
-    .tw::after { width: 5px; height: 5px; margin-left: 5px; }
+    .tw::after { display: none; }   /* no room for the hover hint on a phone; words are still tappable */
     .tw-pop { width: auto; right: 0; }
     .hero { padding: 64px 0; }
     .hero h1 { font-size: 36px; }
@@ -781,8 +800,12 @@
     .about { grid-template-columns: 1fr; }
     .me { display: flex; flex-direction: column; align-items: flex-start; }
     .triage { grid-template-columns: 1fr; }
-    .symptoms { flex-direction: row; flex-wrap: wrap; }
-    .sym { font-size: 14px; padding: 10px 12px; }
+    .symptoms { flex-direction: row; flex-wrap: nowrap; overflow-x: auto; scroll-snap-type: x proximity; margin: 0 -24px; padding: 2px 24px 8px;
+      scrollbar-width: none; -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); mask-image: linear-gradient(90deg, #000 85%, transparent); }
+    .symptoms::-webkit-scrollbar { display: none; }
+    .sym { flex: none; font-size: 14px; padding: 9px 14px; border-radius: 999px; white-space: nowrap; scroll-snap-align: start; }
+    .triage { gap: 14px; }
+    .diag { padding: 22px 18px; }
     .diag { padding: 24px 20px; }
     .q { grid-template-columns: 30px 1fr; padding: 14px 16px; }
     .opts { grid-column: 2; }
@@ -897,7 +920,7 @@
         <div class="svc-art art-build" aria-hidden="true">
           <svg viewBox="0 0 240 96"><path class="ab-line" d="M62 48 C110 18 130 78 178 48"/>
             <circle class="ab-wd" cx="40" cy="48" r="22"/><text x="40" y="52" class="ab-t">WD</text>
-            <rect class="ab-v" x="178" y="28" width="50" height="40" rx="8"/><text x="203" y="52" class="ab-t">Vendor</text><circle class="ab-dot" r="4" opacity="0"><animateMotion dur="2.2s" repeatCount="indefinite" begin="indefinite" path="M62 48 C110 18 130 78 178 48"/><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.9;1" dur="2.2s" repeatCount="indefinite" begin="indefinite"/></circle><circle class="ab-dot" r="4" opacity="0"><animateMotion dur="2.2s" repeatCount="indefinite" begin="indefinite" path="M62 48 C110 18 130 78 178 48"/><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.9;1" dur="2.2s" repeatCount="indefinite" begin="indefinite"/></circle><circle class="ab-dot" r="4" opacity="0"><animateMotion dur="2.2s" repeatCount="indefinite" begin="indefinite" path="M62 48 C110 18 130 78 178 48"/><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.9;1" dur="2.2s" repeatCount="indefinite" begin="indefinite"/></circle></svg>
+            <rect class="ab-v" x="178" y="28" width="50" height="40" rx="8"/><text x="203" y="52" class="ab-t">Vendor</text><circle class="ab-dot" r="4" opacity="0"></circle><circle class="ab-dot" r="4" opacity="0"></circle><circle class="ab-dot" r="4" opacity="0"></circle></svg>
         </div>
         <span class="tag">Build</span>
         <h3>New integrations</h3>
@@ -1825,9 +1848,18 @@ if (heroNet) makeMap(heroNet, null, { id: 'hero', onPick: i => { document.getEle
   buildDots(); layout();
 })();
 
-/* Industries: chips ripple in when the strip scrolls into view */
+/* Industries: chips ripple in when the strip scrolls into view; phones get two drifting rows */
 (() => {
   const box = document.querySelector('.industries');
+  const names = [...box.querySelectorAll('.ind-chips .ind')], rows = document.createElement('div');
+  rows.className = 'ind-rows'; rows.setAttribute('aria-hidden', 'true');
+  [0, 1].forEach(r => {
+    const row = document.createElement('div'); row.className = 'mq-row';
+    const mine = names.filter((_, i) => i % 2 === r);
+    [...mine, ...mine].forEach(n => row.appendChild(n.cloneNode(true)));
+    rows.appendChild(row);
+  });
+  box.appendChild(rows);
   const io = new IntersectionObserver(es => { if (es[0].isIntersecting) { box.classList.add('in'); io.disconnect(); } }, { threshold: .3 });
   io.observe(box);
 })();
@@ -1835,18 +1867,28 @@ if (heroNet) makeMap(heroNet, null, { id: 'hero', onPick: i => { document.getEle
 /* Approach: the timeline fills as you scroll; the Excel window shows each step's deliverable */
 (() => {
   const tl = document.querySelector('.tline'), fill = tl.querySelector('.tl-fill'), steps = [...tl.querySelectorAll('.tl-step')];
-  const sheets = [...document.querySelectorAll('.xl-sheet')], btns = [...document.querySelectorAll('.xl-steps button')];
-  const passes = [...document.querySelectorAll('.xl-sheet[data-step="3"] .pass')], count = document.querySelector('.xl-count');
+  const sheets = [...document.querySelectorAll('.xl-win:not(.xl-mini) .xl-sheet')], btns = [...document.querySelectorAll('.xl-steps button')];
+  // phones: copy each step's sheet under that step (the side window is hidden there)
+  steps.forEach(st => {
+    const src = document.querySelector(`.xl-win .xl-sheet[data-step="${st.dataset.step}"]`);
+    if (!src) return;
+    const mini = document.createElement('div'); mini.className = 'xl-mini xl-win';
+    const copy = src.cloneNode(true); copy.hidden = false; mini.appendChild(copy);
+    st.appendChild(mini);
+  });
+  const passes = [...document.querySelectorAll('.xl-sheet[data-step="3"] .pass')], counts = [...document.querySelectorAll('.xl-count')];
+  const setCount = v => counts.forEach(c => c.textContent = v);
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let shown = 0, lastLit = 0, timers = [];
   function runTests() {
     timers.forEach(clearTimeout); timers = [];
-    passes.forEach(p => p.classList.remove('on')); count.textContent = 0;
-    passes.forEach((p, i) => timers.push(setTimeout(() => { p.classList.add('on'); count.textContent = i + 1; }, still ? 0 : 400 + 220 * i)));
+    passes.forEach(p => p.classList.remove('on')); setCount(0);
+    const per = passes.length / counts.length;   // the same 9 passes appear once per copy of the sheet
+    passes.forEach((p, i) => timers.push(setTimeout(() => { p.classList.add('on'); setCount(i % per + 1); }, still ? 0 : 400 + 220 * (i % per))));
   }
   function show(n) {
     if (n === shown) return; shown = n;
-    sheets.forEach(sh => sh.hidden = sh.dataset.step !== String(n));
+    sheets.forEach(sh => { if (!sh.closest('.xl-mini')) sh.hidden = sh.dataset.step !== String(n); });
     btns.forEach(b => b.classList.toggle('on', b.dataset.step === String(n)));
     if (n === 3) runTests();
   }
@@ -1876,13 +1918,26 @@ if (heroNet) makeMap(heroNet, null, { id: 'hero', onPick: i => { document.getEle
   const replay = c => {
     c.classList.remove('play'); void c.offsetWidth; c.classList.add('play');
     if (still || c.dataset.flowing) return;
-    // Build card: start the data dots once the line has drawn, a third of a lap apart
-    const dots = [...c.querySelectorAll('.ab-dot')];
-    if (!dots.length) return;
+    const line = c.querySelector('.ab-line'), dots = [...c.querySelectorAll('.ab-dot')];
+    if (!line || !dots.length) return;
+    // Build card: once the line has drawn, three data dots travel along it, a third of a lap apart
     c.dataset.flowing = 1;
-    dots.forEach((d, i) => setTimeout(() => d.querySelectorAll('animateMotion, animate').forEach(a => a.beginElement()), 1000 + i * 733));
+    const len = line.getTotalLength(), t0 = performance.now() + 1000;
+    const step = now => {
+      const t = (now - t0) / 2200;
+      dots.forEach((d, i) => {
+        const k = t - i / 3;
+        if (k < 0) return;
+        const f = k % 1, p = line.getPointAtLength(f * len);
+        d.setAttribute('cx', p.x); d.setAttribute('cy', p.y);
+        d.setAttribute('opacity', f < .1 ? f * 10 : f > .9 ? (1 - f) * 10 : 1);
+      });
+      requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
   };
-  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { replay(e.target); io.unobserve(e.target); } }), { threshold: .5 });
+  // a lower threshold so tall cards on phones still count as "in view"
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { replay(e.target); io.unobserve(e.target); } }), { threshold: .3 });
   cards.forEach(c => { io.observe(c); c.addEventListener('mouseenter', () => replay(c)); });
   document.querySelectorAll('.svc-links a[data-filter]').forEach(a => a.addEventListener('click', () => {
     track('services_examples', { service: a.closest('.card').querySelector('.tag').textContent });
