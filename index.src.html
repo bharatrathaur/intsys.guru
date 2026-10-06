@@ -19,6 +19,22 @@
 <!-- Fonts: IBM Plex Sans (c) IBM Corp. and Michroma (c) Vernon Adams, both under the SIL Open Font License 1.1, self-hosted.
      Some icon shapes adapted from Feather Icons (c) Cole Bemis, MIT License. -->
 <script>document.documentElement.classList.add('js')</script>
+<script>
+  // owner switch: ?notrack stops Umami counting this browser, ?track turns it back on. Runs before Umami loads.
+  (() => { try {
+    const q = new URLSearchParams(location.search);
+    if (!q.has('notrack') && !q.has('track')) return;
+    const off = q.has('notrack');
+    off ? localStorage.setItem('umami.disabled', '1') : localStorage.removeItem('umami.disabled');
+    history.replaceState(null, '', location.pathname + location.hash);
+    addEventListener('DOMContentLoaded', () => {
+      const n = document.createElement('div');
+      n.textContent = off ? 'Visits from this browser are no longer counted.' : 'Visits from this browser are counted again.';
+      n.style.cssText = 'position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:99;background:#10123a;color:#fff;padding:12px 18px;border-radius:12px;font:500 15px system-ui,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.25)';
+      document.body.appendChild(n); setTimeout(() => n.remove(), 5000);
+    });
+  } catch (e) {} })();
+</script>
 <script defer src="https://cloud.umami.is/script.js" data-website-id="7283e81e-7919-433a-a250-63175c9607ab" data-domains="intsys.guru,www.intsys.guru"></script>
 <style>
 {{FONTS}}
