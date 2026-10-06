@@ -1677,14 +1677,21 @@ function makeMap(svg, panel, opt = {}) {
   // boomerang: a loop that leaves Workday and comes back
   lane(`M${C.x - 26},${C.y - R0 + 6} C${C.x - 120},${C.y - 250} ${C.x + 120},${C.y - 250} ${C.x + 26},${C.y - R0 + 6}`, 'boom', groups.length, 'boom', BOOM);
   const boomLane = flows[flows.length - 1].path;
-  const bl = el('text', { class: 'boom-lbl', x: C.x, y: C.y - 214, tabindex: '0', role: 'button', 'aria-label': 'Boomerang' }, hubLayer);
-  bl.textContent = '↻ Boomerang';
+  // the boomerang gets its own hub at the top of its loop: data leaves Workday, passes through it, and comes back
+  const BY = C.y - 202;
+  const bl = el('g', { class: 'hub boom-hub', tabindex: '0', role: 'button', 'aria-label': 'Boomerang' }, hubLayer);
+  bl.style.setProperty('--hc', BOOM);
+  el('circle', { class: 'glow', cx: C.x, cy: BY, r: RH + 10 }, bl);
+  el('circle', { class: 'ring', cx: C.x, cy: BY, r: RH }, bl);
+  const bico = el('g', { transform: `translate(${C.x - 12} ${BY - 12}) rotate(45 12 12) translate(0 1.5)` }, bl);   // a classic boomerang
+  el('path', { class: 'ico', d: 'M18.5 6.5 Q9 3.5 6 6 Q3.5 9 6.5 18.5 Q8 20 9.3 18.3 Q8.7 12 10.3 10.3 Q12 8.7 18.3 9.3 Q20 8 18.5 6.5 Z',
+    style: 'fill: rgba(255,255,255,.25)' }, bico);
+  el('text', { class: 'lbl', x: C.x, y: BY - RH - 12, 'text-anchor': 'middle' }, bl).textContent = 'Boomerang';
 
   // core
   el('circle', { class: 'core-pulse', cx: C.x, cy: C.y, r: R0 }, hubLayer).style.stroke = `url(#coreGrad-${opt.id})`;
   el('circle', { class: 'core-ring', cx: C.x, cy: C.y, r: R0 }, hubLayer).style.stroke = `url(#coreGrad-${opt.id})`;
-  el('text', { class: 'core-t', x: C.x, y: C.y + 4 }, hubLayer).textContent = 'Workday';
-  el('text', { class: 'core-s', x: C.x, y: C.y + 24 }, hubLayer).textContent = 'your tenant';
+  el('text', { class: 'core-t', x: C.x, y: C.y + 8 }, hubLayer).textContent = 'Workday';
 
   // panel + focus
   let current = -1, userUntil = 0;
@@ -1696,6 +1703,7 @@ function makeMap(svg, panel, opt = {}) {
     svg.classList.add('focused');
     flows.forEach(f => f.path.classList.toggle('hot', f.gi === i));
     groups.forEach((x, j) => { x.hub.classList.toggle('hot', j === i); x.sat.el.classList.toggle('hot', j === i); });
+    bl.classList.toggle('hot', i === groups.length);
     if (!panel) return;
     panel.style.setProperty('--hc', g.color);
     panel.innerHTML = `<p class="np-k">${g.boom ? 'Workday → Workday' : 'Including'}</p><h3>${esc(g.title)}</h3>`
