@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Field notes · IntSys Guru</title>
+<meta name="description" content="Short, practical notes from real Workday integration work: what broke, why, and what to check. Examples generalised, no client data.">
+<link rel="canonical" href="https://intsys.guru/notes/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://intsys.guru/notes/">
+<meta property="og:site_name" content="IntSys Guru">
+<meta property="og:title" content="Field notes · IntSys Guru">
+<meta property="og:description" content="Short, practical notes from real Workday integration work: what broke, why, and what to check. Examples generalised, no client data.">
+<meta property="og:image" content="https://intsys.guru/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/notes/assets/mark.png">
+<link rel="stylesheet" href="/header.css">
+<link rel="stylesheet" href="/notes/notes.css">
+<script>(() => { try { const q = new URLSearchParams(location.search);
+  if (!q.has('notrack') && !q.has('track')) return;
+  q.has('notrack') ? localStorage.setItem('umami.disabled', '1') : localStorage.removeItem('umami.disabled');
+  history.replaceState(null, '', location.pathname + location.hash); } catch (e) {} })();</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="7283e81e-7919-433a-a250-63175c9607ab" data-domains="intsys.guru,www.intsys.guru"></script>
+</head>
+<body>
+<header class="nav">
+  <div class="hdr-pulse" aria-hidden="true"><svg height="18"><path class="trail"/><path class="pen"/></svg></div>
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/notes/assets/logo-home.webp" alt="IntSys Guru · Passion | Knowledge | Experience"></a>
+    <nav>
+      <a href="/#services">Services</a>
+      <a href="/#breaking" data-from="nav">What's breaking?</a>
+      <a href="/#results">Results</a>
+      <a href="/notes/" class="nav-notes">Field notes</a>
+      <a href="/#approach">Approach</a>
+      <a href="/#about">About</a>
+      <a href="/#pulse-check" class="nav-pulse"><svg viewBox="0 0 26 12" aria-hidden="true"><path d="M0 7h7l2-5 3 9 2-7 2 3h10"/></svg>Pulse check</a>
+      <a class="btn-sm" href="https://fantastical.app/bharatrathaur" target="_blank" rel="noopener" data-umami-event="note_book_call">Book a call</a>
+    </nav>
+  </div>
+</header>
+<script>
+/* header heartbeat: a beat every 150px, drawn at the header's real width; the pen moves at a steady 250px a second */
+(() => {
+  const box = document.querySelector('.hdr-pulse'); if (!box || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const svg = box.querySelector('svg'), trail = svg.querySelector('.trail'), pen = svg.querySelector('.pen');
+  let anims = [], lastW = 0;
+  function draw() {
+    const w = Math.ceil(box.getBoundingClientRect().width); if (!w || w === lastW) return; lastW = w;
+    let d = 'M0 13';
+    for (let x = 0; x < w; x += 150) d += ` H${x + 60} L${x + 66} 13 L${x + 70} 4 L${x + 76} 17 L${x + 81} 1 L${x + 86} 15 L${x + 90} 13 H${x + 150}`;
+    svg.setAttribute('viewBox', `0 0 ${w} 18`); svg.setAttribute('width', w);
+    trail.setAttribute('d', d); pen.setAttribute('d', d);
+    const len = pen.getTotalLength(), ms = len / 250 * 1000;
+    anims.forEach(a => a.cancel());
+    pen.style.strokeDasharray = `34 ${len + 400}`; trail.style.strokeDasharray = `150 ${len + 400}`;
+    anims = [pen.animate([{ strokeDashoffset: 34 }, { strokeDashoffset: -len }], { duration: ms, iterations: Infinity }),
+             trail.animate([{ strokeDashoffset: 150 }, { strokeDashoffset: -(len - 116) }], { duration: ms, iterations: Infinity })];
+  }
+  let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(draw, 150); });
+  draw();
+})();
+</script>
+<main>
+<div class="note-hero">
+  <div class="col">
+    <p class="crumb wide">Field notes</p>
+    <h1>Notes from the field</h1>
+    <p class="dek">Short, practical notes from real Workday integration work: what broke, why, and what to check. Examples generalised, no client data.</p>
+  </div>
+</div>
+<div class="col list">
+<div class="n-list">
+<a class="n-card" href="/notes/first-file-after-open-enrollment/" data-umami-event="note_open" data-umami-event-note="first-file-after-open-enrollment" data-slug="first-file-after-open-enrollment" data-topic="Benefits"><p class="n-meta"><b>Benefits</b> · October 9, 2026 · 4 min read</p><h2>Why the first file after Open Enrollment is the riskiest</h2><p>For a few weeks, two sets of benefit data run side by side. The first new-year file is where they meet, and two dates decide what's in it.</p><span class="more">Read the note →</span></a>
+</div>
+<p class="n-empty" hidden>No notes match. Try fewer words, or <a href="mailto:bharat@intsys.guru?subject=Field%20note%20request">ask me about it</a>.</p>
+
+</div>
+</main>
+<footer>
+  <div class="wrap">
+    <span><img src="/notes/assets/logo-white.webp" alt="IntSys Guru" width="500" height="102">© 2026 IntSysGuru LLC · <a href="/">intsys.guru</a></span>
+    <span class="legal">Independent consultant. Not affiliated with Workday, Inc. Workday is a trademark of Workday, Inc.<br>
+      All other product names and trademarks belong to their owners. Examples are generalised; no client data is shown.</span>
+  </div>
+</footer>
+</body>
+</html>
