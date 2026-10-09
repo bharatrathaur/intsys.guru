@@ -1,5 +1,12 @@
-"""Field notes: turn notes-src/*.md into notes/<slug>/index.html, the notes/ list page, sitemap.xml and the
-home-page cards. Only notes with `status: published` in their front matter are built."""
+"""Field notes: turn notes-src/*.md into notes/<slug>/index.html, the notes/ list page (with its search index),
+sitemap.xml, the home-page cards and the What's breaking? links. Only notes with `status: published` are built.
+
+Front matter: title, date, summary, topic, status, and optionally
+  short:     the "In short" answer shown first on the note
+  featured:  yes  -> listed under "Start here" once there are enough notes
+  breaking:  a What's breaking? pattern or symptom name (comma-separated for several); its result then links here
+
+The list page grows its tools as the collection grows (thresholds below), so a small collection stays simple."""
 from PIL import Image
 import datetime, html, json, math, os, re, subprocess, urllib.parse
 
@@ -8,6 +15,7 @@ BOOK = 'https://fantastical.app/bharatrathaur'
 UMAMI = ('<script defer src="https://cloud.umami.is/script.js" data-website-id="7283e81e-7919-433a-a250-63175c9607ab" '
          'data-domains="intsys.guru,www.intsys.guru"></script>')
 # same owner switch as the home page: ?notrack / ?track
+CHIPS_AT, SEARCH_AT, START_AT, YEARS_AT, PAGE = 6, 15, 10, 40, 20   # list-page tools switch on at these note counts
 NOTRACK = """<script>(() => { try { const q = new URLSearchParams(location.search);
   if (!q.has('notrack') && !q.has('track')) return;
   q.has('notrack') ? localStorage.setItem('umami.disabled', '1') : localStorage.removeItem('umami.disabled');
@@ -19,6 +27,7 @@ def read_note(path):
     m = re.match(r'---\n(.*?)\n---\n(.*)', text, re.S)
     meta = dict(line.split(': ', 1) for line in m.group(1).splitlines() if ': ' in line)
     meta['slug'] = os.path.splitext(os.path.basename(path))[0]
+    meta['path'] = path
     meta['body_md'] = m.group(2).strip()
     meta['date'] = datetime.date.fromisoformat(meta['date'])
     meta['minutes'] = max(1, math.ceil(len(meta['body_md'].split()) / 220))
@@ -128,7 +137,24 @@ FOOT = """<footer>
 """
 
 
-def note_page(n):
+def plain(md):
+    """Note body as plain words, for the search index."""
+    t = re.sub(r'^:::.*$|^[#>=\-]+ ?', ' ', md, flags=re.M)
+    t = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', t)
+    return re.sub(r'\s+', ' ', re.sub(r'[*|`_]', ' ', t)).strip()
+
+
+def related(n, notes):
+    """Up to three other notes on the same topic, newest first."""
+    rel = [m for m in notes if m is not n and m['topic'] == n['topic']][:3]
+    if not rel:
+        return ''
+    items = ''.join(f'<li><a href="/notes/{m["slug"]}/" data-umami-event="note_related">{inline(m["title"])}</a>'
+                    f'<span>{nice(m["date"])} · {m["minutes"]} min</span></li>' for m in rel)
+    return f'<aside class="more-on"><h2>More on {html.escape(n["topic"])}</h2><ul>{items}</ul></aside>\n'
+
+
+def note_page(n, notes=()):
     url = f'{SITE}/notes/{n["slug"]}/'
     image = url + 'og.jpg'
     ld = {'@context': 'https://schema.org', '@type': 'Article', 'headline': n['title'], 'description': n['summary'],
@@ -149,9 +175,15 @@ def note_page(n):
     return head(n['title'] + ' · IntSys Guru', n['summary'], url, 'article', extra, image) + f"""<main>
 <div class="note-hero">
   <div class="col">
-    <p class="crumb wide"><a href="/notes/">Field notes</a> · {html.escape(n['topic'])}</p>
+    <p class="crumb wide">Field notes · <a href="/notes/?topic={urllib.parse.quote(n['topic'])}" title="More notes on {html.escape(n['topic'])}">{html.escape(n['topic'])}</a></p>
+    <script>/* came from the notes list? go back to it as you left it: same filter, search and scroll */
+    (() => {{ try {{ const r = new URL(document.referrer); if (r.origin === location.origin && r.pathname === '/notes/')
+      addEventListener('click', e => {{ if (e.target.closest('a.to-list')) {{ e.preventDefault(); history.back(); }} }}); }} catch (e) {{}} }})();</script>
     <h1>{inline(n['title'])}</h1>
-    <p class="byline"><img src="/notes/assets/bharat.webp" alt="" width="88" height="88"><span><b>Bharat Rathaur</b> · {nice(n['date'])} · {n['minutes']} min read</span></p>
+    <div class="byline-row">
+      <p class="byline"><img src="/notes/assets/bharat.webp" alt="" width="88" height="88"><span><b>Bharat Rathaur</b> · {nice(n['date'])} · {n['minutes']} min read</span></p>
+      <a class="to-list to-notes" href="/notes/" data-umami-event="note_back">← All field notes</a>
+    </div>
     {top}
   </div>
 </div>
@@ -159,8 +191,8 @@ def note_page(n):
 <article class="body">
 {md_to_html(body.strip())}
 </article>
-<div class="next">
-  <div class="cta">
+{related(n, notes)}<div class="next">
+  <div class="note-ask">
     <h2>Something like this on your integrations?</h2>
     <p>Paste the error into What's breaking? for the likely cause and what to check first. Or talk it through with me.</p>
     <div class="btns">
@@ -169,22 +201,114 @@ def note_page(n):
       <a class="btn btn-ghost" href="{mail}" data-umami-event="note_email">Email me</a>
     </div>
   </div>
-  <p class="share"><a href="/notes/">← All field notes</a><a href="{share}" target="_blank" rel="noopener" data-umami-event="note_share">Share on LinkedIn</a></p>
+  <p class="note-foot"><a class="to-list" href="/notes/">← All field notes</a><a href="{share}" target="_blank" rel="noopener" data-umami-event="note_share">Share on LinkedIn</a></p>
 </div>
 </div>
 </main>
 """ + FOOT
 
 
-def card(n, href, cls):
-    return (f'<a class="{cls}" href="{href}" data-umami-event="note_open" data-umami-event-note="{n["slug"]}">'
+def card(n, href, cls, h='h3'):
+    return (f'<a class="{cls}" href="{href}" data-umami-event="note_open" data-umami-event-note="{n["slug"]}" '
+            f'data-slug="{n["slug"]}" data-topic="{html.escape(n["topic"])}">'
             f'<p class="n-meta"><b>{html.escape(n["topic"])}</b> · {nice(n["date"])} · {n["minutes"]} min read</p>'
-            f'<h3>{inline(n["title"])}</h3><p>{inline(n["summary"])}</p><span class="more">Read the note →</span></a>')
+            f'<{h}>{inline(n["title"])}</{h}><p>{inline(n["summary"])}</p><span class="more">Read the note →</span></a>')
+
+
+LIST_JS = """<script>
+/* Field notes list: topic chips, search (full text, loaded on first use), "Show more". Without JavaScript every note is listed. */
+(() => {
+  const list = document.querySelector('.n-list'); if (!list) return;
+  const cards = [...list.querySelectorAll('.n-card')], years = [...list.querySelectorAll('.n-year')];
+  const q = document.querySelector('.n-q'), chips = [...document.querySelectorAll('.n-chip')], more = document.querySelector('.n-more');
+  const count = document.querySelector('.n-count'), empty = document.querySelector('.n-empty'), PAGE = %d;
+  const track = (n, d) => { try { window.umami && umami.track(n, d); } catch (e) {} };
+  let limit = more ? PAGE : Infinity, topic = 'all', words = [], idx = null, searched = false;
+  async function load() {
+    if (idx) return;
+    try { idx = {}; (await (await fetch('/notes/index.json')).json()).forEach(n => idx[n.s] = (n.t + ' ' + n.d + ' ' + n.p + ' ' + n.x).toLowerCase()); }
+    catch (e) { idx = {}; }
+  }
+  function apply() {
+    let shown = 0, total = 0;
+    cards.forEach(c => {
+      const hay = (idx && idx[c.dataset.slug]) || c.textContent.toLowerCase();
+      const ok = (topic === 'all' || c.dataset.topic === topic) && words.every(w => hay.includes(w));
+      if (ok) total++;
+      c.hidden = !(ok && shown < limit); if (!c.hidden) shown++;
+    });
+    years.forEach(y => { let el = y.nextElementSibling, any = false;
+      while (el && !el.classList.contains('n-year')) { if (!el.hidden) any = true; el = el.nextElementSibling; } y.hidden = !any; });
+    if (count) count.textContent = topic === 'all' && !words.length ? `${cards.length} notes` : `${total} of ${cards.length} notes`;
+    if (empty) empty.hidden = total > 0;
+    if (more) { more.hidden = shown >= total; more.textContent = `Show more (${total - shown} more)`; }
+  }
+  // the address keeps the current view (?topic=…&q=…&n=…), so Back from a note, a reload or a shared link shows the same list
+  function sync() {
+    const p = new URLSearchParams();
+    if (topic !== 'all') p.set('topic', topic);
+    if (q && q.value.trim()) p.set('q', q.value.trim());
+    if (more && limit > PAGE) p.set('n', limit);
+    history.replaceState(null, '', location.pathname + (p.toString() ? '?' + p : ''));
+  }
+  const pressChip = t => chips.forEach(x => x.setAttribute('aria-pressed', x.dataset.topic === t));
+  if (q) {
+    let t; q.addEventListener('focus', load, { once: true });
+    q.addEventListener('input', () => { clearTimeout(t); t = setTimeout(async () => {
+      await load(); words = q.value.toLowerCase().split(/\\s+/).filter(Boolean); limit = more ? PAGE : Infinity; apply(); sync();
+      if (words.length && !searched) { searched = true; track('notes_search'); }   // that someone searched, never what
+    }, 150); });
+  }
+  chips.forEach(ch => ch.onclick = () => {
+    topic = ch.dataset.topic; pressChip(topic); limit = more ? PAGE : Infinity; apply(); sync();
+    track('notes_topic', { topic });
+  });
+  if (more) more.onclick = () => { limit += PAGE; apply(); sync(); };
+  (async () => {
+    const p = new URLSearchParams(location.search);
+    if (p.get('topic') && cards.some(c => c.dataset.topic === p.get('topic'))) { topic = p.get('topic'); pressChip(topic); }
+    if (more && +p.get('n') > PAGE) limit = +p.get('n');
+    if (q && p.get('q')) { q.value = p.get('q'); await load(); words = q.value.toLowerCase().split(/\\s+/).filter(Boolean); }
+    apply();
+  })();
+})();
+</script>
+""" % PAGE
 
 
 def list_page(notes):
     desc = 'Short, practical notes from real Workday integration work: what broke, why, and what to check. Examples generalised, no client data.'
-    cards = '\n'.join(card(n, f'/notes/{n["slug"]}/', 'n-card').replace('<h3>', '<h2>').replace('</h3>', '</h2>') for n in notes)
+    n_all, years = len(notes), len(notes) >= YEARS_AT
+    h = 'h3' if years else 'h2'
+    tools = ''
+    feat = [n for n in notes if n.get('featured', '').lower() == 'yes'][:4]
+    if feat and n_all >= START_AT:
+        tools += ('<section class="n-start"><h2 class="wide">Start here</h2><div class="n-start-grid">'
+                  + ''.join(f'<a class="n-feat" href="/notes/{n["slug"]}/" data-umami-event="note_open" data-umami-event-note="{n["slug"]}">'
+                            f'<b>{html.escape(n["topic"])}</b><span>{inline(n["title"])}</span></a>' for n in feat) + '</div></section>\n')
+    bar = ''
+    if n_all >= SEARCH_AT:
+        bar += ('<label class="n-search"><span class="sr">Search field notes</span>'
+                '<input class="n-q" type="search" placeholder="Search, e.g. rehire or 834" autocomplete="off"></label>')
+    if n_all >= CHIPS_AT:
+        topics = {}
+        for n in notes:
+            topics[n['topic']] = topics.get(n['topic'], 0) + 1
+        bar += ('<div class="n-chips" role="group" aria-label="Filter by topic">'
+                f'<button type="button" class="n-chip" data-topic="all" aria-pressed="true">All <i>{n_all}</i></button>'
+                + ''.join(f'<button type="button" class="n-chip" data-topic="{html.escape(t)}" aria-pressed="false">{html.escape(t)} <i>{c}</i></button>'
+                          for t, c in sorted(topics.items(), key=lambda kv: (-kv[1], kv[0]))) + '</div>')
+    if bar:
+        tools += f'<div class="n-tools">{bar}<p class="n-count" aria-live="polite"></p></div>\n'
+    rows, last = [], None
+    for n in notes:
+        if years and n['date'].year != last:
+            last = n['date'].year
+            rows.append(f'<h2 class="n-year wide">{last}</h2>')
+        rows.append(card(n, f'/notes/{n["slug"]}/', 'n-card', h))
+    more = '<button type="button" class="n-more" hidden>Show more</button>' if n_all > PAGE else ''
+    empty = ('<p class="n-empty" hidden>No notes match. Try fewer words, or '
+             '<a href="mailto:bharat@intsys.guru?subject=Field%20note%20request">ask me about it</a>.</p>')
     return head('Field notes · IntSys Guru', desc, f'{SITE}/notes/', 'website') + f"""<main>
 <div class="note-hero">
   <div class="col">
@@ -194,10 +318,14 @@ def list_page(notes):
   </div>
 </div>
 <div class="col list">
-{cards}
+{tools}<div class="n-list">
+{chr(10).join(rows)}
+</div>
+{empty}
+{more}
 </div>
 </main>
-""" + FOOT
+{LIST_JS if (bar or more) else ''}""" + FOOT
 
 
 def assets():
@@ -257,7 +385,8 @@ h1 {{ font-size: 62px; line-height: 1.1; letter-spacing: -.02em; margin: 0; max-
 
 
 def build():
-    """Write every note page, the list page and sitemap.xml; return the home-page cards (latest three)."""
+    """Write every note page, the list page, its search index and sitemap.xml. Returns what the home page needs:
+    {'cards': latest three, 'count': n, 'links': What's breaking? name -> newest note about it}."""
     os.makedirs('notes', exist_ok=True)
     src = sorted(os.listdir('notes-src')) if os.path.isdir('notes-src') else []
     notes = [read_note(os.path.join('notes-src', f)) for f in src if f.endswith('.md')]
@@ -267,20 +396,54 @@ def build():
                                        f'  <url><loc>{SITE}/</loc><lastmod>{datetime.date.today().isoformat()}</lastmod></url>\n</urlset>\n')
         open('robots.txt', 'w').write(f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n')
         print('notes built: 0 (none published)')
-        return ''
+        return {'cards': '', 'count': 0, 'links': {}, 'more': '', 'topics': ''}
     assets()
     for n in notes:
         os.makedirs(f'notes/{n["slug"]}', exist_ok=True)
-        open(f'notes/{n["slug"]}/index.html', 'w').write(note_page(n))
-        og_card(n)
+        open(f'notes/{n["slug"]}/index.html', 'w').write(note_page(n, notes))
+        og = f'notes/{n["slug"]}/og.jpg'   # re-render the link card only when the note changed
+        if not os.environ.get('NOTES_SKIP_OG') and (not os.path.exists(og) or os.path.getmtime(og) < os.path.getmtime(n['path'])):
+            og_card(n)
     open('notes/index.html', 'w').write(list_page(notes))
+    json.dump([{'s': n['slug'], 't': n['title'], 'd': n['summary'], 'p': n['topic'], 'y': n['date'].isoformat(), 'x': plain(n['body_md'])}
+               for n in notes], open('notes/index.json', 'w'), ensure_ascii=False, separators=(',', ':'))
+    links = {}
+    for n in reversed(notes):   # oldest first, so the newest note on a name wins
+        for name in filter(None, (x.strip() for x in n.get('breaking', '').split(','))):
+            links[name] = {'t': n['title'], 'u': f'/notes/{n["slug"]}/'}
     urls = [(f'{SITE}/', datetime.date.today()), (f'{SITE}/notes/', notes[0]['date'] if notes else datetime.date.today())]
     urls += [(f'{SITE}/notes/{n["slug"]}/', n['date']) for n in notes]
     open('sitemap.xml', 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                                    + ''.join(f'  <url><loc>{u}</loc><lastmod>{d.isoformat()}</lastmod></url>\n' for u, d in urls) + '</urlset>\n')
     open('robots.txt', 'w').write(f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n')
     print('notes built:', len(notes))
-    return '\n'.join(card(n, f'/notes/{n["slug"]}/', 'n-card') for n in notes[:3])
+    return {'cards': '\n'.join(card(n, f'/notes/{n["slug"]}/', 'n-card') for n in notes[:3]), 'count': len(notes), 'links': links,
+            'more': home_more(notes), 'topics': home_topics(notes)}
+
+
+HOME_MORE_AT, HOME_TOPICS_AT = 4, 10   # home page: compact list from 4 notes, topic links from 10
+
+
+def home_more(notes):
+    """Notes 4-8 as a compact list under the three newest cards."""
+    if len(notes) < HOME_MORE_AT:
+        return ''
+    return ('    <ul class="n-list-more">' + ''.join(
+        f'<li><a href="/notes/{n["slug"]}/" data-umami-event="note_open" data-umami-event-note="{n["slug"]}">'
+        f'<b>{inline(n["title"])}</b><span><em>{html.escape(n["topic"])}</em> · {nice(n["date"])}</span></a></li>'
+        for n in notes[3:8]) + '</ul>')
+
+
+def home_topics(notes):
+    """Topic links, busiest first, each opening the notes page filtered to it."""
+    if len(notes) < HOME_TOPICS_AT:
+        return ''
+    topics = {}
+    for n in notes:
+        topics[n['topic']] = topics.get(n['topic'], 0) + 1
+    return ('    <div class="n-topics"><span>Browse by topic</span>' + ''.join(
+        f'<a href="/notes/?topic={urllib.parse.quote(t)}" data-umami-event="notes_topic_home">{html.escape(t)} <i>{c}</i></a>'
+        for t, c in sorted(topics.items(), key=lambda kv: (-kv[1], kv[0]))) + '</div>')
 
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 """Inline the logo, photo and fonts into index.html so the page is one self-contained file."""
 from PIL import Image
-import base64, io, os, re
+import base64, io, json, os, re
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
@@ -27,9 +27,12 @@ FONTS = (f"  @font-face {{ font-family: 'IBM Plex Sans'; font-style: normal; fon
 import build_notes
 
 s = open('index.src.html').read()
-cards = build_notes.build()
-if cards:
-    s = s.replace('{{NOTES}}', cards)
+notes = build_notes.build()
+s = s.replace('{{NOTE_LINKS}}', json.dumps(notes['links'], ensure_ascii=False))
+if notes['cards']:
+    s = s.replace('{{NOTES}}', notes['cards']).replace('{{NOTES_MORE}}\n', notes['more'] + '\n' if notes['more'] else '')
+    s = s.replace('{{NOTES_TOPICS}}\n', notes['topics'] + '\n' if notes['topics'] else '')
+    s = s.replace('{{NOTES_ALL}}', f'All {notes["count"]} field notes →' if notes['count'] > 3 else 'All field notes →')
 else:   # no published field notes yet: leave the section and its header link out of the page
     s = re.sub(r'<section id="notes">.*?</section>\n\n', '', s, flags=re.S)
     s = s.replace('      <a href="#notes" class="nav-notes">Field notes</a>\n', '')

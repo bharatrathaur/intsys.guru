@@ -17,6 +17,11 @@ Website for IntSysGuru LLC, Workday integration consulting. Served by GitHub Pag
 
 Draft notes (`notes-src/`) are not committed until they are published: this repository is public.
 
+**Class names: avoid what content blockers hide.** Safari blockers such as Wipr hide elements by class name.
+A button classed `back-top` vanished in Safari (it looks like a "back to top" widget). Steer clear of names like
+`back-top`, `share`, `social`, `related`, `cta`, `popup`, `banner`, `ad`, `sponsor`, `newsletter`, and check new
+pages in Safari with its content blocker on.
+
 To preview locally: `python3 -m http.server 8765`, then open http://127.0.0.1:8765/index.html.
 Analytics (Umami) only count on intsys.guru, so local previews don't affect the numbers.
 
