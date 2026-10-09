@@ -1,6 +1,6 @@
 """Inline the logo, photo and fonts into index.html so the page is one self-contained file."""
 from PIL import Image
-import base64, io, os
+import base64, io, os, re
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
@@ -24,7 +24,17 @@ FONTS = (f"  @font-face {{ font-family: 'IBM Plex Sans'; font-style: normal; fon
          f"  @font-face {{ font-family: 'Michroma'; font-style: normal; font-weight: 400; font-display: swap; "
          f"src: url({font_uri('fonts/Michroma-400.woff2')}) format('woff2'); unicode-range: {LATIN}; }}")
 
+import build_notes
+
 s = open('index.src.html').read()
+cards = build_notes.build()
+if cards:
+    s = s.replace('{{NOTES}}', cards)
+else:   # no published field notes yet: leave the section and its header link out of the page
+    s = re.sub(r'<section id="notes">.*?</section>\n\n', '', s, flags=re.S)
+    s = s.replace('      <a href="#notes" class="nav-notes">Field notes</a>\n', '')
+    assert '{{NOTES}}' not in s and 'nav-notes">' not in s
+s = s.replace('{{HEADER_CSS}}', open('header.css').read())
 s = s.replace('{{FONTS}}', FONTS)
 s = s.replace('{{LOGO}}', webp_uri('logo.webp', 900))
 s = s.replace('{{LOGO_WHITE}}', webp_uri('logo-white.png', 800))

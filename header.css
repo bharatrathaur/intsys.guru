@@ -1,0 +1,34 @@
+  /* Site header, shared by every page: build.py inlines it into index.html; the field-note pages link /header.css.
+     The header markup lives once, between the shared-header markers in index.src.html. */
+  header.nav { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,.96); backdrop-filter: blur(6px); }
+  header.nav::after { content: ""; display: block; height: 4px; background: var(--brand); }
+  .hdr-pulse { position: absolute; left: 0; right: 0; bottom: -7px; height: 18px; overflow: hidden; pointer-events: none; z-index: 2; }
+  /* a live monitor trace: a bright pen draws the beat as it travels, with a fading trail behind it */
+  .hdr-pulse svg { position: absolute; inset: 0; width: 100%; height: 18px; overflow: visible; }
+  .hdr-pulse path { fill: none; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+  .hdr-pulse .pen { stroke: #fff; stroke-width: 2.4; stroke-dasharray: 34 2600; filter: drop-shadow(0 0 4px #fff); animation: trace 6s linear infinite; }
+  .hdr-pulse .trail { stroke: rgba(255,255,255,.55); stroke-width: 1.6; stroke-dasharray: 150 2600; animation: trace-trail 6s linear infinite; }
+  @keyframes trace { from { stroke-dashoffset: 34; } to { stroke-dashoffset: -1500; } }
+  @keyframes trace-trail { from { stroke-dashoffset: 150; } to { stroke-dashoffset: -1384; } }
+  @media (prefers-reduced-motion: reduce) { .hdr-pulse { display: none; } }
+  header.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 84px; }
+  .brand img { display: block; height: 58px; width: auto; }
+  /* own font size and no wrapping, so the header measures the same whatever the page's body text size */
+  nav { font-size: 15px; line-height: 1.6; white-space: nowrap; }
+  nav a { color: var(--ink-2); text-decoration: none; margin-left: 26px; font-size: 15px; font-weight: 500; }
+  nav a:hover { color: var(--passion); }
+  .nav-pulse svg { width: 20px; height: 10px; margin-right: 6px; vertical-align: -1px; fill: none; stroke: var(--passion); stroke-width: 2; stroke-linejoin: round;
+    stroke-dasharray: 40; animation: navbeat 2.4s ease-in-out infinite; }
+  @keyframes navbeat { 0% { stroke-dashoffset: 40; } 50%, 100% { stroke-dashoffset: 0; } }
+  nav a.btn-sm { background: var(--passion); color: #fff; padding: 9px 18px; border-radius: 999px; }
+  nav a.btn-sm:hover { background: #a01a26; color: #fff; }
+  /* narrower screens drop links rather than wrap: Field notes first, then What's breaking? */
+  @media (max-width: 1300px) { nav a.nav-notes { display: none; } }
+  @media (max-width: 1180px) { nav a[data-from="nav"] { display: none; } }
+  @media (max-width: 1000px) and (min-width: 761px) { nav a { margin-left: 16px; font-size: 14px; } }
+  @media (max-width: 760px) {
+    header.nav .wrap { height: 68px; }
+    .brand img { height: 38px; }
+    nav a:not(.btn-sm) { display: none; }
+    nav a.btn-sm { white-space: nowrap; padding: 8px 14px; font-size: 14px; margin-left: 12px; }
+  }
