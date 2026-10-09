@@ -2199,8 +2199,13 @@ document.querySelector('.profile-req')?.addEventListener('click', () => track('p
 
 /* Analytics: counts only, sent to Umami when it is installed; a no-op until then */
 document.addEventListener('click', e => {
-  const a = e.target.closest('a[href*="fantastical.app"]');
-  if (a) track('book_call', { from: a.closest('section, header')?.id || a.closest('section, header')?.className.split(' ')[0] || 'page' });
+  const a = e.target.closest('a');
+  if (!a) return;
+  const from = a.closest('section, header, footer')?.id || a.closest('section, header, footer')?.className.split(' ')[0] || 'page';
+  const href = a.getAttribute('href') || '';
+  if (href.includes('fantastical.app')) track('book_call', { from });
+  else if (href.includes('linkedin.com')) track('linkedin', { from });
+  else if (href === 'mailto:bharat@intsys.guru') track('email_link', { from });   // plain links; pre-filled ones track themselves
 });
 
 /* Health check: a rotating bank of 24 questions; each visit deals 2 per area (one critical, one not) */
