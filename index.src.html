@@ -651,7 +651,7 @@
   .diag-acts { display: flex; flex-wrap: wrap; gap: 10px; }
   .diag-acts .btn { font-size: 15px; padding: 12px 20px; }
   .xlink { margin: 26px 0 0; font-size: 15px; color: var(--ink-2); }
-  .xlink a { font-weight: 600; }
+  .xlink a { font-weight: 600; white-space: nowrap; }   /* the link never splits; on phones it moves to its own line */
   @media (max-width: 860px) { .paste { grid-template-columns: 1fr; } .ps-in { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.08); } }
 
   /* testimonials */
@@ -873,7 +873,7 @@
   .fold-btn, .lift { display: none; }
   @media (max-width: 760px) {
     html.js [data-fold]:not(.unfold) { display: none !important; }
-    html.js .fold-btn { display: inline-flex; align-items: center; gap: 8px; margin: 14px 0 2px; padding: 9px 16px; border-radius: 999px;
+    html.js .fold-btn { display: inline-flex; align-items: center; gap: 8px; margin: 14px 0 2px; min-height: 40px; padding: 9px 16px; border-radius: 999px;
       border: 1px solid var(--line); background: #fff; color: var(--ink); font: 600 14px/1.2 "IBM Plex Sans", sans-serif; cursor: pointer; }
     html.js .fold-btn::after { content: ""; width: 7px; height: 7px; border: solid currentColor; border-width: 0 2px 2px 0; transform: translateY(-2px) rotate(45deg); transition: transform .2s; }
     html.js .fold-btn[aria-expanded="true"]::after { transform: translateY(1px) rotate(-135deg); }
