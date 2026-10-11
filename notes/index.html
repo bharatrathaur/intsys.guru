@@ -15,7 +15,9 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="627">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="/notes/assets/mark.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="stylesheet" href="/header.css">
 <link rel="stylesheet" href="/notes/notes.css">
 <script>(() => { try { const q = new URLSearchParams(location.search);
@@ -37,6 +39,19 @@
       <a href="/#approach">Approach</a>
       <a href="/#about">About</a>
       <a href="/#pulse-check" class="nav-pulse"><svg viewBox="0 0 26 12" aria-hidden="true"><path d="M0 7h7l2-5 3 9 2-7 2 3h10"/></svg>Pulse check</a>
+      <details class="jump">
+        <summary aria-label="Sections"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
+        <div class="jump-list">
+          <a href="/#services">Services</a>
+          <a href="/#breaking" data-from="menu">What's breaking?</a>
+          <a href="/#results">Results</a>
+          <a href="/notes/" class="nav-notes">Field notes</a>
+          <a href="/#approach">Approach</a>
+          <a href="/#about">About</a>
+          <a href="/#pulse-check">Pulse check</a>
+          <a href="/#contact">Contact</a>
+        </div>
+      </details>
       <a class="btn-sm" href="https://fantastical.app/bharatrathaur" target="_blank" rel="noopener" data-umami-event="note_book_call">Book a call</a>
     </nav>
   </div>
@@ -61,6 +76,14 @@
   }
   let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(draw, 150); });
   draw();
+})();
+/* sections menu (phones): closes when a section is picked, on a tap outside, or on Escape */
+(() => {
+  const m = document.querySelector('header.nav .jump'); if (!m) return;
+  m.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { m.open = false; }));
+  document.addEventListener('click', e => { if (m.open && !m.contains(e.target)) m.open = false; });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && m.open) { m.open = false; m.querySelector('summary').focus(); } });
+  m.addEventListener('toggle', () => { if (m.open) try { window.umami && umami.track('menu_open'); } catch (e) {} });
 })();
 </script>
 <main>

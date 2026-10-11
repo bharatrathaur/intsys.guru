@@ -101,7 +101,7 @@ def head(title, desc, url, og_type, extra='', image=f'{SITE}/og-image.png'):
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="627">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="/notes/assets/mark.png">
+{ICON_LINKS}
 <link rel="stylesheet" href="/header.css">
 <link rel="stylesheet" href="/notes/notes.css">
 {NOTRACK}
@@ -338,14 +338,32 @@ def assets():
     save('logo-white.png', 'notes/assets/logo-white.webp', 500)
     im = Image.open('photo.jpg'); s = min(im.size)
     im.crop(((im.width - s) // 2, 0, (im.width + s) // 2, s)).resize((88, 88), Image.LANCZOS).save('notes/assets/bharat.webp', 'WEBP', quality=88)
-    # favicon: the coloured mark from the middle of the logo
+
+
+ICON_LINKS = ('<link rel="icon" href="/favicon.ico" sizes="any">\n'
+              '<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">\n'
+              '<link rel="apple-touch-icon" href="/apple-touch-icon.png">')
+
+
+def icons():
+    """Site icons from the coloured mark in the middle of the logo, padded to a square (never squashed):
+    favicon.ico (16/32/48), icon-192.png (browsers, Google results) and apple-touch-icon.png (white tile)."""
     logo = Image.open('logo.webp').convert('RGBA'); px = logo.load()
     xs, ys = [], []
     for y in range(0, min(300, logo.height)):
         for x in range(logo.width // 2 - 200, logo.width // 2 + 200):
             r, g, b, a = px[x, y]
             if a > 40 and max(r, g, b) - min(r, g, b) > 60: xs.append(x); ys.append(y)
-    logo.crop((min(xs), min(ys), max(xs) + 1, max(ys) + 1)).resize((64, 64), Image.LANCZOS).save('notes/assets/mark.png')
+    mark = logo.crop((min(xs), min(ys), max(xs) + 1, max(ys) + 1))
+    side = max(mark.size)
+    sq = Image.new('RGBA', (side, side), (0, 0, 0, 0))
+    sq.paste(mark, ((side - mark.width) // 2, (side - mark.height) // 2))
+    sq.resize((192, 192), Image.LANCZOS).save('icon-192.png')
+    sq.save('favicon.ico', sizes=[(16, 16), (32, 32), (48, 48)])
+    tile = Image.new('RGBA', (180, 180), (255, 255, 255, 255))
+    inner = sq.resize((132, 132), Image.LANCZOS)
+    tile.paste(inner, (24, 24), inner)
+    tile.convert('RGB').save('apple-touch-icon.png')
 
 
 CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
