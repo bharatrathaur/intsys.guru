@@ -717,13 +717,11 @@
   .avatar { flex: none; width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 16px; color: #fff; letter-spacing: .04em; }
   .avatar.a-red { background: linear-gradient(135deg, #ff7a45, #bc1f2d); }
   .avatar.a-blue { background: linear-gradient(135deg, #8f93ff, #2f3192); }
-  .li-link { margin: 26px 0 0; text-align: center; }
-  .li-link a { display: inline-flex; align-items: center; gap: 10px; color: #c9cbe6; text-decoration: none; font-weight: 600; font-size: 15px;
-    padding: 10px 18px; border: 1px solid rgba(255,255,255,.2); border-radius: 999px; transition: all .2s; }
-  .li-link a:hover { color: #fff; border-color: #fff; }
-  .industries { margin-top: 44px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,.12); text-align: center; }
-  .industries h3 { font-size: 14px; color: var(--experience); margin: 0 0 22px; font-weight: 400; }
-  .ind-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 900px; margin: 0 auto; }
+  .li-src a { display: inline-flex; align-items: center; gap: 8px; color: #b7badc; text-decoration: none; border-bottom: 1px solid rgba(183,186,220,.35); padding-bottom: 2px; transition: color .2s, border-color .2s; }
+  .li-src a:hover { color: #fff; border-color: #fff; }
+  .industries { margin-top: 30px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.12); text-align: center; }
+  .industries h3 { font-size: 14px; color: var(--experience); margin: 0 0 16px; font-weight: 400; }
+  .ind-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 1080px;   /* 22 chips in three even rows (7-8-7) */ margin: 0 auto; }
   .ind-rows { display: none; }
   @media (max-width: 760px) {
     .industries .ind-chips { display: none; }
@@ -731,10 +729,10 @@
       -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
     .ind-rows .mq-row .ind { opacity: 1 !important; transform: none !important; white-space: nowrap; }
   }
-  .ind { --c: #ff6b78; padding: 9px 16px 9px 30px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14);
-    color: #e6e7f7; font-size: 15px; position: relative; transition: opacity .5s, transform .5s, border-color .2s; }
+  .ind { --c: #ff6b78; padding: 6px 13px 6px 26px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14);
+    color: #e6e7f7; font-size: 13.5px; position: relative; transition: opacity .5s, transform .5s, border-color .2s; }
   html.js .industries:not(.in) .ind { opacity: 0; transform: translateY(10px); }
-  .ind::before { content: ""; position: absolute; left: 13px; top: 50%; width: 8px; height: 8px; margin-top: -4px; border-radius: 50%; background: var(--c); }
+  .ind::before { content: ""; position: absolute; left: 11px; top: 50%; width: 7px; height: 7px; margin-top: -3.5px; border-radius: 50%; background: var(--c); }
   .ind:nth-child(3n+2) { --c: #9da1ff; } .ind:nth-child(3n) { --c: var(--experience); }
   .ind:hover { border-color: var(--c); }
   .industries.in .ind { opacity: 1; transform: none; transition-delay: calc(var(--i) * 45ms); }
@@ -1499,7 +1497,7 @@
   <div class="wrap">
     <p class="kicker wide">In their words</p>
     <h2>What people I've worked with say</h2>
-    <p class="sub" style="color:#b7badc">From recommendations on LinkedIn.</p>
+    <p class="sub li-src"><a href="https://www.linkedin.com/in/bharatrathaur/details/recommendations/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect width="24" height="24" rx="4" fill="currentColor"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 10v7" stroke="#10123a" stroke-width="2" stroke-linecap="round" fill="none"/></svg>From recommendations on LinkedIn <span aria-hidden="true">↗</span></a></p>
     <div class="quotes">
       <figure class="quote" style="margin:0">
         <blockquote>Bharat consistently demonstrated <mark class="hl">deep technical expertise, efficiency, and reliability.</mark> What truly sets Bharat apart is his ability to navigate complex challenges with a <mark class="hl">solution-oriented mindset</mark> &hellip; always delivering on time, communicating transparently, and ensuring smooth execution.</blockquote>
@@ -1510,7 +1508,6 @@
         <figcaption><span class="avatar a-blue" aria-hidden="true">VV</span><div><div class="who">Veene Varadarajan</div><div class="role">Chief Architect · managed Bharat at Sanofi</div></div></figcaption>
       </figure>
     </div>
-    <p class="li-link"><a href="https://www.linkedin.com/in/bharatrathaur/details/recommendations/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect width="24" height="24" rx="4" fill="currentColor"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 10v7" stroke="#10123a" stroke-width="2" stroke-linecap="round" fill="none"/></svg>See these recommendations on LinkedIn</a></p>
     <div class="industries">
       <h3 class="wide">Industries I've worked in</h3>
       <div class="ind-chips">
