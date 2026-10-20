@@ -658,7 +658,9 @@
   .quotes-sec { background: var(--night); color: #fff; }
   .quotes-sec h2 { color: #fff; }
   .quotes-sec .kicker { color: var(--experience); }
-  .quotes { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+  .quotes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  /* three quotes: one row on desktop; between phone and desktop, the first spans the top so no card is left alone */
+  @media (max-width: 1023px) { .quotes { grid-template-columns: repeat(2, minmax(0, 1fr)); } .quotes .quote:first-child { grid-column: 1 / -1; } }
   .quote { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 16px; padding: 28px 28px 22px; position: relative; }
   .quote::before { content: "\201C"; position: absolute; top: -18px; left: 26px; font: 700 88px/1 Georgia, serif;
     background: var(--brand-bright); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -670,6 +672,7 @@
   .avatar { flex: none; width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 16px; color: #fff; letter-spacing: .04em; }
   .avatar.a-red { background: linear-gradient(135deg, #ff7a45, #bc1f2d); }
   .avatar.a-blue { background: linear-gradient(135deg, #8f93ff, #2f3192); }
+  .avatar.a-gold { background: linear-gradient(135deg, #f5b041, #b8650a); }
   .li-src a { display: inline-flex; align-items: center; gap: 8px; color: #b7badc; text-decoration: none; border-bottom: 1px solid rgba(183,186,220,.35); padding-bottom: 2px; transition: color .2s, border-color .2s; }
   .li-src a:hover { color: #fff; border-color: #fff; }
   .industries { margin-top: 30px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.12); text-align: center; }
@@ -1452,6 +1455,10 @@
     <h2>What people I've worked with say</h2>
     <p class="sub li-src"><a href="https://www.linkedin.com/in/bharatrathaur/details/recommendations/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect width="24" height="24" rx="4" fill="currentColor"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 10v7" stroke="#10123a" stroke-width="2" stroke-linecap="round" fill="none"/></svg>From recommendations on LinkedIn <span aria-hidden="true">↗</span></a></p>
     <div class="quotes">
+      <figure class="quote" style="margin:0">
+        <blockquote>When I ask Bharat to look into an issue, he is <mark class="hl">very responsive, proactive,</mark> and comes back with the cause and <mark class="hl">a fix he has already tested in sandbox.</mark> &hellip; Once he takes something on, <mark class="hl">I know it will get done</mark> and I don&rsquo;t have to chase him for updates.</blockquote>
+        <figcaption><span class="avatar a-gold" aria-hidden="true">PD</span><div><div class="who">Peter Daheb</div><div class="role">VP, HR Operations, Total Rewards &amp; HR Technology · Bharat reported to him for over four years</div></div></figcaption>
+      </figure>
       <figure class="quote" style="margin:0">
         <blockquote>Bharat consistently demonstrated <mark class="hl">deep technical expertise, efficiency, and reliability.</mark> What truly sets Bharat apart is his ability to navigate complex challenges with a <mark class="hl">solution-oriented mindset</mark> &hellip; always delivering on time, communicating transparently, and ensuring smooth execution.</blockquote>
         <figcaption><span class="avatar a-red" aria-hidden="true">PM</span><div><div class="who">Prisco Morelos</div><div class="role">Global People Solutions Leader · managed Bharat on a Workday and Greenhouse integration project</div></div></figcaption>
