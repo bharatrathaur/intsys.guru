@@ -705,9 +705,8 @@
   .quotes-sec { background: var(--night); color: #fff; }
   .quotes-sec h2 { color: #fff; }
   .quotes-sec .kicker { color: var(--experience); }
-  .quotes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
-  /* three quotes: one row on desktop; between phone and desktop, the first spans the top so no card is left alone */
-  @media (max-width: 1023px) { .quotes { grid-template-columns: repeat(2, minmax(0, 1fr)); } .quotes .quote:first-child { grid-column: 1 / -1; } }
+  /* four quotes: two even rows of two (four across is too narrow to read) */
+  .quotes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
   .quote { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 16px; padding: 28px 28px 22px; position: relative; }
   .quote::before { content: "\201C"; position: absolute; top: -18px; left: 26px; font: 700 88px/1 Georgia, serif;
     background: var(--brand-bright); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -720,6 +719,7 @@
   .avatar.a-red { background: linear-gradient(135deg, #ff7a45, #bc1f2d); }
   .avatar.a-blue { background: linear-gradient(135deg, #8f93ff, #2f3192); }
   .avatar.a-gold { background: linear-gradient(135deg, #f5b041, #b8650a); }
+  .avatar.a-plum { background: linear-gradient(135deg, #c95bbb, #7a2470); }
   .li-src a { display: inline-flex; align-items: center; gap: 8px; color: #b7badc; text-decoration: none; border-bottom: 1px solid rgba(183,186,220,.35); padding-bottom: 2px; transition: color .2s, border-color .2s; }
   .li-src a:hover { color: #fff; border-color: #fff; }
   .industries { margin-top: 30px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.12); text-align: center; }
@@ -1505,6 +1505,10 @@
       <figure class="quote" style="margin:0">
         <blockquote>When I ask Bharat to look into an issue, he is <mark class="hl">very responsive, proactive,</mark> and comes back with the cause and <mark class="hl">a fix he has already tested in sandbox.</mark> &hellip; Once he takes something on, <mark class="hl">I know it will get done</mark> and I don&rsquo;t have to chase him for updates.</blockquote>
         <figcaption><span class="avatar a-gold" aria-hidden="true">PD</span><div><div class="who">Peter Daheb</div><div class="role">VP, HR Operations, Total Rewards &amp; HR Technology · Bharat reported to him for over four years</div></div></figcaption>
+      </figure>
+      <figure class="quote" style="margin:0">
+        <blockquote>He was <mark class="hl">the person behind almost every system that connected to Workday.</mark> &hellip; He&rsquo;d add a validation or a flag so a <mark class="hl">bad record didn&rsquo;t reach a vendor,</mark> and he documented his designs so the next person could follow them. &hellip; He was easy to work with and <mark class="hl">someone I trusted with our data.</mark></blockquote>
+        <figcaption><span class="avatar a-plum" aria-hidden="true">MC</span><div><div class="who">Madhavi Cherukuru</div><div class="role">Head of People Technology · worked with Bharat directly, 2021 to 2022</div></div></figcaption>
       </figure>
       <figure class="quote" style="margin:0">
         <blockquote>Bharat consistently demonstrated <mark class="hl">deep technical expertise, efficiency, and reliability.</mark> What truly sets Bharat apart is his ability to navigate complex challenges with a <mark class="hl">solution-oriented mindset</mark> &hellip; always delivering on time, communicating transparently, and ensuring smooth execution.</blockquote>
