@@ -705,8 +705,11 @@
   .quotes-sec { background: var(--night); color: #fff; }
   .quotes-sec h2 { color: #fff; }
   .quotes-sec .kicker { color: var(--experience); }
-  /* four quotes: two even rows of two (four across is too narrow to read) */
-  .quotes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+  /* five quotes: three across, then two wider (six-column grid); between phone and desktop, the first spans the top, then two rows of two */
+  .quotes { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 24px; }
+  .quotes .quote { grid-column: span 2; }
+  .quotes .quote:nth-child(n+4) { grid-column: span 3; }
+  @media (max-width: 1023px) { .quotes { grid-template-columns: repeat(2, minmax(0, 1fr)); } .quotes .quote, .quotes .quote:nth-child(n+4) { grid-column: auto; } .quotes .quote:first-child { grid-column: 1 / -1; } }
   .quote { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 16px; padding: 28px 28px 22px; position: relative; }
   .quote::before { content: "\201C"; position: absolute; top: -18px; left: 26px; font: 700 88px/1 Georgia, serif;
     background: var(--brand-bright); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -720,6 +723,7 @@
   .avatar.a-blue { background: linear-gradient(135deg, #8f93ff, #2f3192); }
   .avatar.a-gold { background: linear-gradient(135deg, #f5b041, #b8650a); }
   .avatar.a-plum { background: linear-gradient(135deg, #c95bbb, #7a2470); }
+  .avatar.a-teal { background: linear-gradient(135deg, #4fc3b0, #17695e); }
   .li-src a { display: inline-flex; align-items: center; gap: 8px; color: #b7badc; text-decoration: none; border-bottom: 1px solid rgba(183,186,220,.35); padding-bottom: 2px; transition: color .2s, border-color .2s; }
   .li-src a:hover { color: #fff; border-color: #fff; }
   .industries { margin-top: 30px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.12); text-align: center; }
@@ -1517,6 +1521,10 @@
       <figure class="quote" style="margin:0">
         <blockquote>Bharat is one of the few who created a very positive impression! &hellip; he is <mark class="hl">so passionate about Workday!</mark> &hellip; At Sanofi, he made <mark class="hl">key contributions in delivering many Workday related initiatives.</mark></blockquote>
         <figcaption><span class="avatar a-blue" aria-hidden="true">VV</span><div><div class="who">Veene Varadarajan</div><div class="role">Chief Architect · managed Bharat at Sanofi</div></div></figcaption>
+      </figure>
+      <figure class="quote" style="margin:0">
+        <blockquote>Over that time I watched him <mark class="hl">grow from a developer into a lead.</mark> &hellip; When we ran into payment decryption issues, <mark class="hl">his detailed approach is what got them resolved.</mark> &hellip; Every time I gave Bharat more responsibility, he handled it well. <mark class="hl">I&rsquo;d recommend him for any lead role.</mark></blockquote>
+        <figcaption><span class="avatar a-teal" aria-hidden="true">RM</span><div><div class="who">Rupesh Mithani</div><div class="role">Consulting Project Manager · managed Bharat for about seven years at PeopleSoft and Oracle Consulting</div></div></figcaption>
       </figure>
     </div>
     <div class="industries">
